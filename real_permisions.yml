@@ -1,0 +1,3594 @@
+version: "0.14.0"
+# ==========================================
+# databases
+# ==========================================
+databases: 
+# production databases
+  - landing_scd:
+      shared: no
+      owner: loader_qlik
+  - landing_wolf:
+      shared: no
+      owner: loader_qlik
+  - landing_jira:
+      shared: no
+  - landing_esgaia:
+      shared: no
+  - landing_factset:
+      shared: no
+  - landing_sustainalytics:
+      shared: no
+  - landing_trucost:
+      shared: no
+  - landing_sharepoint_sam:
+      shared: no
+  - landing_external_data:
+      shared: no
+      owner: loader_qlik
+  - landing_meps:
+      shared: no
+  - landing_esg:
+      shared: no
+  - landing_scd_data_products:
+      shared: no
+      owner: loader_scd
+  - landing_usb:
+      shared: no
+      owner: loader_qlik_corporate
+  - landing_boost_ai:
+      shared: no
+  - landing_monitoring:
+      shared: no
+  - landing_iss:
+      shared: no
+
+  - rd_scd:
+      shared: no
+  - rd_wolf:
+      shared: no
+  - rd_jira:
+      shared: no
+  - rd_esgaia:
+      shared: no
+  - rd_factset:
+      shared: no
+  - rd_sustainalytics:
+      shared: no
+  - rd_trucost:
+      shared: no
+  - rd_sharepoint_sam:
+      shared: no
+  - rd_external_data:
+      shared: no
+  - rd_meps:
+      shared: no
+  - rd_esg:
+      shared: no
+  - rd_scd_data_products:
+      shared: no
+  - rd_usb:
+      shared: no
+  - rd_boost_ai:
+      shared: no
+  - rd_monitoring:
+      shared: no
+  - rd_iss:
+      shared: no
+
+
+  - dds_sam:
+      shared: no
+  - dds_core_data_platform:
+      shared: no
+  - dds_pension:
+      shared: no
+  - dds_sourcing:
+      shared: no
+  - dwh_sam:
+      shared: no
+
+  - internal_export_sam:
+      shared: no
+  - external_export_sam:
+      shared: no
+
+  - snowflake:
+      shared: yes
+
+# dev databases
+
+  - dev_landing_wolf:
+      shared: no 
+  - dev_landing_scd_qa:
+      shared: no
+      owner: loader_qlik
+  - dev_landing_scd:
+       shared: no
+       owner: loader_qlik
+  - dev_landing_jira:
+      shared: no
+  - dev_landing_esgaia:
+      shared: no
+  - dev_landing_sustainalytics:
+      shared: no
+  - dev_landing_trucost:
+      shared: no
+  - dev_landing_sharepoint_sam:
+      shared: no
+  - dev_landing_external_data:
+      shared: no
+      owner: loader_qlik
+  - dev_landing_meps:
+      shared: no
+  - dev_landing_esg:
+      shared: no
+  - dev_landing_scd_data_products:
+      shared: no
+      owner: dev_loader_scd
+  - dev_landing_usb:
+      shared: no
+      owner: dev_loader_qlik_corporate
+  - dev_landing_boost_ai:
+      shared: no
+  - dev_landing_monitoring:
+      shared: no
+  - dev_landing_iss:
+      shared: no
+
+  - dev_rd_scd:
+      shared: no
+  - dev_rd_wolf:
+      shared: no
+  - dev_rd_jira:
+      shared: no
+  - dev_rd_esgaia:
+      shared: no
+  - dev_rd_factset:
+      shared: no
+  - dev_rd_sustainalytics:
+      shared: no
+  - dev_rd_trucost:
+      shared: no
+  - dev_rd_sharepoint_sam:
+      shared: no
+  - dev_rd_external_data:
+      shared: no
+  - dev_rd_meps:
+      shared: no
+  - dev_rd_esg:
+      shared: no
+  - dev_rd_scd_data_products:
+      shared: no
+  - dev_rd_usb:
+      shared: no
+  - dev_rd_boost_ai:
+      shared: no
+  - dev_rd_monitoring:
+      shared: no
+  - dev_rd_iss:
+      shared: no
+
+  - dev_dds_sam:
+      shared: no
+      owner: data_engineer_sam
+  - dev_dds_core_data_platform:
+      shared: no
+      owner: data_engineer_platform
+  - dev_dds_pension:
+      shared: no
+      owner: data_engineer_pension
+  - dev_dds_sourcing:
+      shared: no
+      owner: data_engineer_sourcing
+  - dev_dwh_sam:
+      shared: no
+      owner: data_engineer_sam
+
+  - dev_internal_export_sam:
+      shared: no
+  - dev_external_export_sam:
+      shared: no
+
+# demo/onboarding
+  - demo:
+      shared: no
+      owner: data_engineer_platform
+  - dev_demo:
+      shared: no
+      owner: data_engineer_platform
+  
+# ==========================================
+# admin roles
+# ==========================================
+
+roles: 
+
+    - stb_account_admin:
+          member_of:
+            - accountadmin
+    - accountadmin:
+          member_of:
+            - securityadmin
+            - sysadmin
+            - aad_provisioner
+    - securityadmin:
+          member_of:  
+            - useradmin
+            - maskadmin
+    - sysadmin: 
+          member_of:
+            - data_engineer_platform
+            - loader
+            - transformer_sam
+            - transformer_corporate
+            - transformer_platform
+            - transformer_sourcing
+    - maskadmin:
+          member_of: []
+
+    
+      
+# ==========================================
+# functional roles
+# ==========================================
+    - loader: # binding role for structural order 
+          member_of: 
+            - loader_hevo
+            - loader_qlik
+            - loader_meltano
+            - loader_scd
+            - dev_loader_scd
+            - loader_qlik_corporate
+            - dev_loader_qlik_corporate
+            
+
+    - loader_meltano:
+          warehouses: 
+            - loading_sam_wh
+            - dev_loading_sam_wh
+          member_of: 
+            - ar_db_landing_sustainalytics_r
+            - ar_db_landing_sustainalytics_w
+            - ar_db_landing_trucost_r
+            - ar_db_landing_trucost_w
+            - ar_db_landing_sharepoint_sam_r
+            - ar_db_landing_sharepoint_sam_w
+            - ar_db_landing_meps_w
+            - ar_db_landing_jira_r
+            - ar_db_landing_jira_w
+            - ar_db_landing_esg_r
+            - ar_db_landing_esg_w
+            - ar_db_landing_esgaia_r
+            - ar_db_landing_esgaia_w
+            - ar_db_landing_boost_ai_r
+            - ar_db_landing_boost_ai_w
+            - ar_db_landing_monitoring_r
+            - ar_db_landing_monitoring_w
+            - ar_db_landing_iss_r
+            - ar_db_landing_iss_w
+
+            #dev
+            - dev_ar_db_landing_sustainalytics_r
+            - dev_ar_db_landing_sustainalytics_w
+            - dev_ar_db_landing_trucost_r
+            - dev_ar_db_landing_trucost_w
+            - dev_ar_db_landing_sharepoint_sam_r
+            - dev_ar_db_landing_sharepoint_sam_w
+            - dev_ar_db_landing_meps_w
+            - dev_ar_db_landing_jira_r
+            - dev_ar_db_landing_jira_w
+            - dev_ar_db_landing_esg_r
+            - dev_ar_db_landing_esg_w
+            - dev_ar_db_landing_esgaia_r
+            - dev_ar_db_landing_esgaia_w
+            - dev_ar_db_landing_boost_ai_r
+            - dev_ar_db_landing_boost_ai_w
+            - dev_ar_db_landing_iss_r
+            - dev_ar_db_landing_iss_w
+
+    - loader_qlik:
+          warehouses: 
+            - loading_sam_wh
+            - dev_loading_sam_wh
+          member_of: 
+            - ar_db_landing_wolf_r
+            - ar_db_landing_wolf_w
+            - ar_db_landing_scd_r
+            - ar_db_landing_scd_w
+            - ar_db_landing_jira_r
+            - ar_db_landing_jira_w
+            - ar_db_landing_external_data_w
+            - ar_db_landing_external_data_r
+            # dev
+            - dev_ar_db_landing_wolf_r
+            - dev_ar_db_landing_wolf_w
+            - dev_ar_db_landing_scd_r
+            - dev_ar_db_landing_scd_w
+            - dev_ar_db_landing_jira_r
+            - dev_ar_db_landing_jira_w
+            - dev_ar_db_landing_external_data_w
+            - dev_ar_db_landing_external_data_r
+            - dev_ar_db_landing_scd_qa_r
+            - dev_ar_db_landing_scd_qa_w
+    
+    #Corporate - Functional roles
+    - loader_qlik_corporate:
+          warehouses: 
+            - loading_corporate_xs
+          member_of:
+            - ar_db_landing_usb_r
+            - ar_db_landing_usb_w
+    
+    - dev_loader_qlik_corporate:
+          warehouses: 
+            - dev_loading_corporate_xs
+          member_of:
+            - dev_ar_db_landing_usb_r
+            - dev_ar_db_landing_usb_w    
+
+    - transformer_corporate: # system role for dbt in production
+          warehouses: 
+            - transforming_corporate_xs
+            - transforming_corporate_m
+            - transforming_corporate_l
+          member_of:
+            # prod
+            - ar_db_landing_usb_r
+            - ar_db_rd_usb_r
+            - ar_db_rd_usb_w
+            - ar_db_dds_pension_r
+            - ar_db_dds_pension_w
+            
+            # dev
+            - dev_ar_db_dds_pension_r
+            - dev_ar_db_dds_pension_w
+            - dev_ar_db_rd_usb_r
+            - dev_ar_db_rd_usb_w
+            - dev_ar_db_landing_usb_r
+    
+    #Pension (Fist domain covered within Corporate)
+    - data_engineer_pension: #ad gruppe
+          warehouses:
+            - transforming_corporate_xs
+            - transforming_corporate_m
+            - transforming_corporate_l
+
+          member_of:
+           #Functional roles
+            - data_analyst_pension
+
+            #Prod read  
+            - ar_db_landing_usb_r
+            - ar_db_rd_usb_r
+            - ar_db_dds_pension_r
+
+            #Dev
+            - dev_ar_db_landing_usb_r
+            - dev_ar_db_rd_usb_r
+            - dev_ar_db_rd_usb_w 
+            - dev_ar_db_dds_pension_r
+            - dev_ar_db_dds_pension_w
+
+    - data_analyst_pension: #AD group
+          warehouses:
+            - analysis_corporate_xs
+          member_of:
+            - ar_db_dds_pension_r                      
+
+
+
+    - loader_hevo:
+          warehouses: 
+            - loading_sam_wh
+            - dev_loading_sam_wh
+          member_of:
+            - ar_db_landing_esgaia_r
+            - ar_db_landing_esgaia_w
+            # dev
+            - dev_ar_db_landing_esgaia_r
+            - dev_ar_db_landing_esgaia_w
+
+    - loader_scd:
+          warehouses: 
+            - loading_sam_wh
+          member_of:
+            - ar_db_landing_scd_data_products_r
+            - ar_db_landing_scd_data_products_w
+            
+    - dev_loader_scd:
+          warehouses: 
+            - dev_loading_sam_wh
+          member_of:
+            - dev_ar_db_landing_scd_data_products_r
+            - dev_ar_db_landing_scd_data_products_w                                   
+  
+    - transformer_sam: # system role for dbt in production
+          warehouses: 
+            - transforming_sam_wh
+            - transforming_sam_xl
+          member_of:
+            - ar_db_landing_wolf_r
+            - ar_db_landing_scd_r
+            - ar_db_landing_jira_r
+            - ar_db_landing_esgaia_r
+            - ar_db_landing_esg_r
+            - ar_db_landing_factset_r
+            - ar_db_landing_sustainalytics_r
+            - ar_db_landing_trucost_r
+            - ar_db_landing_sharepoint_sam_r
+            - ar_db_landing_scd_data_products_r
+            - ar_db_landing_external_data_r # to be deleted
+            - ar_db_rd_external_data_r # to be deleted
+            - ar_db_rd_external_data_w # to be deleted
+            - ar_db_rd_esgaia_r
+            - ar_db_rd_esgaia_w
+            - ar_db_rd_scd_r
+            - ar_db_rd_scd_w
+            - ar_db_rd_wolf_r
+            - ar_db_rd_wolf_w
+            - ar_db_rd_esg_r
+            - ar_db_rd_esg_w
+            - ar_db_rd_factset_r
+            - ar_db_rd_factset_w
+            - ar_db_rd_sustainalytics_r
+            - ar_db_rd_sustainalytics_w
+            - ar_db_rd_trucost_r
+            - ar_db_rd_trucost_w
+            - ar_db_rd_sharepoint_sam_r
+            - ar_db_rd_sharepoint_sam_w
+            - ar_db_rd_scd_data_products_r
+            - ar_db_rd_scd_data_products_w
+            - ar_db_dds_core_data_platform_r
+            - ar_db_dds_core_data_platform_w
+            - ar_db_dds_sam_r
+            - ar_db_dds_sam_w
+            - ar_db_dwh_sam_r
+            - ar_db_dwh_sam_w
+            - ar_db_internal_export_sam_r
+            - ar_db_internal_export_sam_w
+            - ar_db_external_export_sam_r
+            - ar_db_external_export_sam_w
+            - ar_db_landing_meps_r
+            - ar_db_rd_meps_r
+            - ar_db_rd_meps_w
+            - ar_db_rd_iss_r
+            - ar_db_landing_iss_r
+
+            # dev permisions
+            - dev_ar_db_landing_wolf_r
+            - dev_ar_db_landing_scd_r
+            - dev_ar_db_landing_jira_r
+            - dev_ar_db_landing_esgaia_r
+            - dev_ar_db_landing_esg_r
+            - dev_ar_db_landing_sustainalytics_r
+            - dev_ar_db_landing_trucost_r
+            - dev_ar_db_landing_sharepoint_sam_r
+            - dev_ar_db_landing_scd_data_products_r
+            - dev_ar_db_landing_external_data_r # to be deleted
+            - dev_ar_db_rd_external_data_r # to be deleted
+            - dev_ar_db_rd_external_data_w # to be deleted
+            - dev_ar_db_rd_esgaia_r
+            - dev_ar_db_rd_esgaia_w
+            - dev_ar_db_rd_scd_r
+            - dev_ar_db_rd_scd_w
+            - dev_ar_db_rd_wolf_r
+            - dev_ar_db_rd_wolf_w
+            - dev_ar_db_rd_esgaia_r
+            - dev_ar_db_rd_esgaia_w
+            - dev_ar_db_rd_esg_r
+            - dev_ar_db_rd_esg_w
+            - dev_ar_db_rd_factset_r
+            - dev_ar_db_rd_factset_w
+            - dev_ar_db_rd_sustainalytics_r
+            - dev_ar_db_rd_sustainalytics_w
+            - dev_ar_db_rd_trucost_r
+            - dev_ar_db_rd_trucost_w
+            - dev_ar_db_rd_sharepoint_sam_r
+            - dev_ar_db_rd_sharepoint_sam_w
+            - dev_ar_db_rd_scd_data_products_r
+            - dev_ar_db_rd_scd_data_products_w
+            - dev_ar_db_dds_core_data_platform_r
+            - dev_ar_db_dds_core_data_platform_w
+            - dev_ar_db_landing_meps_r
+            - dev_ar_db_rd_meps_r
+            - dev_ar_db_rd_meps_w
+            - dev_ar_db_rd_iss_r
+            - dev_ar_db_landing_iss_r
+            - dev_ar_db_landing_iss_w
+            - ar_db_demo_w
+
+
+    - transformer_sourcing: # system role for dbt in production
+          warehouses: 
+            - transforming_sourcing_xs
+          member_of:
+            # prod
+            - ar_db_rd_meps_r
+            - ar_db_dds_sourcing_r
+            - ar_db_dds_sourcing_w
+            # dev
+            - dev_ar_db_rd_meps_r
+            - dev_ar_db_dds_sourcing_r
+            - dev_ar_db_dds_sourcing_w
+
+    - transformer_platform: # system role for dbt in production
+          warehouses: 
+            - transforming_platform_xs
+            - transforming_platform_m
+            - transforming_sam_wh
+            - transforming_sam_xl
+            - transforming_sourcing_xs
+            - transforming_corporate_xs
+          member_of:
+            - ops_datadog #gives snowflake read
+            # Transformer roles
+            - transformer_sam
+            - transformer_sourcing
+            - transformer_corporate
+            # prod
+            - ar_db_landing_wolf_r
+            - ar_db_landing_scd_r
+            - ar_db_landing_jira_r
+            - ar_db_landing_esgaia_r
+            - ar_db_landing_esg_r
+            - ar_db_landing_factset_r
+            - ar_db_landing_sustainalytics_r
+            - ar_db_landing_trucost_r
+            - ar_db_landing_sharepoint_sam_r
+            - ar_db_landing_scd_data_products_r
+            - ar_db_landing_external_data_r # to be deleted
+            - ar_db_rd_external_data_r # to be deleted
+            - ar_db_rd_external_data_w # to be deleted
+            - ar_db_rd_esgaia_r
+            - ar_db_rd_esgaia_w
+            - ar_db_rd_scd_r
+            - ar_db_rd_scd_w
+            - ar_db_rd_wolf_r
+            - ar_db_rd_wolf_w
+            - ar_db_rd_esg_r
+            - ar_db_rd_esg_w
+            - ar_db_rd_factset_r
+            - ar_db_rd_factset_w
+            - ar_db_rd_sustainalytics_r
+            - ar_db_rd_sustainalytics_w
+            - ar_db_rd_trucost_r
+            - ar_db_rd_trucost_w
+            - ar_db_rd_sharepoint_sam_r
+            - ar_db_rd_sharepoint_sam_w
+            - ar_db_rd_scd_data_products_r
+            - ar_db_rd_scd_data_products_w
+            - ar_db_dds_core_data_platform_r
+            - ar_db_dds_core_data_platform_w
+            - ar_db_demo_r
+            - ar_db_demo_w
+            - ar_db_landing_monitoring_r
+            - ar_db_landing_monitoring_w
+            - ar_db_rd_iss_r
+            - ar_db_rd_iss_w
+
+            # dev
+            - dev_ar_db_landing_wolf_r
+            - dev_ar_db_landing_scd_r
+            - dev_ar_db_landing_jira_r
+            - dev_ar_db_landing_esgaia_r
+            - dev_ar_db_landing_esg_r
+            - dev_ar_db_landing_sustainalytics_r
+            - dev_ar_db_landing_trucost_r
+            - dev_ar_db_landing_sharepoint_sam_r
+            - dev_ar_db_landing_scd_data_products_r
+            - dev_ar_db_landing_external_data_r # to be deleted
+            - dev_ar_db_rd_external_data_r # to be deleted
+            - dev_ar_db_rd_external_data_w # to be deleted
+            - dev_ar_db_rd_esgaia_r
+            - dev_ar_db_rd_esgaia_w
+            - dev_ar_db_rd_scd_r
+            - dev_ar_db_rd_scd_w
+            - dev_ar_db_rd_wolf_r
+            - dev_ar_db_rd_wolf_w
+            - dev_ar_db_rd_esgaia_r
+            - dev_ar_db_rd_esgaia_w
+            - dev_ar_db_rd_esg_r
+            - dev_ar_db_rd_esg_w
+            - dev_ar_db_rd_factset_r
+            - dev_ar_db_rd_factset_w
+            - dev_ar_db_rd_sustainalytics_r
+            - dev_ar_db_rd_sustainalytics_w
+            - dev_ar_db_rd_trucost_r
+            - dev_ar_db_rd_trucost_w
+            - dev_ar_db_rd_sharepoint_sam_r
+            - dev_ar_db_rd_sharepoint_sam_w
+            - dev_ar_db_rd_scd_data_products_r
+            - dev_ar_db_rd_scd_data_products_w
+            - dev_ar_db_dds_core_data_platform_r
+            - dev_ar_db_dds_core_data_platform_w
+            - dev_ar_db_demo_r
+            - dev_ar_db_demo_w
+            - dev_ar_db_landing_monitoring_r
+            - dev_ar_db_landing_monitoring_w
+            - dev_ar_db_rd_iss_r
+            - dev_ar_db_rd_iss_w
+
+    - data_engineer_platform:  #ad gruppe
+          warehouses: 
+            - transforming_platform_m
+            - transforming_platform_xs
+            - dev_transforming_platform_xs
+          member_of:
+            # functional roles
+            - reporter_platform
+            - ops_datadog
+            # data engineering roles
+            - data_engineer_sam
+            - data_engineer_grc
+            - data_engineer_enterprise
+            - data_engineer_demo
+            - data_engineer_sourcing
+            - data_engineer_pension
+            # data analysts - without engineers
+
+            # ar-roles
+            # prod
+            - ar_db_landing_jira_r
+            - ar_db_rd_jira_r
+            - ar_db_rd_jira_w
+            - ar_db_landing_meps_r
+            - ar_db_landing_esg_r
+            - ar_db_rd_esg_w
+            - ar_db_rd_esg_r
+            - ar_db_rd_scd_data_products_w
+            - ar_db_landing_monitoring_r
+            - ar_db_landing_monitoring_w
+
+            #dev
+            - dev_ar_db_landing_jira_r
+            - dev_ar_db_rd_jira_r
+            - dev_ar_db_rd_jira_w
+            - dev_ar_db_dds_core_data_platform_r
+            - dev_ar_db_dds_core_data_platform_w
+            - dev_ar_db_landing_meps_r
+            - dev_ar_db_landing_meps_w
+            - dev_ar_db_landing_esg_w
+            - dev_ar_db_landing_esg_r
+            - dev_ar_db_rd_esg_r
+            - dev_ar_db_rd_esg_w
+            - dev_ar_db_rd_meps_r
+            - dev_ar_db_rd_meps_w
+            - dev_ar_db_landing_monitoring_r
+            - dev_ar_db_landing_monitoring_w
+
+
+
+    - data_engineer_sam:  #ad gruppe
+          warehouses:
+            - dev_transforming_sam_wh
+            - dev_transforming_sam_xl
+          member_of:
+            - data_analyst_sam
+            - data_engineer_sam_risk_and_ownership 
+            - data_engineer_investment_platform
+            - reporter_sam
+            - exporter_sam
+            - reader_sam                     
+            - dev_ar_db_landing_wolf_r
+            - dev_ar_db_landing_scd_r
+            - dev_ar_db_landing_esgaia_r
+            - dev_ar_db_landing_sustainalytics_r
+            - dev_ar_db_landing_trucost_r
+            - dev_ar_db_landing_sharepoint_sam_r
+            - dev_ar_db_landing_scd_qa_r
+            - dev_ar_db_landing_scd_data_products_r      
+            - ar_db_landing_factset_r #there is no dev role for this
+            - dev_ar_db_landing_external_data_r # to be deleted
+            - dev_ar_db_rd_external_data_r # to be deleted
+            - dev_ar_db_rd_external_data_w # to be deleted
+            - dev_ar_db_rd_wolf_r
+            - dev_ar_db_rd_wolf_w
+            - dev_ar_db_rd_scd_r
+            - dev_ar_db_rd_scd_w
+            - dev_ar_db_rd_esgaia_r
+            - dev_ar_db_rd_esgaia_w
+            - dev_ar_db_rd_factset_r
+            - dev_ar_db_rd_factset_w
+            - dev_ar_db_rd_sustainalytics_r
+            - dev_ar_db_rd_sustainalytics_w
+            - dev_ar_db_rd_trucost_r
+            - dev_ar_db_rd_trucost_w
+            - dev_ar_db_rd_sharepoint_sam_r
+            - dev_ar_db_rd_sharepoint_sam_w
+            - dev_ar_db_dds_sam_r
+            - dev_ar_db_dds_sam_w
+            - dev_ar_db_dds_core_data_platform_r
+            - dev_ar_db_dwh_sam_r
+            - dev_ar_db_dwh_sam_w
+            - dev_ar_db_internal_export_sam_r
+            - dev_ar_db_internal_export_sam_w
+            - dev_ar_db_external_export_sam_r
+            - dev_ar_db_external_export_sam_w
+            - dev_ar_db_landing_esg_w
+            - dev_ar_db_landing_esg_r
+            - dev_ar_db_rd_esg_w
+            - dev_ar_db_rd_esg_r
+            - dev_ar_db_rd_scd_data_products_r
+            - dev_ar_db_rd_scd_data_products_w      
+            - dev_ar_db_landing_iss_r
+            - dev_ar_db_landing_iss_w
+
+            # prod read
+            - ar_db_landing_wolf_r
+            - ar_db_landing_scd_r
+            - ar_db_landing_esgaia_r
+            - ar_db_landing_sustainalytics_r
+            - ar_db_landing_trucost_r
+            - ar_db_landing_sharepoint_sam_r
+            - ar_db_landing_iss_r
+            - ar_db_landing_external_data_r # to be deleted
+            - ar_db_rd_external_data_r # to be deleted
+            - ar_db_rd_wolf_r
+            - ar_db_rd_scd_r
+            - ar_db_rd_esgaia_r
+            - ar_db_rd_factset_r
+            - ar_db_rd_sustainalytics_r
+            - ar_db_rd_trucost_r
+            - ar_db_rd_sharepoint_sam_r
+            - ar_db_dds_sam_r
+            - ar_db_dds_core_data_platform_r
+            - ar_db_dwh_sam_r
+            - ar_db_internal_export_sam_r
+            - ar_db_external_export_sam_r
+            - ar_db_landing_esg_r
+            - ar_db_rd_scd_data_products_r
+
+    - data_engineer_sam_risk_and_ownership:  #ad gruppe
+          warehouses:
+            - dev_transforming_sam_wh
+            - dev_transforming_sam_xl
+          member_of:
+            - data_analyst_sam_risk_and_ownership
+            #dev landing
+            - dev_ar_db_landing_wolf_r
+            - dev_ar_db_landing_scd_r
+            - dev_ar_db_landing_esgaia_r
+            - dev_ar_db_landing_sustainalytics_r
+            - dev_ar_db_landing_trucost_r
+            - dev_ar_db_landing_sharepoint_sam_r
+            - dev_ar_db_landing_scd_qa_r
+            - ar_db_landing_factset_r #there is no dev role for this
+            - dev_ar_db_landing_external_data_r # to be deleted
+            - dev_ar_db_rd_external_data_r # to be deleted
+            - dev_ar_db_landing_iss_r
+            
+            #dev rd
+            - dev_ar_db_rd_external_data_r # to be deleted
+            - dev_ar_db_rd_external_data_w # to be deleted
+            - dev_ar_db_rd_esgaia_r
+            - dev_ar_db_rd_esgaia_w
+            - dev_ar_db_rd_factset_r
+            - dev_ar_db_rd_factset_w
+            - dev_ar_db_rd_sustainalytics_r
+            - dev_ar_db_rd_sustainalytics_w
+            - dev_ar_db_rd_trucost_r
+            - dev_ar_db_rd_trucost_w
+            - dev_ar_db_rd_scd_r
+            - dev_ar_db_rd_iss_r
+            - dev_ar_db_rd_iss_w         
+                        
+            #dev ddds & dwh  
+            - dev_ar_db_dds_sam_r
+            - dev_ar_db_dds_sam_w
+            - dev_ar_db_dwh_sam_r
+            - dev_ar_db_dwh_sam_w
+            - dev_ar_db_dds_core_data_platform_r
+            - dev_ar_db_dds_core_data_platform_w
+
+            #dev export
+            - dev_ar_db_internal_export_sam_r
+            - dev_ar_db_internal_export_sam_w
+            - dev_ar_db_external_export_sam_r
+            - dev_ar_db_external_export_sam_w            
+
+            #prod RD
+            - ar_db_rd_scd_r
+            - ar_db_rd_iss_r
+
+            #Prod Landing
+            - ar_db_landing_iss_r
+
+               
+       #     - ar_schema_dds_sam_scd_pfc_holdings_r
+            
+
+    # ad rolle data_engineer_sam_prod
+    # heller mot egen rolle, men avventer med navnegiving til etter test av qa prosess
+
+    - data_engineer_grc:  #ad gruppe
+          warehouses:
+            - analysis_sam_wh
+          member_of:
+            - ar_schema_internal_export_sam_ie_grc_r
+            - ar_db_landing_jira_r
+            - dev_ar_db_landing_jira_r
+            - data_analyst_sam_fund_administration_no #grc needs this role to be able to analyze on unmasked fund-admin data for only sams (not spps) customers. 
+
+    - data_engineer_investment_platform:  #ad gruppe
+          warehouses:
+            - analysis_sam_wh
+          member_of:
+            - ar_db_landing_scd_data_products_r
+            - dev_ar_db_landing_scd_data_products_w
+            - dev_ar_db_landing_scd_data_products_r
+
+    - data_engineer_demo:  #ad gruppe
+          warehouses:
+            - demo_xs
+            - demo_m
+          member_of:
+            - ar_db_demo_r
+            - dev_ar_db_demo_r
+            - dev_ar_db_demo_w
+
+    - data_analyst_sam:  # binding role #ad gruppe
+          warehouses:
+            - analysis_sam_wh
+          member_of:
+            - data_analyst_sam_aksjeforvaltning
+            - data_analyst_sam_eiendom
+            - data_analyst_sam_ik
+            - data_analyst_sam_renteforvaltning
+            - data_analyst_sam_fund_administration_no
+            - data_analyst_sam_fund_administration_se
+            - data_analyst_sam_fund_product
+            - data_analyst_sam_operations
+            - data_analyst_sam_skagen
+            - data_analyst_sam_risk_and_ownership
+            - data_analyst_sam_fund_admin_skagen
+
+    - data_analyst_sam_aksjeforvaltning: #ad gruppe
+          warehouses:
+            - analysis_sam_wh
+          member_of:
+            - public_sam
+            - ar_schema_dwh_sam_esg_r            
+  ##        - ar_schema_dwh_sam_performance_r ##activate this access when this product is production ready
+
+    - data_analyst_sam_eiendom: #ad gruppe
+          warehouses:
+            - analysis_sam_wh
+          member_of: 
+            - public_sam
+            - ar_schema_dwh_sam_esg_r
+            - ar_schema_dds_sam_esg_kpi_r
+
+    - data_analyst_sam_fund_administration_no: #ad gruppe
+          warehouses:
+            - analysis_sam_wh
+          member_of:
+            - public_sam
+            - ar_schema_dwh_sam_fund_admin_r
+
+    - data_analyst_sam_fund_administration_se: #ad gruppe
+          warehouses:
+            - analysis_sam_wh
+          member_of:
+            - public_sam
+            - ar_schema_dwh_sam_fund_admin_r
+
+    - data_analyst_sam_fund_admin_skagen: 
+          warehouses:
+            - analysis_sam_wh
+          member_of:
+            - public_sam
+            - ar_schema_dwh_sam_fund_admin_skagen_r             
+
+    - data_analyst_sam_fund_product: #ad gruppe
+          warehouses:
+            - analysis_sam_wh
+          member_of:
+            - public_sam
+            - ar_schema_dwh_sam_esg_r
+  ##        - ar_schema_dwh_sam_performance_r ##activate this access when this product is production ready
+            - ar_schema_dds_sam_sustainalytics_r
+            - ar_schema_dds_sam_esg_kpi_r              
+
+    - data_analyst_sam_ik: #ad gruppe
+          warehouses:
+            - analysis_sam_wh
+          member_of:
+            - public_sam
+            - ar_schema_dwh_sam_esg_r            
+  ##        - ar_schema_dwh_sam_performance_r ##active this access when this product is production ready
+            - ar_db_rd_scd_r
+            - ar_schema_dwh_sam_fund_admin_nordic_distribution_r
+           
+    - data_analyst_sam_operations: #ad gruppe
+          warehouses:
+            - analysis_sam_wh
+          member_of:
+            - public_sam
+  ##        - ar_schema_dwh_sam_performance_r ##active this access when this product is production ready
+            - ar_schema_dds_sam_recon_r ## activate when recon is production ready
+            - ar_schema_dwh_sam_esg_r
+            - ar_schema_dwh_sam_bruddstatistikk_r
+            - ar_schema_dwh_sam_price_r
+            - ar_schema_dwh_sam_transactions_and_finance_r
+            - ar_schema_dds_sam_esg_kpi_r  
+            - ar_schema_dds_sam_sustainalytics_r
+            - ar_schema_dds_sam_scd_pfc_holdings_r
+            - ar_db_rd_scd_r
+            - ar_schema_dwh_sam_fund_admin_r         
+            
+
+    - data_analyst_sam_renteforvaltning: #ad gruppe 
+          warehouses:
+            - analysis_sam_wh
+          member_of:
+            - public_sam
+            - ar_schema_dwh_sam_esg_r
+            - ar_schema_dds_sam_esg_kpi_r
+            - ar_schema_dds_sam_bquant_r             
+  ##        - ar_schema_dwh_sam_performance_r ##activate this access when this product is production ready
+            ##note: need to add access to sandbox sb_bquant
+
+
+
+    - data_analyst_sam_skagen: #ad gruppe - created for portfolio managers and analyst in skagen who mostly needs just simcorp data and are not allowed to see client details.
+          warehouses:
+            - analysis_sam_wh
+          member_of: 
+            - public_sam
+            - ar_schema_dwh_sam_esg_r
+            - ar_schema_dds_sam_esg_kpi_r   
+  ##        - ar_schema_dwh_sam_performance_r ##activate this access when this product is production ready
+
+    - data_analyst_sam_risk_and_ownership: #ad gruppe
+          warehouses:
+            - analysis_sam_wh
+          member_of:
+            - public_sam
+            - ar_schema_dds_sam_esg_kpi_r
+            - ar_schema_dwh_sam_esg_r
+            - ar_schema_dds_sam_active_ownership_engagement_r
+            - ar_schema_dds_sam_sustainalytics_r
+            - ar_schema_dds_sam_scd_pfc_holdings_r
+            - ar_db_rd_iss_r
+
+    - data_analyst_sourcing: #ad gruppe
+          warehouses:
+            - analysis_sam_wh
+          member_of:
+            - ar_db_landing_meps_r
+            - ar_db_rd_meps_r
+            - ar_db_dds_sourcing_r
+
+    - data_engineer_sourcing: #ad gruppe
+          warehouses:
+            - dev_transforming_sourcing_xs
+          member_of:
+            # functional roles
+            - data_analyst_sourcing
+
+            # prod
+            - ar_db_landing_meps_r
+            - ar_db_rd_meps_r
+            - ar_db_dds_sourcing_w
+            - ar_db_dds_sourcing_r
+
+            # dev
+            - dev_ar_db_landing_meps_r
+            - dev_ar_db_rd_meps_r
+            - dev_ar_db_dds_sourcing_w
+            - dev_ar_db_dds_sourcing_r
+
+
+
+    - export_reader_ads:
+          warehouses:
+            - exporting_sam_wh
+          member_of:
+            - ar_schema_internal_export_sam_ie_ads_r
+        
+    - export_reader_bquant:
+          warehouses:
+            - exporting_sam_wh
+          member_of:
+            - ar_schema_internal_export_sam_ie_bquant_r
+            - data_analyst_sam_renteforvaltning ##exception until we land proper process for bquant
+
+    - export_reader_cfo:
+          warehouses:
+            - exporting_sam_wh
+          member_of:
+            - ar_schema_internal_export_sam_ie_cfo_r
+
+    - export_reader_grc:
+          warehouses:
+            - exporting_sam_wh
+          member_of:
+            - ar_schema_internal_export_sam_ie_grc_r
+
+    - sam_ads_exporter:
+          warehouses:
+            - exporting_sam_wh
+          member_of:
+            - ar_schema_internal_export_sam_ie_ads_staging_w
+            - ar_schema_internal_export_sam_ie_ads_r
+            - ar_schema_internal_export_sam_snapshots_r
+
+    - reporter_sam_fund_admin: #terraform
+          warehouses:
+            - reporting_sam_wh
+          member_of:
+            - public_sam
+            - ar_schema_dwh_sam_fund_admin_r
+
+    - public_sam: #ad gruppe
+          warehouses:
+            - analysis_sam_wh
+          member_of:
+            - ar_schema_dwh_sam_conformed_dim_r
+            - ar_db_rd_factset_r
+            - ar_db_rd_sustainalytics_r
+            - ar_db_rd_trucost_r
+            - ar_db_rd_iss_r
+            - ar_db_rd_external_data_r
+            - ar_schema_rd_esg_rd_science_based_targets_r
+            - ar_schema_rd_scd_data_products_rd_esg_scores_r
+
+    
+    - reporter_platform: #role used by system users to schedule reports and dataset refresh
+          warehouses:
+            - reporting_sam_wh
+          member_of:
+            - reporter_sam
+            - ar_db_dds_core_data_platform_r
+    
+    - reporter_sam: 
+          warehouses:
+            - reporting_sam_wh
+          member_of:
+            - reporter_sam_fund_admin
+            - ar_schema_dwh_sam_conformed_dim_r
+            - ar_schema_dwh_sam_bruddstatistikk_r
+            - ar_schema_dwh_sam_esg_r
+            - ar_schema_dwh_sam_general_ledger_r 
+            - ar_schema_dwh_sam_price_r
+            - ar_schema_dds_sam_active_ownership_engagement_r
+            - ar_schema_dds_sam_esg_kpi_r
+            - ar_schema_dds_sam_sustainalytics_r
+
+    - exporter_sam: #binding group
+          member_of:
+            - export_reader_bquant
+            - export_reader_cfo
+            - export_reader_grc
+            - export_reader_ads
+            - sam_ads_exporter
+            - export_reader_cfo
+
+    - reader_sam: # binding group
+          member_of: []
+
+# ==========================================
+# access roles  - monitoring
+# ==========================================
+
+    - ops_metaplane:
+          privileges:
+            databases:
+                read: 
+                    - internal_export_sam
+            schemas:
+                read:
+                    - internal_export_sam.*
+
+    - ops_datadog:
+          privileges:
+            databases:
+                read: 
+                    - snowflake
+
+# ==========================================
+# access roles  - production
+# ==========================================
+
+
+
+# landing
+    - ar_db_landing_scd_r:
+          privileges:
+            databases:
+                read: 
+                    - landing_scd
+            schemas:
+                read:
+                    - landing_scd.*
+            tables:
+                read:
+                    - landing_scd.*.*
+
+    - ar_db_landing_scd_w:
+          privileges:
+            databases:
+                write: 
+                    - landing_scd
+            schemas:
+                write:
+                    - landing_scd.*
+            tables:
+                write:
+                    - landing_scd.*.*
+
+    - ar_db_landing_wolf_r:
+          privileges:
+            databases:
+                read: 
+                    - landing_wolf
+            schemas:
+                read:
+                    - landing_wolf.* 
+            tables:
+                read:
+                    - landing_wolf.*.*
+    - ar_db_landing_wolf_w:
+          privileges:
+            databases:
+                write: 
+                    - landing_wolf
+            schemas:
+                write:
+                    - landing_wolf.* 
+            tables:
+                write:
+                    - landing_wolf.*.*
+
+
+    - ar_db_landing_jira_r:
+          privileges:
+            databases:
+                read: 
+                    - landing_jira
+            schemas:
+                read:
+                    - landing_jira.*
+            tables:
+                read:
+                    - landing_jira.*.*
+    - ar_db_landing_jira_w:
+          privileges:
+            databases:
+                write: 
+                    - landing_jira
+            schemas:
+                write:
+                    - landing_jira.*
+            tables:
+                write:
+                    - landing_jira.*.*
+
+
+    - ar_db_landing_esgaia_r:
+          privileges:
+            databases:
+                read: 
+                    - landing_esgaia
+            schemas:
+                read:
+                    - landing_esgaia.*
+            tables:
+                read:
+                    - landing_esgaia.*.*
+    - ar_db_landing_esgaia_w:
+          privileges:
+            databases:
+                write: 
+                    - landing_esgaia
+            schemas:
+                write:
+                    - landing_esgaia.*
+            tables:
+                write:
+                    - landing_esgaia.*.*
+
+
+    - ar_db_landing_factset_r:
+          privileges:
+            databases:
+                read: 
+                    - landing_factset
+            schemas:
+                read:
+                    - landing_factset.*
+            tables:
+                read:
+                    - landing_factset.*.*
+    - ar_db_landing_factset_w:
+          privileges:
+            databases:
+                write: 
+                    - landing_factset
+            schemas:
+                write:
+                    - landing_factset.*
+            tables:
+                write:
+                    - landing_factset.*.*
+
+
+    - ar_db_landing_sustainalytics_r:
+          privileges:
+            databases:
+                read: 
+                    - landing_sustainalytics
+            schemas:
+                read:
+                    - landing_sustainalytics.*
+            tables:
+                read:
+                    - landing_sustainalytics.*.*
+    - ar_db_landing_sustainalytics_w:
+          privileges:
+            databases:
+                write: 
+                    - landing_sustainalytics
+            schemas:
+                write:
+                    - landing_sustainalytics.*
+            tables:
+                write:
+                    - landing_sustainalytics.*.*
+
+
+    - ar_db_landing_trucost_r:
+          privileges:
+            databases:
+                read: 
+                    - landing_trucost
+            schemas:
+                read:
+                    - landing_trucost.*
+            tables:
+                read:
+                    - landing_trucost.*.*
+
+    - ar_db_landing_trucost_w:
+          privileges:
+            databases:
+                write: 
+                    - landing_trucost
+            schemas:
+                write:
+                    - landing_trucost.*
+            tables:
+                write:
+                    - landing_trucost.*.*
+
+
+    - ar_db_landing_sharepoint_sam_r:
+          privileges:
+            databases:
+                read: 
+                    - landing_sharepoint_sam
+            schemas:
+                read:
+                    - landing_sharepoint_sam.*
+            tables:
+                read:
+                    - landing_sharepoint_sam.*.*
+
+    - ar_db_landing_sharepoint_sam_w:
+          privileges:
+            databases:
+                write: 
+                    - landing_sharepoint_sam
+            schemas:
+                write:
+                    - landing_sharepoint_sam.*
+            tables:
+                write:
+                    - landing_sharepoint_sam.*.*
+
+    - ar_db_landing_external_data_r:
+          privileges:
+            databases:
+                read: 
+                    - landing_external_data
+            schemas:
+                read:
+                    - landing_external_data.*
+            tables:
+                read:
+                    - landing_external_data.*.*
+    - ar_db_landing_external_data_w:
+          privileges:
+            databases:
+                write: 
+                    - landing_external_data
+            schemas:
+                write:
+                    - landing_external_data.*
+            tables:
+                write:
+                    - landing_external_data.*.*
+
+    - ar_db_landing_scd_data_products_r:
+          privileges:
+            databases:
+                read: 
+                    - landing_scd_data_products
+            schemas:
+                read:
+                    - landing_scd_data_products.*
+            tables:
+                read:
+                    - landing_scd_data_products.*.*
+
+    - ar_db_landing_scd_data_products_w:
+          privileges:
+            databases:
+                write: 
+                    - landing_scd_data_products
+            schemas:
+                write:
+                    - landing_scd_data_products.*
+            tables:
+                write:
+                    - landing_scd_data_products.*.*                    
+
+    # meps landing
+    - ar_db_landing_meps_r:
+          privileges:
+            databases:
+                read: 
+                    - landing_meps
+            schemas:
+                read:
+                    - landing_meps.*
+            tables:
+                read:
+                    - landing_meps.*.*
+
+    - ar_db_landing_meps_w:
+          privileges:
+            databases:
+                write: 
+                    - landing_meps
+            schemas:
+                write:
+                    - landing_meps.*
+            tables:
+                write:
+                    - landing_meps.*.*
+
+# usb landing
+    - ar_db_landing_usb_r:
+          privileges:
+            databases:
+                read: 
+                    - landing_usb
+            schemas:
+                read:
+                    - landing_usb.*
+            tables:
+                read:
+                    - landing_usb.*.*
+
+    - ar_db_landing_usb_w:
+          privileges:
+            databases:
+                write: 
+                    - landing_usb
+            schemas:
+                write:
+                    - landing_usb.*
+            tables:
+                write:
+                    - landing_usb.*.*
+# boost ai landing
+    - ar_db_landing_boost_ai_r:
+          privileges:
+            databases:
+                read: 
+                    - landing_boost_ai
+            schemas:
+                read:
+                    - landing_boost_ai.*
+            tables:
+                read:
+                    - landing_boost_ai.*.*
+
+    - ar_db_landing_boost_ai_w:
+          privileges:
+            databases:
+                write: 
+                    - landing_boost_ai
+            schemas:
+                write:
+                    - landing_boost_ai.*
+            tables:
+                write:
+                    - landing_boost_ai.*.*
+
+# ISS landing 
+    - ar_db_landing_iss_r:
+          privileges:
+            databases:
+                read: 
+                    - landing_iss
+            schemas:
+                read:
+                    - landing_iss.*
+            tables:
+                read:
+                    - landing_iss.*.*
+
+    - ar_db_landing_iss_w:
+          privileges:
+            databases:
+                write: 
+                    - landing_iss
+            schemas:
+                write:
+                    - landing_iss.*
+            tables:
+                write:
+                    - landing_iss.*.*    
+
+# monitoring landing
+    - ar_db_landing_monitoring_r:
+          privileges:
+            databases:
+                read: 
+                    - landing_monitoring
+            schemas:
+                read:
+                    - landing_monitoring.*
+            tables:
+                read:
+                    - landing_monitoring.*.*
+
+    - ar_db_landing_monitoring_w:
+          privileges:
+            databases:
+                write: 
+                    - landing_monitoring
+            schemas:
+                write:
+                    - landing_monitoring.*
+            tables:
+                write:
+                    - landing_monitoring.*.*
+
+# rd 
+    - ar_db_rd_external_data_r:
+          privileges:
+            databases:
+                read: 
+                    - rd_external_data
+            schemas:
+                read:
+                    - rd_external_data.*
+            tables:
+                read:
+                    - rd_external_data.*.*
+    - ar_db_rd_external_data_w:
+          privileges:
+            databases:
+                write: 
+                    - rd_external_data
+            schemas:
+                write:
+                    - rd_external_data.*
+            tables:
+                write:
+                    - rd_external_data.*.*
+
+    - ar_db_rd_scd_r:
+          privileges:
+            databases:
+                read: 
+                    - rd_scd
+            schemas:
+                read:
+                    - rd_scd.*
+            tables:
+                read:
+                    - rd_scd.*.*
+
+    - ar_db_rd_scd_w:
+          privileges:
+            databases:
+                write: 
+                    - rd_scd
+            schemas:
+                write:
+                    - rd_scd.*
+            tables:
+                write:
+                    - rd_scd.*.*
+
+    - ar_db_rd_wolf_r:
+          privileges:
+            databases:
+                read: 
+                    - rd_wolf
+            schemas:
+                read:
+                    - rd_wolf.* 
+            tables:
+                read:
+                    - rd_wolf.*.*
+
+    - ar_db_rd_wolf_w:
+          privileges:
+            databases:
+                write: 
+                    - rd_wolf
+            schemas:
+                write:
+                    - rd_wolf.* 
+            tables:
+                write:
+                    - rd_wolf.*.*
+
+    - ar_db_rd_jira_r:
+          privileges:
+            databases:
+                read: 
+                    - rd_jira
+            schemas:
+                read:
+                    - rd_jira.*
+            tables:
+                read:
+                    - rd_jira.*.*
+
+    - ar_db_rd_jira_w:
+          privileges:
+            databases:
+                write: 
+                    - rd_jira
+            schemas:
+                write:
+                    - rd_jira.*
+            tables:
+                write:
+                    - rd_jira.*.*
+
+
+    - ar_db_rd_esgaia_r:
+          privileges:
+            databases:
+                read: 
+                    - rd_esgaia
+            schemas:
+                read:
+                    - rd_esgaia.*
+            tables:
+                read:
+                    - rd_esgaia.*.*
+
+    - ar_db_rd_esgaia_w:
+          privileges:
+            databases:
+                write: 
+                    - rd_esgaia
+            schemas:
+                write:
+                    - rd_esgaia.*
+            tables:
+                write:
+                    - rd_esgaia.*.*
+
+    - ar_db_rd_factset_r:
+          privileges:
+            databases:
+                read: 
+                    - rd_factset
+            schemas:
+                read:
+                    - rd_factset.*
+            tables:
+                read:
+                    - rd_factset.*.*
+
+    - ar_db_rd_factset_w:
+          privileges:
+            databases:
+                write: 
+                    - rd_factset
+            schemas:
+                write:
+                    - rd_factset.*
+            tables:
+                write:
+                    - rd_factset.*.*
+
+
+    - ar_db_rd_sustainalytics_r:
+          privileges:
+            databases:
+                read: 
+                    - rd_sustainalytics
+            schemas:
+                read:
+                    - rd_sustainalytics.*
+            tables:
+                read:
+                    - rd_sustainalytics.*.*
+
+    - ar_db_rd_sustainalytics_w:
+          privileges:
+            databases:
+                write: 
+                    - rd_sustainalytics
+            schemas:
+                write:
+                    - rd_sustainalytics.*
+            tables:
+                write:
+                    - rd_sustainalytics.*.*
+
+    - ar_db_rd_trucost_r:
+          privileges:
+            databases:
+                read: 
+                    - rd_trucost
+            schemas:
+                read:
+                    - rd_trucost.*
+            tables:
+                read:
+                    - rd_trucost.*.*
+
+    - ar_db_rd_trucost_w:
+          privileges:
+            databases:
+                write: 
+                    - rd_trucost
+            schemas:
+                write:
+                    - rd_trucost.*
+            tables:
+                write:
+                    - rd_trucost.*.*
+
+    - ar_db_rd_sharepoint_sam_r:
+          privileges:
+            databases:
+                read: 
+                    - rd_sharepoint_sam
+            schemas:
+                read:
+                    - rd_sharepoint_sam.*
+            tables:
+                read:
+                    - rd_sharepoint_sam.*.*
+    - ar_db_rd_sharepoint_sam_w:
+          privileges:
+            databases:
+                write: 
+                    - rd_sharepoint_sam
+            schemas:
+                write:
+                    - rd_sharepoint_sam.*
+            tables:
+                write:
+                    - rd_sharepoint_sam.*.*
+
+    # meps rd
+    - ar_db_rd_meps_r:
+          privileges:
+            databases:
+                read: 
+                    - rd_meps
+            schemas:
+                read:
+                    - rd_meps.*
+            tables:
+                read:
+                    - rd_meps.*.*
+
+    - ar_db_rd_meps_w:
+          privileges:
+            databases:
+                write: 
+                    - rd_meps
+            schemas:
+                write:
+                    - rd_meps.*
+            tables:
+                write:
+                    - rd_meps.*.*
+# usb rd
+    - ar_db_rd_usb_r:
+          privileges:
+            databases:
+                read: 
+                    - rd_usb
+            schemas:
+                read:
+                    - rd_usb.*
+            tables:
+                read:
+                    - rd_usb.*.*
+
+    - ar_db_rd_usb_w:
+          privileges:
+            databases:
+                write: 
+                    - rd_usb
+            schemas:
+                write:
+                    - rd_usb.*
+            tables:
+                write:
+                    - rd_usb.*.*
+# boost ai rd
+    - ar_db_rd_boost_ai_r:
+          privileges:
+            databases:
+                read: 
+                    - rd_boost_ai
+            schemas:
+                read:
+                    - rd_boost_ai.*
+            tables:
+                read:
+                    - rd_boost_ai.*.*
+
+    - ar_db_rd_boost_ai_w:
+          privileges:
+            databases:
+                write: 
+                    - rd_boost_ai
+            schemas:
+                write:
+                    - rd_boost_ai.*
+            tables:
+                write:
+                    - rd_boost_ai.*.* 
+# monitoring rd
+    - ar_db_rd_monitoring_r:
+          privileges:
+            databases:
+                read: 
+                    - rd_monitoring
+            schemas:
+                read:
+                    - rd_monitoring.*
+            tables:
+                read:
+                    - rd_monitoring.*.*
+
+    - ar_db_rd_monitoring_w:
+          privileges:
+            databases:
+                write: 
+                    - rd_monitoring
+            schemas:
+                write:
+                    - rd_monitoring.*
+            tables:
+                write:
+                    - rd_monitoring.*.*
+
+    # dds meps/sourcing
+    - ar_db_dds_sourcing_r:
+          privileges:
+            databases:
+                read: 
+                    - dds_sourcing
+            schemas:
+                read:
+                    - dds_sourcing.*
+            tables:
+                read:
+                    - dds_sourcing.*.*
+
+    - ar_db_dds_sourcing_w:
+          privileges:
+            databases:
+                write: 
+                    - dds_sourcing
+            schemas:
+                write:
+                    - dds_sourcing.*
+            tables:
+                write:
+                    - dds_sourcing.*.*
+
+    # scd_data_products rd
+    - ar_db_rd_scd_data_products_r:
+          privileges:
+            databases:
+                read: 
+                    - rd_scd_data_products
+            schemas:
+                read:
+                    - rd_scd_data_products.*
+            tables:
+                read:
+                    - rd_scd_data_products.*.*
+    
+    - ar_db_rd_scd_data_products_w:
+          privileges:
+            databases:
+                write: 
+                    - rd_scd_data_products
+            schemas:
+                write:
+                    - rd_scd_data_products.*
+            tables:
+                write:
+                    - rd_scd_data_products.*.*   
+    
+    # scd_data_products_rd_esg_scores rd
+    - ar_schema_rd_scd_data_products_rd_esg_scores_r:
+          privileges:
+            databases:
+                read: 
+                    - rd_scd_data_products
+            schemas:
+                read:
+                    - rd_scd_data_products.rd_esg_scores
+            tables:
+                read:
+                    - rd_scd_data_products.rd_esg_scores.* 
+
+
+    # esg rd
+    - ar_db_rd_esg_r:
+          privileges:
+            databases:
+                read: 
+                    - rd_esg
+            schemas:
+                read:
+                    - rd_esg.*
+            tables:
+                read:
+                    - rd_esg.*.*
+
+    - ar_db_rd_esg_w:
+          privileges:
+            databases:
+                write: 
+                    - rd_esg
+            schemas:
+                write:
+                    - rd_esg.*
+            tables:
+                write:
+                    - rd_esg.*.*
+
+    - ar_schema_rd_esg_rd_science_based_targets_r:
+          privileges:
+            databases:
+                read:
+                    - rd_esg
+            schemas:
+                read:
+                    - rd_esg.rd_science_based_targets
+            tables:
+                read:
+                    - rd_esg.rd_science_based_targets.*
+
+    #ISS RD
+    - ar_db_rd_iss_r:
+          privileges:
+            databases:
+                read: 
+                    - rd_iss
+            schemas:
+                read:
+                    - rd_iss.*
+            tables:
+                read:
+                    - rd_iss.*.*
+
+    - ar_db_rd_iss_w:
+          privileges:
+            databases:
+                write: 
+                    - rd_iss
+            schemas:
+                write:
+                    - rd_iss.*
+            tables:
+                write:
+                    - rd_iss.*.* 
+
+
+
+# dds 
+    - ar_db_dds_sam_r:
+          privileges:
+            databases:
+                read: 
+                    - dds_sam
+            schemas:
+                read:
+                    - dds_sam.*
+            tables:
+                read:
+                    - dds_sam.*.*
+    - ar_db_dds_sam_w:
+          warehouses:
+            - transforming_sam_wh
+          privileges:
+            databases:
+                write: 
+                    - dds_sam
+            schemas:
+                write:
+                    - dds_sam.*
+            tables:
+                write:
+                    - dds_sam.*.*
+
+    - ar_db_dds_core_data_platform_r:
+          privileges:
+            databases:
+                read: 
+                    - dds_core_data_platform
+            schemas:
+                read:
+                    - dds_core_data_platform.*
+            tables:
+                read:
+                    - dds_core_data_platform.*.*
+    - ar_db_dds_core_data_platform_w:
+          warehouses:
+            - transforming_sam_wh
+          privileges:
+            databases:
+                write: 
+                    - dds_core_data_platform
+            schemas:
+                write:
+                    - dds_core_data_platform.*
+            tables:
+                write:
+                    - dds_core_data_platform.*.*
+#dds sourcing
+    - ar_db_dds_sourcing_r:
+          privileges:
+            databases:
+                read: 
+                    - dds_sourcing
+            schemas:
+                read:
+                    - dds_sourcing.*
+            tables:
+                read:
+                    - dds_sourcing.*.*
+    - ar_db_dds_sourcing_w:
+          privileges:
+            databases:
+                write: 
+                    - dds_sourcing
+            schemas:
+                write:
+                    - dds_sourcing.*
+            tables:
+                write:
+                    - dds_sourcing.*.*
+# dds Pension 
+    - ar_db_dds_pension_r:
+          privileges:
+            databases:
+                read: 
+                    - dds_pension
+            schemas:
+                read:
+                    - dds_pension.*
+            tables:
+                read:
+                    - dds_pension.*.*
+    - ar_db_dds_pension_w:
+          privileges:
+            databases:
+                write: 
+                    - dds_pension
+            schemas:
+                write:
+                    - dds_pension.*
+            tables:
+                write:
+                    - dds_pension.*.*
+
+# dwh SAM
+    - ar_db_dwh_sam_r:
+          privileges:
+            databases:
+                read: 
+                    - dwh_sam
+            schemas:
+                read:
+                    - dwh_sam.*
+            tables:
+                read:
+                    - dwh_sam.*.*
+    - ar_db_dwh_sam_w:
+          privileges:
+            databases:
+                write: 
+                    - dwh_sam
+            schemas:
+                write:
+                    - dwh_sam.*
+            tables:
+                write:
+                    - dwh_sam.*.*
+
+# internal export
+    - ar_db_internal_export_sam_r:
+          privileges:
+            databases:
+                read: 
+                    - internal_export_sam
+            schemas:
+                read:
+                    - internal_export_sam.*
+            tables:
+                read:
+                    - internal_export_sam.*.*
+
+    - ar_db_internal_export_sam_w:
+          privileges:
+            databases:
+                write: 
+                    - internal_export_sam
+            schemas:
+                write:
+                    - internal_export_sam.*
+            tables:
+                write:
+                    - internal_export_sam.*.*
+
+    - ar_schema_internal_export_sam_ie_ads_r:
+          privileges:
+            databases:
+                read: 
+                    - internal_export_sam
+            schemas:
+                read:
+                    - internal_export_sam.ie_ads
+            tables:
+                read:
+                    - internal_export_sam.ie_ads.*
+
+
+    - ar_schema_internal_export_sam_ie_ads_staging_w:
+          privileges:
+            databases:
+                write: 
+                    - internal_export_sam
+            schemas:
+                write:
+                    - internal_export_sam.ie_ads_staging
+            tables:
+                write:
+                    - internal_export_sam.ie_ads_staging.*
+
+
+    - ar_schema_internal_export_sam_snapshots_r:
+          privileges:
+            databases:
+                read: 
+                    - internal_export_sam
+            schemas:
+                read:
+                    - internal_export_sam.snapshots
+            tables:
+                read:
+                    - internal_export_sam.snapshots.*
+
+
+    - ar_schema_internal_export_sam_ie_bquant_r:
+          privileges:
+            databases:
+                read: 
+                    - internal_export_sam
+            schemas:
+                read:
+                    - internal_export_sam.ie_bquant
+            tables:
+                read:
+                    - internal_export_sam.ie_bquant.*
+
+    - ar_schema_internal_export_sam_ie_cfo_r:
+          privileges:
+            databases:
+                read: 
+                    - internal_export_sam
+            schemas:
+                read:
+                    - internal_export_sam.ie_cfo
+            tables:
+                read:
+                    - internal_export_sam.ie_cfo.*
+    
+    - ar_schema_internal_export_sam_ie_grc_r:
+          privileges:
+            databases:
+                read: 
+                    - internal_export_sam
+            schemas:
+                read:
+                    - internal_export_sam.ie_grc
+            tables:
+                read:
+                    - internal_export_sam.ie_grc.*
+
+# external export
+    - ar_db_external_export_sam_r:
+          privileges:
+            databases:
+                read: 
+                    - external_export_sam
+            schemas:
+                read:
+                    - external_export_sam.*
+            tables:
+                read:
+                    - external_export_sam.*.*
+
+    - ar_db_external_export_sam_w:
+          privileges:
+            databases:
+                write: 
+                    - external_export_sam
+            schemas:
+                write:
+                    - external_export_sam.*
+            tables:
+                write:
+                    - external_export_sam.*.*
+
+# landing_esg
+    - ar_db_landing_esg_r:
+          privileges:
+            databases:
+                read: 
+                    - landing_esg
+            schemas:
+                read:
+                    - landing_esg.*
+            tables:
+                read:
+                    - landing_esg.*.*
+
+    - ar_db_landing_esg_w:
+          privileges:
+            databases:
+                write: 
+                    - landing_esg
+            schemas:
+                write:
+                    - landing_esg.*
+            tables:
+                write:
+                    - landing_esg.*.*                    
+
+
+# schema accsess roles: dwh_sam
+#performance
+    - ar_schema_dwh_sam_performance_r:
+          privileges:
+            databases:
+                read: 
+                    - dwh_sam
+            schemas:
+                read:
+                    - dwh_sam.* #performance
+            tables:
+                read:
+                    - dwh_sam.*.* #performance.*
+
+#conformed_dim
+    - ar_schema_dwh_sam_conformed_dim_r:
+          privileges:
+            databases:
+                read: 
+                    - dwh_sam
+            schemas:
+                read:
+                    - dwh_sam.conformed_dim
+            tables:
+                read:
+                    - dwh_sam.conformed_dim.*
+
+#fund_admin
+    - ar_schema_dwh_sam_fund_admin_r:
+          privileges:
+            databases:
+                read: 
+                    - dwh_sam
+            schemas:
+                read:
+                    - dwh_sam.fund_admin
+            tables:
+                read:
+                    - dwh_sam.fund_admin.*
+
+#fund_admin for sam_analyst_ik
+    - ar_schema_dwh_sam_fund_admin_nordic_distribution_r:
+          privileges:
+            databases:
+                read: 
+                    - dwh_sam
+            schemas:
+                read:
+                    - dwh_sam.fund_admin_nordic_distribution
+            tables:
+                read:
+                    - dwh_sam.fund_admin_nordic_distribution.*
+
+    - ar_schema_dwh_sam_fund_admin_skagen_r:
+          privileges:
+            databases:
+                read: 
+                    - dwh_sam
+            schemas:
+                read:
+                    - dwh_sam.fund_admin_skagen
+            tables:
+                read:
+                    - dwh_sam.fund_admin_skagen.*                    
+
+#sam_esg
+    - ar_schema_dwh_sam_esg_r:
+          privileges:
+            databases:
+                read: 
+                    - dwh_sam
+            schemas:
+                read:
+                    - dwh_sam.esg
+            tables:
+                read:
+                    - dwh_sam.esg.*
+
+#bruddstatistikk
+    - ar_schema_dwh_sam_bruddstatistikk_r:
+          privileges:
+            databases:
+                read: 
+                    - dwh_sam
+            schemas:
+                read:
+                    - dwh_sam.bruddstatistikk
+            tables:
+                read:
+                    - dwh_sam.bruddstatistikk.*
+#general_ledger
+    - ar_schema_dwh_sam_general_ledger_r:
+          privileges:
+            databases:
+                read: 
+                    - dwh_sam
+            schemas:
+                read:
+                    - dwh_sam.general_ledger
+            tables:
+                read:
+                    - dwh_sam.general_ledger.*
+
+#price
+    - ar_schema_dwh_sam_price_r:
+          privileges:
+            databases:
+                read: 
+                    - dwh_sam
+            schemas:
+                read:
+                    - dwh_sam.price
+            tables:
+                read:
+                    - dwh_sam.price.*
+
+#transactions_and_finance
+    - ar_schema_dwh_sam_transactions_and_finance_r:
+          privileges:
+            databases:
+                read: 
+                    - dwh_sam
+            schemas:
+                read:
+                    - dwh_sam.transactions_and_finance
+            tables:
+                read:
+                    - dwh_sam.transactions_and_finance.*                                
+
+# schema accsess roles: dds_sam
+
+# recon
+    - ar_schema_dds_sam_recon_r:
+          privileges:
+            databases:
+                read: 
+                    - dds_sam
+            schemas:
+                read:
+                    - dds_sam.recon
+            tables:
+                read:
+                    - dds_sam.recon.*
+
+#esg_kpi
+    - ar_schema_dds_sam_esg_kpi_r:
+          privileges:
+            databases:
+                read: 
+                    - dds_sam
+            schemas:
+                read:
+                    - dds_sam.esg_kpi
+            tables:
+                read:
+                    - dds_sam.esg_kpi.*
+
+# holdings eom, dds_sam / scd_pfc_holdings
+    - ar_schema_dds_sam_scd_pfc_holdings_r:
+          privileges:
+            databases:
+                read: 
+                    - dds_sam
+            schemas:
+                read:
+                    - dds_sam.scd_pfc_holdings
+            tables:
+                read:
+                    - dds_sam.scd_pfc_holdings.*
+            
+#sustainalytics
+    - ar_schema_dds_sam_sustainalytics_r:
+          privileges:
+            databases:
+                read: 
+                    - dds_sam
+            schemas:
+                read:
+                    - dds_sam.sustainalytics
+            tables:
+                read:
+                    - dds_sam.sustainalytics.*
+
+#active ownership engagement
+    - ar_schema_dds_sam_active_ownership_engagement_r:
+          privileges:
+            databases:
+                read: 
+                    - dds_sam
+            schemas:
+                read:
+                    - dds_sam.active_ownership_engagement 
+            tables:
+                read:
+                    - dds_sam.active_ownership_engagement.*
+
+#bquant
+    - ar_schema_dds_sam_bquant_r:
+          privileges:
+            databases:
+                read: 
+                    - dds_sam
+            schemas:
+                read:
+                    - dds_sam.bquant 
+            tables:
+                read:
+                    - dds_sam.bquant.*                    
+# ==========================================
+# access roles  - development
+# ==========================================
+# landing
+    - dev_ar_db_landing_scd_r:
+          privileges:
+            databases:
+                read:  
+                    - dev_landing_scd
+            schemas:
+                read: 
+                    - dev_landing_scd.*
+            tables:
+                read: 
+                    - dev_landing_scd.*.*
+    - dev_ar_db_landing_scd_w:
+          privileges:
+            databases:
+                write:  
+                    - dev_landing_scd
+            schemas:
+                write: 
+                    - dev_landing_scd.*
+            tables:
+                write: 
+                    - dev_landing_scd.*.*
+
+    - dev_ar_db_landing_scd_qa_r:
+          privileges:
+            databases:
+                read:  
+                    - dev_landing_scd_qa
+            schemas:
+                read: 
+                    - dev_landing_scd_qa.*
+            tables:
+                read: 
+                    - dev_landing_scd_qa.*.*
+    - dev_ar_db_landing_scd_qa_w:
+          privileges:
+            databases:
+                write:  
+                    - dev_landing_scd_qa
+            schemas:
+                write: 
+                    - dev_landing_scd_qa.*
+            tables:
+                write: 
+                    - dev_landing_scd_qa.*.*
+
+    - dev_ar_db_landing_wolf_r:
+          privileges:
+            databases:
+                read:  
+                    - dev_landing_wolf
+            schemas:
+                read: 
+                    - dev_landing_wolf.* 
+            tables:
+                read: 
+                    - dev_landing_wolf.*.*
+
+    - dev_ar_db_landing_wolf_w:
+          privileges:
+            databases:
+                write:  
+                    - dev_landing_wolf
+            schemas:
+                write: 
+                    - dev_landing_wolf.* 
+            tables:
+                write: 
+                    - dev_landing_wolf.*.*
+
+
+    - dev_ar_db_landing_jira_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_landing_jira
+            schemas:
+                read: 
+                    - dev_landing_jira.*
+            tables:
+                read:
+                    - dev_landing_jira.*.*
+    - dev_ar_db_landing_jira_w:
+          privileges:
+            databases:
+                write:  
+                    - dev_landing_jira
+            schemas:
+                write: 
+                    - dev_landing_jira.*
+            tables:
+                write: 
+                    - dev_landing_jira.*.*
+
+    - dev_ar_db_landing_esgaia_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_landing_esgaia
+            schemas:
+                read: 
+                    - dev_landing_esgaia.*
+            tables:
+                read: 
+                    - dev_landing_esgaia.*.*
+
+    - dev_ar_db_landing_esgaia_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_landing_esgaia
+            schemas:
+                write: 
+                    - dev_landing_esgaia.*
+            tables:
+                write: 
+                    - dev_landing_esgaia.*.*
+
+
+    - dev_ar_db_landing_sustainalytics_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_landing_sustainalytics
+            schemas:
+                read: 
+                    - dev_landing_sustainalytics.*
+            tables:
+                read: 
+                    - dev_landing_sustainalytics.*.*
+
+    - dev_ar_db_landing_sustainalytics_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_landing_sustainalytics
+            schemas:
+                write: 
+                    - dev_landing_sustainalytics.*
+            tables:
+                write: 
+                    - dev_landing_sustainalytics.*.*
+
+    - dev_ar_db_landing_trucost_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_landing_trucost
+            schemas:
+                read: 
+                    - dev_landing_trucost.*
+            tables:
+                read: 
+                    - dev_landing_trucost.*.*
+    - dev_ar_db_landing_trucost_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_landing_trucost
+            schemas:
+                write: 
+                     - dev_landing_trucost.*
+            tables:
+                write: 
+                    - dev_landing_trucost.*.*
+
+    - dev_ar_db_landing_sharepoint_sam_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_landing_sharepoint_sam
+            schemas:
+                read: 
+                    - dev_landing_sharepoint_sam.*
+            tables:
+                read: 
+                    - dev_landing_sharepoint_sam.*.*
+    - dev_ar_db_landing_sharepoint_sam_w:
+          privileges:
+            databases:
+                write:
+                    - dev_landing_sharepoint_sam
+            schemas:
+                write:
+                    - dev_landing_sharepoint_sam.*
+            tables:
+                write:
+                    - dev_landing_sharepoint_sam.*.*
+
+
+    - dev_ar_db_landing_external_data_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_landing_external_data
+            schemas:
+                read:
+                    - dev_landing_external_data.*
+            tables:
+                read:
+                    - dev_landing_external_data.*.*
+
+    - dev_ar_db_landing_external_data_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_landing_external_data
+            schemas:
+                write:
+                    - dev_landing_external_data.*
+            tables:
+                write:
+                    - dev_landing_external_data.*.*
+
+    # meps landing
+    - dev_ar_db_landing_meps_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_landing_meps
+            schemas:
+                read:
+                    - dev_landing_meps.*
+            tables:
+                read:
+                    - dev_landing_meps.*.*
+    - dev_ar_db_landing_meps_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_landing_meps
+            schemas:
+                write:
+                    - dev_landing_meps.*
+            tables:
+                write:
+                    - dev_landing_meps.*.*
+
+    - dev_ar_db_landing_scd_data_products_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_landing_scd_data_products
+            schemas:
+                read:
+                    - dev_landing_scd_data_products.*
+            tables:
+                read:
+                    - dev_landing_scd_data_products.*.*
+
+    - dev_ar_db_landing_scd_data_products_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_landing_scd_data_products
+            schemas:
+                write:
+                    - dev_landing_scd_data_products.*
+            tables:
+                write:
+                    - dev_landing_scd_data_products.*.*    
+
+# usb landing
+    - dev_ar_db_landing_usb_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_landing_usb
+            schemas:
+                read:
+                    - dev_landing_usb.*
+            tables:
+                read:
+                    - dev_landing_usb.*.*
+
+    - dev_ar_db_landing_usb_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_landing_usb
+            schemas:
+                write:
+                    - dev_landing_usb.*
+            tables:
+                write:
+                    - dev_landing_usb.*.*
+# boost ai landing
+    - dev_ar_db_landing_boost_ai_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_landing_boost_ai
+            schemas:
+                read:
+                    - dev_landing_boost_ai.*
+            tables:
+                read:
+                    - dev_landing_boost_ai.*.*
+
+    - dev_ar_db_landing_boost_ai_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_landing_boost_ai
+            schemas:
+                write:
+                    - dev_landing_boost_ai.*
+            tables:
+                write:
+                    - dev_landing_boost_ai.*.*     
+# monitoring landing
+    - dev_ar_db_landing_monitoring_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_landing_monitoring
+            schemas:
+                read:
+                    - dev_landing_monitoring.*
+            tables:
+                read:
+                    - dev_landing_monitoring.*.*
+
+    - dev_ar_db_landing_monitoring_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_landing_monitoring
+            schemas:
+                write:
+                    - dev_landing_monitoring.*
+            tables:
+                write:
+                    - dev_landing_monitoring.*.*
+
+# ISS landing (dev)
+    - dev_ar_db_landing_iss_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_landing_iss
+            schemas:
+                read:
+                    - dev_landing_iss.*
+            tables:
+                read:
+                    - dev_landing_iss.*.*
+
+    - dev_ar_db_landing_iss_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_landing_iss
+            schemas:
+                write:
+                    - dev_landing_iss.*
+            tables:
+                write:
+                    - dev_landing_iss.*.*    
+
+# rd 
+    - dev_ar_db_rd_external_data_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_rd_external_data
+            schemas:
+                read:
+                    - dev_rd_external_data.*
+            tables:
+                read:
+                    - dev_rd_external_data.*.*
+    - dev_ar_db_rd_external_data_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_rd_external_data
+            schemas:
+                write:
+                    - dev_rd_external_data.*
+            tables:
+                write:
+                    - dev_rd_external_data.*.*
+
+    - dev_ar_db_rd_scd_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_rd_scd
+            schemas:
+                read:
+                    - dev_rd_scd.*
+            tables:
+                read:
+                    - dev_rd_scd.*.*
+    - dev_ar_db_rd_scd_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_rd_scd
+            schemas:
+                write:
+                    - dev_rd_scd.*
+            tables:
+                write:
+                    - dev_rd_scd.*.*
+
+    - dev_ar_db_rd_wolf_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_rd_wolf
+            schemas:
+                read:
+                    - dev_rd_wolf.* 
+            tables:
+                read:
+                    - dev_rd_wolf.*.*
+    - dev_ar_db_rd_wolf_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_rd_wolf
+            schemas:
+                write:
+                    - dev_rd_wolf.* 
+            tables:
+                write:
+                    - dev_rd_wolf.*.*
+
+
+    - dev_ar_db_rd_jira_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_rd_jira
+            schemas:
+                read:
+                    - dev_rd_jira.*
+            tables:
+                read:
+                    - dev_rd_jira.*.*
+    - dev_ar_db_rd_jira_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_rd_jira
+            schemas:
+                write:
+                    - dev_rd_jira.*
+            tables:
+                write:
+                    - dev_rd_jira.*.*
+
+    - dev_ar_db_rd_esgaia_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_rd_esgaia
+            schemas:
+                read:
+                    - dev_rd_esgaia.*
+            tables:
+                read:
+                    - dev_rd_esgaia.*.*
+    - dev_ar_db_rd_esgaia_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_rd_esgaia
+            schemas:
+                write:
+                    - dev_rd_esgaia.*
+            tables:
+                write:
+                    - dev_rd_esgaia.*.*
+
+    - dev_ar_db_rd_factset_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_rd_factset
+            schemas:
+                read:
+                    - dev_rd_factset.*
+            tables:
+                read:
+                    - dev_rd_factset.*.*
+    - dev_ar_db_rd_factset_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_rd_factset
+            schemas:
+                write:
+                    - dev_rd_factset.*
+            tables:
+                write:
+                    - dev_rd_factset.*.*
+
+    - dev_ar_db_rd_sustainalytics_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_rd_sustainalytics
+            schemas:
+                read:
+                    - dev_rd_sustainalytics.*
+            tables:
+                read:
+                    - dev_rd_sustainalytics.*.*
+    - dev_ar_db_rd_sustainalytics_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_rd_sustainalytics
+            schemas:
+                write:
+                    - dev_rd_sustainalytics.*
+            tables:
+                write:
+                    - dev_rd_sustainalytics.*.*
+
+    - dev_ar_db_rd_trucost_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_rd_trucost
+            schemas:
+                read:
+                    - dev_rd_trucost.*
+            tables:
+                read:
+                    - dev_rd_trucost.*.*
+    - dev_ar_db_rd_trucost_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_rd_trucost
+            schemas:
+                write:
+                    - dev_rd_trucost.*
+            tables:
+                write:
+                    - dev_rd_trucost.*.*
+
+    - dev_ar_db_rd_sharepoint_sam_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_rd_sharepoint_sam
+            schemas:
+                read:
+                    - dev_rd_sharepoint_sam.*
+            tables:
+                read:
+                    - dev_rd_sharepoint_sam.*.*
+    - dev_ar_db_rd_sharepoint_sam_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_rd_sharepoint_sam
+            schemas:
+                write:
+                    - dev_rd_sharepoint_sam.*
+            tables:
+                write:
+                    - dev_rd_sharepoint_sam.*.*
+
+    # meps rd
+    - dev_ar_db_rd_meps_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_rd_meps
+            schemas:
+                read:
+                    - dev_rd_meps.*
+            tables:
+                read:
+                    - dev_rd_meps.*.*
+
+    - dev_ar_db_rd_meps_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_rd_meps
+            schemas:
+                write:
+                    - dev_rd_meps.*
+            tables:
+                write:
+                    - dev_rd_meps.*.*
+
+    - dev_ar_db_rd_scd_data_products_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_rd_scd_data_products
+            schemas:
+                read:
+                    - dev_rd_scd_data_products.*
+            tables:
+                read:
+                    - dev_rd_scd_data_products.*.*
+
+    - dev_ar_db_rd_scd_data_products_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_rd_scd_data_products
+            schemas:
+                write:
+                    - dev_rd_scd_data_products.*
+            tables:
+                write:
+                    - dev_rd_scd_data_products.*.*                   
+
+
+    # dev esg rd
+    - dev_ar_db_rd_esg_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_rd_esg
+            schemas:
+                read:
+                    - dev_rd_esg.*
+            tables:
+                read:
+                    - dev_rd_esg.*.*
+
+    - dev_ar_db_rd_esg_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_rd_esg
+            schemas:
+                write:
+                    - dev_rd_esg.*
+            tables:
+                write:
+                    - dev_rd_esg.*.*
+
+# usb rd
+    - dev_ar_db_rd_usb_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_rd_usb
+            schemas:
+                read:
+                    - dev_rd_usb.*
+            tables:
+                read:
+                    - dev_rd_usb.*.*
+
+    - dev_ar_db_rd_usb_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_rd_usb
+            schemas:
+                write:
+                    - dev_rd_usb.*
+            tables:
+                write:
+                    - dev_rd_usb.*.*
+# boost ai rd
+    - dev_ar_db_rd_boost_ai_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_rd_boost_ai
+            schemas:
+                read:
+                    - dev_rd_boost_ai.*
+            tables:
+                read:
+                    - dev_rd_boost_ai.*.*
+
+    - dev_ar_db_rd_boost_ai_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_rd_boost_ai
+            schemas:
+                write:
+                    - dev_rd_boost_ai.*
+            tables:
+                write:
+                    - dev_rd_boost_ai.*.* 
+
+# iss rd (dev)
+    - dev_ar_db_rd_iss_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_rd_iss
+            schemas:
+                read:
+                    - dev_rd_iss.*
+            tables:
+                read:
+                    - dev_rd_iss.*.*
+
+    - dev_ar_db_rd_iss_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_rd_iss
+            schemas:
+                write:
+                    - dev_rd_iss.*
+            tables:
+                write:
+                    - dev_rd_iss.*.* 
+
+# monitoring rd
+    - dev_ar_db_rd_monitoring_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_rd_monitoring
+            schemas:
+                read:
+                    - dev_rd_monitoring.*
+            tables:
+                read:
+                    - dev_rd_monitoring.*.*
+
+    - dev_ar_db_rd_monitoring_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_rd_monitoring
+            schemas:
+                write:
+                    - dev_rd_monitoring.*
+            tables:
+                write:
+                    - dev_rd_monitoring.*.*   
+
+# dds 
+    - dev_ar_db_dds_sam_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_dds_sam
+            schemas:
+                read:
+                    - dev_dds_sam.*
+            tables:
+                read:
+                    - dev_dds_sam.*.*
+    - dev_ar_db_dds_sam_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_dds_sam
+            schemas:
+                write:
+                    - dev_dds_sam.*
+            tables:
+                write:
+                    - dev_dds_sam.*.*
+    - dev_ar_db_dds_core_data_platform_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_dds_core_data_platform
+            schemas:
+                read:
+                    - dev_dds_core_data_platform.*
+            tables:
+                read:
+                    - dev_dds_core_data_platform.*.*
+    - dev_ar_db_dds_core_data_platform_w:
+          warehouses:
+            - transforming_sam_wh
+          privileges:
+            databases:
+                write: 
+                    - dev_dds_core_data_platform
+            schemas:
+                write:
+                    - dev_dds_core_data_platform.*
+            tables:
+                write:
+                    - dev_dds_core_data_platform.*.*
+
+#dds sourcing
+    - dev_ar_db_dds_sourcing_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_dds_sourcing
+            schemas:
+                read:
+                    - dev_dds_sourcing.*
+            tables:
+                read:
+                    - dev_dds_sourcing.*.*
+    - dev_ar_db_dds_sourcing_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_dds_sourcing
+            schemas:
+                write:
+                    - dev_dds_sourcing.*
+            tables:
+                write:
+                    - dev_dds_sourcing.*.*
+# dds Pension
+    - dev_ar_db_dds_pension_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_dds_pension
+            schemas:
+                read:
+                    - dev_dds_pension.*
+            tables:
+                read:
+                    - dev_dds_pension.*.*
+    - dev_ar_db_dds_pension_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_dds_pension
+            schemas:
+                write:
+                    - dev_dds_pension.*
+            tables:
+                write:
+                    - dev_dds_pension.*.*
+# dwh 
+    - dev_ar_db_dwh_sam_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_dwh_sam
+            schemas:
+                read:
+                    - dev_dwh_sam.*
+            tables:
+                read:
+                    - dev_dwh_sam.*.*
+    - dev_ar_db_dwh_sam_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_dwh_sam
+            schemas:
+                write:
+                    - dev_dwh_sam.*
+            tables:
+                write:
+                    - dev_dwh_sam.*.*
+
+# internal export
+    - dev_ar_db_internal_export_sam_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_internal_export_sam
+            schemas:
+                read:
+                    - dev_internal_export_sam.*
+            tables:
+                read:
+                    - dev_internal_export_sam.*.*
+    - dev_ar_db_internal_export_sam_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_internal_export_sam
+            schemas:
+                write:
+                    - dev_internal_export_sam.*
+            tables:
+                write:
+                    - dev_internal_export_sam.*.*
+
+# external export
+    - dev_ar_db_external_export_sam_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_external_export_sam
+            schemas:
+                read:
+                    - dev_external_export_sam.*
+            tables:
+                read:
+                    - dev_external_export_sam.*.*
+    - dev_ar_db_external_export_sam_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_external_export_sam
+            schemas:
+                write:
+                    - dev_external_export_sam.*
+            tables:
+                write:
+                    - dev_external_export_sam.*.*
+
+# dev landing_esg
+    - dev_ar_db_landing_esg_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_landing_esg
+            schemas:
+                read:
+                    - dev_landing_esg.*
+            tables:
+                read:
+                    - dev_landing_esg.*.*
+
+    - dev_ar_db_landing_esg_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_landing_esg
+            schemas:
+                write:
+                    - dev_landing_esg.*
+            tables:
+                write:
+                    - dev_landing_esg.*.*
+
+# demo/onboarding
+    - ar_db_demo_r:
+          privileges:
+            databases:
+                read: 
+                    - demo
+            schemas:
+                read:
+                    - demo.*
+            tables:
+                read:
+                    - demo.*.*
+
+    - ar_db_demo_w:
+          privileges:
+            databases:
+                write: 
+                    - demo
+            schemas:
+                write:
+                    - demo.*
+            tables:
+                write:
+                    - demo.*.*                    
+
+    - dev_ar_db_demo_r:
+          privileges:
+            databases:
+                read: 
+                    - dev_demo
+            schemas:
+                read:
+                    - dev_demo.*
+            tables:
+                read:
+                    - dev_demo.*.*
+
+    - dev_ar_db_demo_w:
+          privileges:
+            databases:
+                write: 
+                    - dev_demo
+            schemas:
+                write:
+                    - dev_demo.*
+            tables:
+                write:
+                    - dev_demo.*.*                    
+
+
+
+# ==========================================
+# users
+# ==========================================
+users:
+    ## users for apps to conenct to snowflake
+    - sys_metaplane_platform:
+            can_login: yes
+            member_of:
+                - ops_datadog
+    - sys_datadog_platform:
+            can_login: yes
+            member_of:
+                - ops_datadog
+    - sys_terraform_platform:
+            can_login: yes
+            member_of:
+                - accountadmin
+    - sys_permifrost_platform:
+            can_login: yes
+            member_of:
+                - securityadmin
+    - sys_prefect_janitor_platform:
+            can_login: yes
+            member_of: 
+                - data_engineer_platform
+                - sam_ads_exporter
+    - sys_prefect_sam:
+            can_login: yes
+            member_of:
+                - data_engineer_sam
+    - sys_dbt_sam:
+            can_login: yes
+            member_of:
+                - transformer_sam
+    - sys_dbt_corporate:
+            can_login: yes
+            member_of:
+                - transformer_corporate
+    - sys_dbt_platform:
+            can_login: yes
+            member_of:
+                - transformer_platform
+    - sys_dbt_sourcing:
+            can_login: yes
+            member_of:
+                - transformer_sourcing
+
+    - sys_ihub_sam_data_insight:
+            can_login: yes
+            member_of:
+                - reporter_sam
+                - reporter_sam_fund_admin
+    - sys_pbi_damp_platform:
+            can_login: yes
+            member_of: 
+                - reporter_platform
+    - sys_pbi_sam_data_insight:
+            can_login: yes
+            member_of:
+                - reporter_sam
+    - sys_pbi_sam_data_insight_fund_admin:
+            can_login: yes
+            member_of: 
+                - reporter_sam_fund_admin
+
+
+    ##loaders (used to load data to snowflake)
+    - loader_qlik:
+            can_login: yes
+            member_of:
+                - loader_qlik
+    - loader_qlik_corporate:
+            can_login: yes
+            member_of:
+                - loader_qlik_corporate
+    - dev_loader_qlik_corporate:
+            can_login: yes
+            member_of:
+                - dev_loader_qlik_corporate
+
+    - loader_meltano:
+            can_login: yes
+            member_of:
+                - loader_meltano
+    - loader_hevo:
+            can_login: yes
+            member_of:
+                - loader_hevo
+    - loader_scd:
+            can_login: yes
+            member_of:
+                - loader_scd
+    - dev_loader_scd:
+            can_login: yes
+            member_of:
+                - dev_loader_scd
+
+    ## exporters (used to load data from snowflake)
+    - ie_reader_bquant:
+            can_login: yes
+            member_of:
+                - export_reader_bquant
+    - ie_reader_cfo:
+            can_login: yes
+            member_of: 
+                - export_reader_cfo
+    - ie_reader_connect:
+            can_login: yes
+            member_of: []
+    - ie_reader_grc:
+            can_login: yes
+            member_of:
+                - export_reader_grc
+
+    ## readers
+    - reader_bquant_risk_and_ownership:
+            can_login: yes
+            member_of:
+                - data_analyst_sam_risk_and_ownership
+                - data_engineer_sam_risk_and_ownership                
+
+# ==========================================
+# warehouses
+# ==========================================
+
+warehouses: 
+    # prod warehouses
+    # prod - sam
+    - loading_sam_wh: 
+        size: x-small
+    - analysis_sam_wh: # to be deleted, once move to new naming standard confirmed
+        size: x-small
+    - transforming_sam_wh:  # to be deleted, once move to new naming standard confirmed
+        size: medium
+    - reporting_sam_wh: # to be deleted, once move to new naming standard confirmed
+        size: x-small
+    - exporting_sam_wh: # to be deleted, once move to new naming standard confirmed
+        size: x-small
+    - analysis_sam_xs: 
+        size: x-small
+    - transforming_sam_m: 
+        size: medium
+    - reporting_sam_xs:
+        size: x-small
+    - exporting_sam_xs:
+        size: x-small
+    - transforming_sam_xl:
+        size: xlarge
+
+    # prod - platform
+    - metaplane_wh:
+        size: x-small
+    - monitoring_wh:
+        size: x-small
+    - demo_xs:
+        size: x-small
+    - demo_m:
+        size: medium   
+    - transforming_platform_xs:
+        size: x-small
+    - transforming_platform_m:
+        size: medium
+     
+
+    # prod - Pension / Corporate
+    - analysis_corporate_xs:
+        size: x-small
+    - transforming_corporate_xs:
+        size: x-small
+    - transforming_corporate_m:
+        size: medium        
+    - transforming_corporate_l:
+        size: large
+    - loading_corporate_xs:
+        size: x-small           
+
+
+    # prod - sourcing
+    - analysis_sourcing_xs:
+        size: x-small
+    - transforming_sourcing_xs:
+        size: x-small
+
+    # dev warehouses
+    
+    # dev - sam
+    - dev_loading_sam_wh: 
+        size: x-small
+    - dev_analysis_sam_wh: # to be deleted, once move to new naming standard confirmed
+        size: x-small
+    - dev_transforming_sam_wh: # to be deleted, once move to new naming standard confirmed
+        size: medium
+    - dev_reporting_sam_wh: # to be deleted, once move to new naming standard confirmed
+        size: x-small
+    - dev_transforming_sam_xl:
+        size: xlarge
+    - dev_analysis_sam_xs: 
+        size: x-small
+    - dev_transforming_sam_m: 
+        size: medium
+    - dev_reporting_sam_xs:
+        size: x-small
+    
+    # dev - platform
+    - dev_transforming_platform_xs:
+        size: x-small
+    - dev_metaplane_wh:
+        size: x-small
+    - dev_demo_xs:
+        size: x-small
+    - dev_demo_m:
+        size: medium
+    
+    # dev - sourcing
+    - dev_transforming_sourcing_xs:
+        size: x-small
+        
+    #dev - corporate
+    - dev_transforming_corporate_xs:
+        size: x-small
+    - dev_transforming_corporate_m:
+        size: medium
+    - dev_loading_corporate_xs:
+        size: x-small               
