@@ -1,5 +1,4 @@
 import pytest
-import yaml
 from src.Users import Users_Module
 
 
@@ -32,7 +31,7 @@ def users_loaded():
 
 def test_user_add_users(user_object1):
     users = Users_Module()
-    users.add_users(user_object1)
+    users.add_entities(user_object1)
     assert users.spesification == {
         "user1": {"can_login": True, "member_of": ["role1"]},
         "user2": {"can_login": True, "member_of": ["role2"]},
@@ -41,8 +40,8 @@ def test_user_add_users(user_object1):
 
 def test_user_append_users(user_object1, user_object2, users_loaded):
     users = Users_Module()
-    users.add_users(user_object1)
-    users.add_users(user_object2)
+    users.add_entities(user_object1)
+    users.add_entities(user_object2)
     assert users.spesification == users_loaded.spesification
 
 
@@ -60,8 +59,10 @@ def test_users_get_user_not_found(users_loaded):
 def test_users_is_user(users_loaded):
     assert users_loaded.is_user("user1") == True
 
+
 def test_users_is_user_not_found(users_loaded):
     assert users_loaded.is_user("user4") == False
+
 
 def test_users_describe(users_loaded):
     user_description = users_loaded.describe()
@@ -71,6 +72,7 @@ def test_users_describe(users_loaded):
     assert set(user_description.can_login) == set(["user1", "user2"])
     assert set(user_description.cannot_login) == set(["user3"])
 
+
 def test_users_describe_empty():
     users = Users_Module()
     user_description = users.describe()
@@ -79,4 +81,3 @@ def test_users_describe_empty():
     assert user_description.roles == []
     assert user_description.can_login == []
     assert user_description.cannot_login == []
-

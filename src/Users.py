@@ -7,7 +7,7 @@ class Users_Module:
     def __init__(self):
         self.spesification = {}
 
-    def add_users(self, users):
+    def add_entities(self, users):
         """
         Add users to the users object.
         """
@@ -28,7 +28,7 @@ class Users_Module:
         Check if user is in the users object.
         """
         return user in self.spesification
-    
+
     def __get_roles(self):
         """
         Get all roles from the users object.
@@ -37,7 +37,7 @@ class Users_Module:
         for user in self.spesification:
             roles.extend(self.spesification[user]["member_of"])
         return list(set(roles))
-    
+
     def __get_login(self, yes_no):
         """
         Get all users that can login from the users object.
@@ -47,7 +47,7 @@ class Users_Module:
             if self.spesification[user]["can_login"] == yes_no:
                 users.append(user)
         return users
-    
+
     def describe(self):
         """
         Provides a general description of the users object.
