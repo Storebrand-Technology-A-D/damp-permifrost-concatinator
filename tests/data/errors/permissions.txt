@@ -1,0 +1,7 @@
+This is a text file for error detection.
+databases: 
+- database1:
+        shared: no
+  - database2:
+      shared: no
+      owner: loader_qlik
