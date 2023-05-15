@@ -46,22 +46,22 @@ def test_user_append_users(user_object1, user_object2, users_loaded):
 
 
 def test_users_get_user(users_loaded):
-    assert users_loaded.get_user("user1") == {"can_login": True, "member_of": ["role1"]}
+    assert users_loaded.get_entities("user1") == {"can_login": True, "member_of": ["role1"]}
 
 
 def test_users_get_user_not_found(users_loaded):
     with pytest.raises(Exception) as exception_info:
-        users_loaded.get_user("user4")
+        users_loaded.get_entities("user4")
     assert exception_info.type == Exception
     assert exception_info.value.args[0] == "User not found"
 
 
 def test_users_is_user(users_loaded):
-    assert users_loaded.is_user("user1") == True
+    assert users_loaded.is_entity("user1") == True
 
 
 def test_users_is_user_not_found(users_loaded):
-    assert users_loaded.is_user("user4") == False
+    assert users_loaded.is_entity("user4") == False
 
 
 def test_users_describe(users_loaded):
