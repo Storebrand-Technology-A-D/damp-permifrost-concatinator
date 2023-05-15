@@ -48,8 +48,8 @@ def test_database_module_add_entities(
 
 
 def test_database_module_get_database(databases_loaded):
-    assert databases_loaded.get_entitiy("database1") == {"shared": False}
-    assert databases_loaded.get_entitiy("database2") == {
+    assert databases_loaded.get_entities("database1") == {"shared": False}
+    assert databases_loaded.get_entities("database2") == {
         "shared": False,
         "owner": "loader_qlik",
     }
@@ -57,7 +57,7 @@ def test_database_module_get_database(databases_loaded):
 
 def test_database_module_get_database_not_found(databases_loaded):
     with pytest.raises(Exception) as exception_info:
-        databases_loaded.get_entitiy("database4")
+        databases_loaded.get_entities("database4")
     assert exception_info.type == Exception
     assert exception_info.value.args[0] == "Database not found"
 

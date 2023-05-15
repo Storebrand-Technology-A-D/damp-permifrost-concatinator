@@ -8,7 +8,7 @@ class Base_Module:
         for entity in entities:
             self.spesification.update(entity)
 
-    def get_entitiy(self, entity):
+    def get_entities(self, entity):
         if self.is_entity(entity):
             return self.spesification[entity]
         else:

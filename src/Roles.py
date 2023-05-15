@@ -1,25 +1,9 @@
-from src.Module_description import Module_description
+from src.Base_module import Base_Module
 
-class Roles_Module:
+class Roles_Module(Base_Module):
     def __init__(self):
         self.spesification = {}
-
-    def add_entities(self, roles):
-        for role in roles:
-            self.spesification.update(role)
-
-    def get_entities(self, role):
-        if role not in self.spesification:
-            raise Exception("Role not found")
-        return self.spesification[role]
-
-    def is_entity(self, role):
-        return role in self.spesification
-
-    def describe(self):
-        description = Module_description("roles")
-        description.gather_description(self)
-        return description
+        self.type = "Role"
 
     def identify_roles(self):
         self.functional_roles = []
