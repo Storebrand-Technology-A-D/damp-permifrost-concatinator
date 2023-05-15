@@ -26,7 +26,7 @@ def warehouses_loaded():
 def test_warehouse_module_add_entities(warehouses_object1):
     warehouses = Warehouses_Module()
     warehouses.add_entities(warehouses_object1)
-    assert warehouses_module.warehouses == [
+    assert warehouses.spesification == [
         {"warehouse1": {"size": "xsmall"}},
         {"warehouse2": {"size": "xsmall"}},
     ]
@@ -42,12 +42,12 @@ def test_warehouse_module_add_entities(
 
 
 def test_warehouse_module_get_warehouse(warehouses_loaded):
-    assert warehouses_loaded.get_entitiy("warehouse1") == {"size": "xsmall"}
+    assert warehouses_loaded.get_entities("warehouse1") == {"size": "xsmall"}
 
 
 def test_warehouse_module_get_warehouse_not_found(warehouses_loaded):
     with pytest.raises(Exception) as exception_info:
-        warehouses_loaded.get_entitiy("warehouse4")
+        warehouses_loaded.get_entities("warehouse4")
     assert exception_info.type == Exception
     assert exception_info.value.args[0] == "Warehouse not found"
 
