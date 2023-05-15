@@ -1,6 +1,6 @@
-class Spessification_description(object):
+class Spessification_description():
     def __init__(self):
-        self.count = 0
+        self.count_modules = 0
         self.entities = []
 
     def load_module_description(self, module_name, module_description):

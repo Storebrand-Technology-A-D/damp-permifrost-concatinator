@@ -2,6 +2,7 @@ from src.Databases import Databases_Module
 from src.Warehouses import Warehouses_Module
 from src.Users import Users_Module
 from src.Roles import Roles_Module
+from src.Spesification_description import Spessification_description
 
 
 class Spesification:
@@ -49,4 +50,10 @@ class Spesification:
         Provides a general description of the spesification.
         That can be used to validate the spesification.
         """
-        pass
+        description = Spessification_description()
+        description.load_module_description("databases", self.databases.describe())
+        description.load_module_description("warehouses", self.warehouses.describe())
+        description.load_module_description("users", self.users.describe())
+        description.load_module_description("roles", self.roles.describe())
+        return description
+
