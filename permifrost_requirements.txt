@@ -12,7 +12,7 @@ humanfriendly == 10.0
 greenlet == 1.1.2
 pytz == 2022.1
 cffi == 1.15.1
-cryptography == 3.3.2
+cryptography == 39.0.1
 charset-normalizer == 2.1.0
 pycryptodomex == 3.15.0
 pyjwt == 1.7.1
