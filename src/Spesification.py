@@ -45,15 +45,42 @@ class Spesification:
                 raise Exception("Module not found")
         return True
     
+    def append_spec(self, spec_file):
+        """
+        Append a spec file to the current spec.
+        """
+        new_spec_file = spec_file
+        new_module_list = list(new_spec_file.keys())
+        new_module_list.remove("version")
+        for module in new_module_list:
+            if module == "roles":
+                self.roles.add_entities(new_spec_file[module])
+            elif module == "users":
+                self.users.add_entities(new_spec_file[module])
+            elif module == "warehouses":
+                self.warehouses.add_entities(new_spec_file[module])
+            elif module == "databases":
+                self.databases.add_entities(new_spec_file[module])
+            else:
+                raise Exception("Module not found")
+
+
     def describe(self):
         """
         Provides a general description of the spesification.
         That can be used to validate the spesification.
         """
         description = Spessification_description()
-        description.load_module_description("databases", self.databases.describe())
-        description.load_module_description("warehouses", self.warehouses.describe())
-        description.load_module_description("users", self.users.describe())
-        description.load_module_description("roles", self.roles.describe())
+        for module in self.module_list:
+            if module == "roles":
+                description.load_module_description("roles", self.roles.describe())
+            elif module == "users":
+                description.load_module_description("users", self.users.describe())
+            elif module == "warehouses":
+                description.load_module_description("warehouses", self.warehouses.describe())
+            elif module == "databases":
+                description.load_module_description("databases", self.databases.describe())
+            else:
+                raise Exception("Module not found")
         return description
 

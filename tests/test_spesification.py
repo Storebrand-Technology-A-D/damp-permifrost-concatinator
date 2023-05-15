@@ -74,5 +74,16 @@ def test_spesification_describe(spesification_loaded):
     assert description.users.keys() == {"count", "entities"}
 
 
-# def test_spesification_append_spec(spesification_loaded, spesification_onject2):
-#    spesification_loaded.append_spec(spesification_onject2)
+def test_spesification_append_spec(spesification_loaded, spesification_onject2):
+    spesification_loaded.identify_modules()
+    spesification_loaded.identify_entities()
+    pre_description = spesification_loaded.describe()
+    spesification_loaded.append_spec(spesification_onject2)
+    post_description = spesification_loaded.describe()
+    assert pre_description.databases["entities"] != post_description.databases["entities"]
+    assert pre_description.databases["count"] < post_description.databases["count"]
+    assert pre_description.roles["entities"] != post_description.roles["entities"]
+    assert pre_description.users["entities"] == post_description.users["entities"]
+    assert pre_description.warehouses["entities"] == post_description.warehouses["entities"]
+
+
