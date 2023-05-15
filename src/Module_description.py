@@ -1,5 +1,5 @@
 class Module_description:
-    def __init__(self):
+    def __init__(self, type):
         self.type = ""
         self.entities = []
         self.count = 0

@@ -1,3 +1,5 @@
+from .Module_description import Module_description
+
 class Roles_Module:
     def __init__(self):
         self.spesification = {}
@@ -15,9 +17,9 @@ class Roles_Module:
         return role in self.spesification
 
     def describe(self):
-        self.count = len(self.spesification)
-        self.entities = list(self.spesification.keys())
-        return self
+        description = Module_description("roles")
+        description.gather_description(self)
+        return description
 
     def identify_roles(self):
         self.functional_roles = []

@@ -1,3 +1,4 @@
+from src.Module_description import Module_description
 class Warehouses_Module:
     def __init__(self):
         self.spesification = {}
@@ -15,6 +16,6 @@ class Warehouses_Module:
         return warehouse in self.spesification
 
     def describe(self):
-        self.count = len(self.spesification)
-        self.entities = list(self.spesification.keys())
-        return self
+        description = Module_description("warehouses")
+        description.gather_description(self)
+        return description
