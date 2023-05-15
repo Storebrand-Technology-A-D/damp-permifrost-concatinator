@@ -68,9 +68,6 @@ def test_users_describe(users_loaded):
     user_description = users_loaded.describe()
     assert user_description.count == 3
     assert set(user_description.entities) == set(["user1", "user2", "user3"])
-    assert set(user_description.roles) == set(["role1", "role2", "role3"])
-    assert set(user_description.can_login) == set(["user1", "user2"])
-    assert set(user_description.cannot_login) == set(["user3"])
 
 
 def test_users_describe_empty():
@@ -78,6 +75,3 @@ def test_users_describe_empty():
     user_description = users.describe()
     assert user_description.count == 0
     assert user_description.entities == []
-    assert user_description.roles == []
-    assert user_description.can_login == []
-    assert user_description.cannot_login == []

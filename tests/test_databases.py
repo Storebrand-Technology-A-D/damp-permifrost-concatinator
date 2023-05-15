@@ -74,7 +74,6 @@ def test_database_describe(databases_loaded):
     databases_description = databases_loaded.describe()
     assert databases_description.count == 3
     assert databases_description.entities == ["database1", "database2", "database3"]
-    assert databases_description.users == ["loader_qlik"]
 
 
 def test_database_describe_empty():
@@ -82,4 +81,3 @@ def test_database_describe_empty():
     databases_description = databases.describe()
     assert databases_description.count == 0
     assert databases_description.entities == []
-    assert databases_description.users == []

@@ -1,4 +1,4 @@
-from .Module_description import Module_description
+from src.Module_description import Module_description
 class Users_Module:
     """
     Class for holding onto a permifrost users as imported from a spec file.

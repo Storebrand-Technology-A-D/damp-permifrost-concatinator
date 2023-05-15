@@ -1,4 +1,4 @@
-from .Module_description import Module_description
+from src.Module_description import Module_description
 
 class Roles_Module:
     def __init__(self):
