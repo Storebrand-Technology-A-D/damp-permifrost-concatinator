@@ -3,6 +3,7 @@ class Spec_Generator():
     def __init__(self, version):
         self.output = ""
         self.users = "\n"
+        self.databases = "\n"
 
         self.version = version
 
@@ -19,8 +20,8 @@ class Spec_Generator():
                     self.users += f"""      {key}: {module.spesification[user][key]}\n"""
 
     def generate(self, module):
+        self.output += f"""version: \"{self.version}\"\n"""
         if module.type == "User":
             self.generate_users(module)
 
-        self.output += f"""version: \"{self.version}\"\n"""
         self.output += self.users

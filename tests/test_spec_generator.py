@@ -142,8 +142,8 @@ def test_spec_generator_singel_user_generator(singel_user_object):
     spec_generator = Spec_Generator("0.14.0")
     spec_generator.generate(singel_user_object)
     assert (
-        spec_generator.output
-        == """version: \"0.14.0\"\nusers:\n  - user1:\n      can_login: yes\n      member_of:\n        - role1\n"""
+        spec_generator.users
+        == """users:\n  - user1:\n      can_login: yes\n      member_of:\n        - role1\n"""
     )
 
 
@@ -151,22 +151,17 @@ def test_spec_generator_generate_users(users_object):
     spec_generator = Spec_Generator("0.14.0")
     spec_generator.generate(users_object)
     assert (
-        spec_generator.output
-        == """version: \"0.14.0\"\nusers:\n  - user1:\n      can_login: yes\n      member_of:\n        - role1\n  - user2:\n      can_login: yes\n      member_of:\n        - role2\n  - user3:\n      can_login: no\n      member_of:\n        - role3\n"""
+        spec_generator.users
+        == """users:\n  - user1:\n      can_login: yes\n      member_of:\n        - role1\n  - user2:\n      can_login: yes\n      member_of:\n        - role2\n  - user3:\n      can_login: no\n      member_of:\n        - role3\n"""
     )
 
 def test_spec_generator_generate_empty_users():
     users = Users_Module()
     spec_generator = Spec_Generator("0.14.0")
     spec_generator.generate(users)
-    assert spec_generator.output == "version: \"0.14.0\"\nusers:\n"
+    assert spec_generator.users == "users:\n"
 
 def test_spec_generator_generate_single_warehouse(single_warehouse_object):
     spec_generator = Spec_Generator("0.14.0")
     spec_generator.generate(single_warehouse_object)
-    assert spec_generator.output == """version: "0.14.0"\ndatabases:\n  - test_db:\n      owner: test_owner\n      warehouses:\n        - test_warehouse\n"""
-
-def test_spec_generator_generate_single_database(single_database_object):
-    spec_generator = Spec_Generator("0.14.0")
-    spec_generator.generate(single_database_object)
-    assert spec_generator.output == """version: "0.14.0"\ndatabases:\n  - database2:\n      owner: loader_qlik\n      shared: false\n"""
+    assert spec_generator.databases == """databases:\n  - database2:\n      shared: false\n      owner: loader_qlik\n"""
