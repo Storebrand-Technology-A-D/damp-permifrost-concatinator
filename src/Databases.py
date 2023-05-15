@@ -1,20 +1,10 @@
 from src.Module_description import Module_description   
+from src.Base_module import Base_Module
 
-class Databases_Module:
+class Databases_Module(Base_Module):
     def __init__(self):
         self.spesification = {}
-
-    def add_entities(self, databases):
-        for database in databases:
-            self.spesification.update(database)
-
-    def get_entitiy(self, database):
-        if database not in self.spesification:
-            raise Exception("Database not found")
-        return self.spesification[database]
-
-    def is_entity(self, database):
-        return database in self.spesification
+        self.type = "Database"
 
     def __get_users(self):
         users = []
