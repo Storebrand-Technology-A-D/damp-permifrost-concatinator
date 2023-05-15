@@ -7,7 +7,7 @@ click-default-group == 1.2.2
 snowflake-connector-python[secure-local-storage] == 2.7.11
 snowflake-sqlalchemy == 1.4.2
 pyyaml == 5.4
-setuptools == 45.2.0
+setuptools == 65.5.1
 humanfriendly == 10.0
 greenlet == 1.1.2
 pytz == 2022.1
