@@ -9,7 +9,7 @@ class Module_description:
         self.count = len(module.spesification)
         self.entities = list(module.spesification.keys())
         return self
-    
+
     def return_description(self):
         self.description["count"] = self.count
         self.description["entities"] = self.entities

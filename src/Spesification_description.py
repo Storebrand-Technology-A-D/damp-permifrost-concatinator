@@ -1,4 +1,4 @@
-class Spessification_description():
+class Spessification_description:
     def __init__(self):
         self.count_modules = 0
         self.entities = []
@@ -14,4 +14,3 @@ class Spessification_description():
             self.roles = module_description.return_description()
         else:
             raise Exception("Module not found")
-        

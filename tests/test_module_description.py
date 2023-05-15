@@ -8,7 +8,8 @@ def databases():
     database = Databases_Module()
     database.spesification = {
         "database1": {"shared": False},
-        "database2": {"shared": False, "owner": "loader_qlik"},}
+        "database2": {"shared": False, "owner": "loader_qlik"},
+    }
     return database
 
 
@@ -17,6 +18,7 @@ def test_module_description_gather_description(databases):
     description.gather_description(databases)
     assert description.count == 2
     assert description.entities == ["database1", "database2"]
+
 
 def test_module_description_return_description(databases):
     description = Module_description("databases")

@@ -9,8 +9,10 @@ def databases():
     database = Databases_Module()
     database.spesification = {
         "database1": {"shared": False},
-        "database2": {"shared": False, "owner": "loader_qlik"},}
+        "database2": {"shared": False, "owner": "loader_qlik"},
+    }
     return database.describe()
+
 
 @pytest.fixture
 def warehouses():
@@ -20,7 +22,8 @@ def warehouses():
         "warehouse2": {"size": "xsmall"},
         "warehouse3": {"size": "medium"},
     }
-    return warehouse.describe()   
+    return warehouse.describe()
+
 
 def test_spesification_description_load_module_description(warehouses):
     description = Spessification_description()

@@ -1,4 +1,6 @@
 from src.Base_module import Base_Module
+
+
 class Users_Module(Base_Module):
     """
     Class for holding onto a permifrost users as imported from a spec file.

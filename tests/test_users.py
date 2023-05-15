@@ -46,7 +46,10 @@ def test_user_append_users(user_object1, user_object2, users_loaded):
 
 
 def test_users_get_user(users_loaded):
-    assert users_loaded.get_entities("user1") == {"can_login": True, "member_of": ["role1"]}
+    assert users_loaded.get_entities("user1") == {
+        "can_login": True,
+        "member_of": ["role1"],
+    }
 
 
 def test_users_get_user_not_found(users_loaded):

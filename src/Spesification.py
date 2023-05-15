@@ -44,7 +44,7 @@ class Spesification:
             else:
                 raise Exception("Module not found")
         return True
-    
+
     def append_spec(self, spec_file):
         """
         Append a spec file to the current spec.
@@ -64,7 +64,6 @@ class Spesification:
             else:
                 raise Exception("Module not found")
 
-
     def describe(self):
         """
         Provides a general description of the spesification.
@@ -77,10 +76,13 @@ class Spesification:
             elif module == "users":
                 description.load_module_description("users", self.users.describe())
             elif module == "warehouses":
-                description.load_module_description("warehouses", self.warehouses.describe())
+                description.load_module_description(
+                    "warehouses", self.warehouses.describe()
+                )
             elif module == "databases":
-                description.load_module_description("databases", self.databases.describe())
+                description.load_module_description(
+                    "databases", self.databases.describe()
+                )
             else:
                 raise Exception("Module not found")
         return description
-

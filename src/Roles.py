@@ -1,5 +1,6 @@
 from src.Base_module import Base_Module
 
+
 class Roles_Module(Base_Module):
     def __init__(self):
         self.spesification = {}
@@ -20,4 +21,3 @@ class Roles_Module(Base_Module):
                     for dependency in self.spesification[role]["member_of"]
                     if dependency not in self.functional_roles_dependencies
                 )
-
