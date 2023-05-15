@@ -45,7 +45,7 @@ def warehouses_object():
 @pytest.fixture
 def single_database_object():
     database = Databases_Module()
-    database.spesification = {"database2": {"shared": False, "owner": "loader_qlik"}},
+    database.spesification = {"database2": {"shared": "no", "owner": "loader_qlik"}}
     return database
 
 
@@ -53,9 +53,9 @@ def single_database_object():
 def databases_object(): 
     databases = Databases_Module()
     databases.spesification = {
-        "database1": {"shared": True, "owner": "loader_qlik"},
-        "database2": {"shared": False, "owner": "loader_qlik"},
-        "database3": {"shared": True},
+        "database1": {"shared": "yes", "owner": "loader_qlik"},
+        "database2": {"shared": "no", "owner": "loader_qlik"},
+        "database3": {"shared": "yes"},
     }
     return databases
 
@@ -161,7 +161,22 @@ def test_spec_generator_generate_empty_users():
     spec_generator.generate(users)
     assert spec_generator.users == "users:\n"
 
+def test_spec_generator_generate_single_database(single_database_object):
+    spec_generator = Spec_Generator("0.14.0")
+    spec_generator.generate(single_database_object)
+    assert spec_generator.databases == """databases:\n  - database2:\n      shared: no\n      owner: loader_qlik\n"""
+
+def test_spec_generator_generate_databases(databases_object):
+    spec_generator = Spec_Generator("0.14.0")
+    spec_generator.generate(databases_object)
+    assert spec_generator.databases == """databases:\n  - database1:\n      shared: yes\n      owner: loader_qlik\n  - database2:\n      shared: no\n      owner: loader_qlik\n  - database3:\n      shared: yes\n"""
+
 def test_spec_generator_generate_single_warehouse(single_warehouse_object):
     spec_generator = Spec_Generator("0.14.0")
     spec_generator.generate(single_warehouse_object)
-    assert spec_generator.databases == """databases:\n  - database2:\n      shared: false\n      owner: loader_qlik\n"""
+    assert spec_generator.warehouses == """warehouses:\n  - warehouse1:\n      size: xsmall\n"""
+
+def test_spec_generator_generate_warehouses(warehouses_object):
+    spec_generator = Spec_Generator("0.14.0")
+    spec_generator.generate(warehouses_object)
+    assert spec_generator.warehouses == """warehouses:\n  - warehouse1:\n      size: xsmall\n  - warehouse2:\n      size: xsmall\n  - warehouse3:\n      size: medium\n"""
