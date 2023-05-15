@@ -46,3 +46,9 @@ def test_base_module_is_entitiy(base_module_loaded):
 def test_base_module_is_entitiy_not_found(base_module_loaded):  
     assert base_module_loaded.is_entity("entitiy4") == False
 
+def test_base_module_describe(base_module_loaded):
+    description = base_module_loaded.describe()
+    assert description.type == "Entity"
+    assert description.entities == ["entitiy1", "entitiy2", "entitiy3"] 
+
+

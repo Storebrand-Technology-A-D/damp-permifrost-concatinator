@@ -1,3 +1,4 @@
+from src.Module_description import Module_description
 class Base_Module:
     def __init__(self):
         self.spesification = {}
@@ -15,3 +16,8 @@ class Base_Module:
 
     def is_entity(self, entity):
         return entity in self.spesification
+    
+    def describe(self):
+        description = Module_description(self.type)
+        description.gather_description(self)
+        return description

@@ -12,9 +12,3 @@ class Databases_Module(Base_Module):
             if "owner" in self.spesification[database]:
                 users.append(self.spesification[database]["owner"])
         return list(set(users))
-
-    def describe(self):
-        
-        description = Module_description("warehouses")
-        description.gather_description(self)
-        return description
