@@ -1,3 +1,4 @@
+from .Module_description import Module_description
 class Users_Module:
     """
     Class for holding onto a permifrost users as imported from a spec file.
@@ -53,9 +54,7 @@ class Users_Module:
         Provides a general description of the users object.
         That can be used to validate the spesification.
         """
-        self.count = len(self.spesification)
-        self.entities = list(self.spesification.keys())
-        self.roles = self.__get_roles()
-        self.can_login = self.__get_login(True)
-        self.cannot_login = self.__get_login(False)
-        return self
+        
+        description = Module_description("users")
+        description.gather_description(self)
+        return description

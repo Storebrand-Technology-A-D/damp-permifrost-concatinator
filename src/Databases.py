@@ -1,3 +1,5 @@
+from src.Module_description import Module_description   
+
 class Databases_Module:
     def __init__(self):
         self.spesification = {}
@@ -22,7 +24,7 @@ class Databases_Module:
         return list(set(users))
 
     def describe(self):
-        self.count = len(self.spesification)
-        self.entities = list(self.spesification.keys())
-        self.users = self.__get_users()
-        return self
+        
+        description = Module_description("warehouses")
+        description.gather_description(self)
+        return description
