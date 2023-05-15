@@ -2,11 +2,12 @@
 class Spec_Generator():
     def __init__(self, version):
         self.output = ""
-        self.users = ""
+        self.users = "\n"
+
         self.version = version
 
     def generate_users(self, module):
-        self.users += "users:\n"
+        self.users = "users:\n"
         for user in module.spesification:
             self.users += f"""  - {user}:\n"""
             for key in module.spesification[user]:
