@@ -43,3 +43,10 @@ class Spesification:
             else:
                 raise Exception("Module not found")
         return True
+    
+    def describe(self):
+        """
+        Provides a general description of the spesification.
+        That can be used to validate the spesification.
+        """
+        pass

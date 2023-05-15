@@ -35,10 +35,3 @@ class Roles_Module:
                     if dependency not in self.functional_roles_dependencies
                 )
 
-    def describe(self):
-        warehous_descriptions = self.warehouses.describe()
-        database_descriptions = self.databases.describe()
-        user_descriptions = self.users.describe()
-        role_descriptions = self.roles.describe()
-
-        description = {}
