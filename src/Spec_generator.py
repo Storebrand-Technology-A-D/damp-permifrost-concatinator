@@ -8,42 +8,43 @@ class Spec_Generator:
         self.functional_roles = ""
         self.access_roles = ""
         self.roles = "\n"
+        self.space = " "*2
 
     def generate_users(self, module):
         self.users = "users:\n"
         for user in module.spesification:
-            self.users += f"""  - {user}:\n"""
+            self.users += f"""{self.space*1}- {user}:\n"""
             for key in module.spesification[user]:
                 if key == "member_of":
-                    self.users += f"""      {key}:\n"""
+                    self.users += f"""{self.space*2}{key}:\n"""
                     for role in module.spesification[user][key]:
-                        self.users += f"""        - {role}\n"""
+                        self.users += f"""{self.space*3}- {role}\n"""
                 elif key == "can_login":
                     self.users += (
-                        f"""      {key}: {module.spesification[user][key]}\n"""
+                        f"""{self.space*2}{key}: {module.spesification[user][key]}\n"""
                     )
 
     def generate_databases(self, module):
         self.databases = "databases:\n"
         for database in module.spesification:
-            self.databases += f"""  - {database}:\n"""
+            self.databases += f"""{self.space*1}- {database}:\n"""
             for key in module.spesification[database]:
                 if key == "owner":
                     self.databases += (
-                        f"""      {key}: {module.spesification[database][key]}\n"""
+                        f"""{self.space*2}{key}: {module.spesification[database][key]}\n"""
                     )
                 elif key == "shared":
                     self.databases += (
-                        f"""      {key}: {module.spesification[database][key]}\n"""
+                        f"""{self.space*2}{key}: {module.spesification[database][key]}\n"""
                     )
 
     def generate_warehouses(self, module):
         self.warehouses = "warehouses:\n"
         for warehouse in module.spesification:
-            self.warehouses += f"""  - {warehouse}:\n"""
+            self.warehouses += f"""{self.space*1}- {warehouse}:\n"""
             for key in module.spesification[warehouse]:
                 self.warehouses += (
-                    f"""      {key}: {module.spesification[warehouse][key]}\n"""
+                    f"""{self.space*2}{key}: {module.spesification[warehouse][key]}\n"""
                 )
 
     def generate_roles(self, module):
@@ -64,35 +65,35 @@ class Spec_Generator:
 
     def __access_role(self, module):
         for access_role in module.access_roles:
-            self.access_roles += f"""  - {access_role}:\n"""
+            self.access_roles += f"""{self.space*1}- {access_role}:\n"""
             for key in module.spesification[access_role]:
                 if key == "privileges":
-                    self.access_roles += f"""    {key}:\n"""
+                    self.access_roles += f"""{self.space*2}{key}:\n"""
                     for privilege in module.spesification[access_role][key]:
-                        self.access_roles += f"""      {privilege}:\n"""
+                        self.access_roles += f"""{self.space*3}{privilege}:\n"""
                         for read_write in module.spesification[access_role][key][
                             privilege
                         ]:
-                            self.access_roles += f"""        {read_write}:\n"""
+                            self.access_roles += f"""{self.space*4}{read_write}:\n"""
                             for database in module.spesification[access_role][key][
                                 privilege
                             ][read_write]:
                                 self.access_roles += (
-                                    f"""          - {database}\n"""
+                                    f"""{self.space*5}- {database}\n"""
                                 )
 
     def __functional_role(self, module):
         for functional_role in module.functional_roles:
-            self.functional_roles += f"""  - {functional_role}:\n"""
+            self.functional_roles += f"""{self.space*1}- {functional_role}:\n"""
             for key in module.spesification[functional_role]:
                 if key == "member_of":
-                    self.functional_roles += f"""    {key}:\n"""
+                    self.functional_roles += f"""{self.space*2}{key}:\n"""
                     for role in module.spesification[functional_role][key]:
-                        self.functional_roles += f"""      - {role}\n"""
+                        self.functional_roles += f"""{self.space*3}- {role}\n"""
                 elif key == "warehouses":
-                    self.functional_roles += f"""    {key}:\n"""
+                    self.functional_roles += f"""{self.space*2}{key}:\n"""
                     for warehouse in module.spesification[functional_role][key]:
-                        self.functional_roles += f"""      - {warehouse}\n"""
+                        self.functional_roles += f"""{self.space*3}- {warehouse}\n"""
         self.functional_roles += "\n"
 
     def generate(self, module):
@@ -106,4 +107,9 @@ class Spec_Generator:
         elif module.type == "Role":
             self.generate_roles(module)
 
+        self.output += self.databases
+        self.output += self.roles
         self.output += self.users
+        self.output += self.warehouses
+
+        return self.output

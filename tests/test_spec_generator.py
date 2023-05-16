@@ -5,6 +5,7 @@ from src.Databases import Databases_Module
 from src.Roles import Roles_Module
 
 import pytest
+space = " "*2
 
 
 @pytest.fixture
@@ -203,7 +204,7 @@ def test_spec_generator_singel_user_generator(singel_user_object):
     spec_generator.generate(singel_user_object)
     assert (
         spec_generator.users
-        == """users:\n  - user1:\n      can_login: yes\n      member_of:\n        - role1\n"""
+        == f"""users:\n{space*1}- user1:\n{space*2}can_login: yes\n{space*2}member_of:\n{space*3}- role1\n"""
     )
 
 
@@ -212,7 +213,7 @@ def test_spec_generator_generate_users(users_object):
     spec_generator.generate(users_object)
     assert (
         spec_generator.users
-        == """users:\n  - user1:\n      can_login: yes\n      member_of:\n        - role1\n  - user2:\n      can_login: yes\n      member_of:\n        - role2\n  - user3:\n      can_login: no\n      member_of:\n        - role3\n"""
+        == f"""users:\n{space*1}- user1:\n{space*2}can_login: yes\n{space*2}member_of:\n{space*3}- role1\n{space*1}- user2:\n{space*2}can_login: yes\n{space*2}member_of:\n{space*3}- role2\n{space*1}- user3:\n{space*2}can_login: no\n{space*2}member_of:\n{space*3}- role3\n"""
     )
 
 
@@ -228,7 +229,7 @@ def test_spec_generator_generate_single_database(single_database_object):
     spec_generator.generate(single_database_object)
     assert (
         spec_generator.databases
-        == """databases:\n  - database2:\n      shared: no\n      owner: loader_qlik\n"""
+        == f"""databases:\n{space*1}- database2:\n{space*2}shared: no\n{space*2}owner: loader_qlik\n"""
     )
 
 
@@ -237,7 +238,7 @@ def test_spec_generator_generate_databases(databases_object):
     spec_generator.generate(databases_object)
     assert (
         spec_generator.databases
-        == """databases:\n  - database1:\n      shared: yes\n      owner: loader_qlik\n  - database2:\n      shared: no\n      owner: loader_qlik\n  - database3:\n      shared: yes\n"""
+        == f"""databases:\n{space*1}- database1:\n{space*2}shared: yes\n{space*2}owner: loader_qlik\n{space*1}- database2:\n{space*2}shared: no\n{space*2}owner: loader_qlik\n{space*1}- database3:\n{space*2}shared: yes\n"""
     )
 
 
@@ -246,7 +247,7 @@ def test_spec_generator_generate_single_warehouse(single_warehouse_object):
     spec_generator.generate(single_warehouse_object)
     assert (
         spec_generator.warehouses
-        == """warehouses:\n  - warehouse1:\n      size: xsmall\n"""
+        == f"""warehouses:\n{space*1}- warehouse1:\n{space*2}size: xsmall\n"""
     )
 
 
@@ -255,7 +256,7 @@ def test_spec_generator_generate_warehouses(warehouses_object):
     spec_generator.generate(warehouses_object)
     assert (
         spec_generator.warehouses
-        == """warehouses:\n  - warehouse1:\n      size: xsmall\n  - warehouse2:\n      size: xsmall\n  - warehouse3:\n      size: medium\n"""
+        == f"""warehouses:\n{space*1}- warehouse1:\n{space*2}size: xsmall\n{space*1}- warehouse2:\n{space*2}size: xsmall\n{space*1}- warehouse3:\n{space*2}size: medium\n"""
     )
 
 
@@ -264,14 +265,14 @@ def test_spec_generator_generate_single_functional_role(single_functional_role_o
     spec_generator.generate(single_functional_role_object)
     assert (
         spec_generator.functional_roles
-        == """  - role2:\n    warehouses:\n      - warehouse1\n    member_of:\n      - ar_db_database1_r\n      - ar_db_database1_w\n      - ar_db_database2_r\n      - ar_db_database2_w\n\n""")
+        == f"""{space*1}- role2:\n{space*2}warehouses:\n{space*3}- warehouse1\n{space*2}member_of:\n{space*3}- ar_db_database1_r\n{space*3}- ar_db_database1_w\n{space*3}- ar_db_database2_r\n{space*3}- ar_db_database2_w\n\n""")
 
 def test_spec_generator_generate_multiple_functional_roles(functional_roles_object):
     spec_generator = Spec_Generator("0.14.0")
     spec_generator.generate(functional_roles_object)
     assert (
         spec_generator.functional_roles
-        == """  - role1:\n    member_of:\n      - role2\n  - role2:\n    member_of:\n      - ar_db_database1_r\n      - ar_db_database1_w\n      - ar_db_database2_r\n      - ar_db_database2_w\n\n""")
+        == f"""{space*1}- role1:\n{space*2}member_of:\n{space*3}- role2\n{space*1}- role2:\n{space*2}member_of:\n{space*3}- ar_db_database1_r\n{space*3}- ar_db_database1_w\n{space*3}- ar_db_database2_r\n{space*3}- ar_db_database2_w\n\n""")
 
 
 def test_spec_generator_generate_accsess_roles(single_accsess_role_object):
@@ -279,7 +280,7 @@ def test_spec_generator_generate_accsess_roles(single_accsess_role_object):
     spec_generator.generate(single_accsess_role_object)
     assert (
         spec_generator.access_roles
-        == """  - ar_db_database1_r:\n    privileges:\n      databases:\n        read:\n          - database1\n      schemas:\n        read:\n          - database1.*\n      tables:\n        read:\n          - database1.*.*\n""" 
+        == f"""{space*1}- ar_db_database1_r:\n{space*2}privileges:\n{space*3}databases:\n{space*4}read:\n{space*5}- database1\n{space*3}schemas:\n{space*4}read:\n{space*5}- database1.*\n{space*3}tables:\n{space*4}read:\n{space*5}- database1.*.*\n""" 
           )
 
 
@@ -288,7 +289,7 @@ def test_spec_generator_generate_multiple_accsess_roles(accsess_roles_object):
     spec_generator.generate(accsess_roles_object)
     assert (
         spec_generator.access_roles
-        =="""  - ar_db_database1_r:\n    privileges:\n      databases:\n        read:\n          - database1\n      schemas:\n        read:\n          - database1.*\n      tables:\n        read:\n          - database1.*.*\n  - ar_db_database1_w:\n    privileges:\n      databases:\n        write:\n          - database1\n      schemas:\n        write:\n          - database1.*\n      tables:\n        write:\n          - database1.*.*\n  - ar_db_database2_r:\n    privileges:\n      databases:\n        read:\n          - database2\n      schemas:\n        read:\n          - database2.*\n      tables:\n        read:\n          - database2.*.*\n  - ar_db_database2_w:\n    privileges:\n      databases:\n        write:\n          - database2\n      schemas:\n        write:\n          - database2.*\n      tables:\n        write:\n          - database2.*.*\n""" 
+        ==f"""{space*1}- ar_db_database1_r:\n{space*2}privileges:\n{space*3}databases:\n{space*4}read:\n{space*5}- database1\n{space*3}schemas:\n{space*4}read:\n{space*5}- database1.*\n{space*3}tables:\n{space*4}read:\n{space*5}- database1.*.*\n{space*1}- ar_db_database1_w:\n{space*2}privileges:\n{space*3}databases:\n{space*4}write:\n{space*5}- database1\n{space*3}schemas:\n{space*4}write:\n{space*5}- database1.*\n{space*3}tables:\n{space*4}write:\n{space*5}- database1.*.*\n{space*1}- ar_db_database2_r:\n{space*2}privileges:\n{space*3}databases:\n{space*4}read:\n{space*5}- database2\n{space*3}schemas:\n{space*4}read:\n{space*5}- database2.*\n{space*3}tables:\n{space*4}read:\n{space*5}- database2.*.*\n{space*1}- ar_db_database2_w:\n{space*2}privileges:\n{space*3}databases:\n{space*4}write:\n{space*5}- database2\n{space*3}schemas:\n{space*4}write:\n{space*5}- database2.*\n{space*3}tables:\n{space*4}write:\n{space*5}- database2.*.*\n""" 
     )
 
 def test_spec_generator_generate_roles(roles_object):
@@ -296,5 +297,5 @@ def test_spec_generator_generate_roles(roles_object):
     spec_generator.generate(roles_object)
     assert (
         spec_generator.roles
-        =="""roles:\n  - role1:\n    member_of:\n      - role2\n  - role2:\n    member_of:\n      - ar_db_database1_r\n      - ar_db_database1_w\n      - ar_db_database2_r\n      - ar_db_database2_w\n\n  - ar_db_database1_r:\n    privileges:\n      databases:\n        read:\n          - database1\n      schemas:\n        read:\n          - database1.*\n      tables:\n        read:\n          - database1.*.*\n  - ar_db_database1_w:\n    privileges:\n      databases:\n        write:\n          - database1\n      schemas:\n        write:\n          - database1.*\n      tables:\n        write:\n          - database1.*.*\n  - ar_db_database2_r:\n    privileges:\n      databases:\n        read:\n          - database2\n      schemas:\n        read:\n          - database2.*\n      tables:\n        read:\n          - database2.*.*\n  - ar_db_database2_w:\n    privileges:\n      databases:\n        write:\n          - database2\n      schemas:\n        write:\n          - database2.*\n      tables:\n        write:\n          - database2.*.*\n""" 
-    )
+        ==f"""roles:\n{space*1}- role1:\n{space*2}member_of:\n{space*3}- role2\n{space*1}- role2:\n{space*2}member_of:\n{space*3}- ar_db_database1_r\n{space*3}- ar_db_database1_w\n{space*3}- ar_db_database2_r\n{space*3}- ar_db_database2_w\n\n{space*1}- ar_db_database1_r:\n{space*2}privileges:\n{space*3}databases:\n{space*4}read:\n{space*5}- database1\n{space*3}schemas:\n{space*4}read:\n{space*5}- database1.*\n{space*3}tables:\n{space*4}read:\n{space*5}- database1.*.*\n{space*1}- ar_db_database1_w:\n{space*2}privileges:\n{space*3}databases:\n{space*4}write:\n{space*5}- database1\n{space*3}schemas:\n{space*4}write:\n{space*5}- database1.*\n{space*3}tables:\n{space*4}write:\n{space*5}- database1.*.*\n{space*1}- ar_db_database2_r:\n{space*2}privileges:\n{space*3}databases:\n{space*4}read:\n{space*5}- database2\n{space*3}schemas:\n{space*4}read:\n{space*5}- database2.*\n{space*3}tables:\n{space*4}read:\n{space*5}- database2.*.*\n{space*1}- ar_db_database2_w:\n{space*2}privileges:\n{space*3}databases:\n{space*4}write:\n{space*5}- database2\n{space*3}schemas:\n{space*4}write:\n{space*5}- database2.*\n{space*3}tables:\n{space*4}write:\n{space*5}- database2.*.*\n"""  )
+
