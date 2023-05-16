@@ -38,6 +38,20 @@ class Spec_Generator():
             for key in module.spesification[warehouse]:
                 self.warehouses += f"""      {key}: {module.spesification[warehouse][key]}\n"""
 
+    def generate_roles(self, module):
+        self.functional_roles = "roles:\n"
+        for functional_role in module.functional_roles:
+            self.functional_roles += f"""  - {functional_role}:\n"""
+            for key in module.spesification[functional_role]:
+                if key == "member_of":
+                    self.functional_roles += f"""      {key}:\n"""
+                    for role in module.spesification[functional_role][key]:
+                        self.functional_roles += f"""        - {role}\n"""
+                elif key == "warehouses":
+                    self.functional_roles += f"""      {key}:\n"""
+                    for warehouse in module.spesification[functional_role][key]:
+                        self.functional_roles += f"""        - {warehouse}\n"""
+
     def generate(self, module):
         self.output += f"""version: \"{self.version}\"\n"""
         if module.type == "User":
@@ -46,5 +60,8 @@ class Spec_Generator():
             self.generate_databases(module)
         elif module.type == "Warehouse":
             self.generate_warehouses(module)
+        elif module.type == "Role":
+            self.generate_roles(module)
+
 
         self.output += self.users

@@ -63,6 +63,7 @@ def databases_object():
 def single_functional_role_object():
     functional_role = Roles_Module()
     functional_role.spesification = {"role2": {
+                "warehouses": ["warehouse1"],
                 "member_of": [
                     "ar_db_database1_r",
                     "ar_db_database1_w",
@@ -71,6 +72,7 @@ def single_functional_role_object():
                 ]
             }
     }
+    functional_role.identify_roles()
     return functional_role
 
 @pytest.fixture
@@ -180,3 +182,9 @@ def test_spec_generator_generate_warehouses(warehouses_object):
     spec_generator = Spec_Generator("0.14.0")
     spec_generator.generate(warehouses_object)
     assert spec_generator.warehouses == """warehouses:\n  - warehouse1:\n      size: xsmall\n  - warehouse2:\n      size: xsmall\n  - warehouse3:\n      size: medium\n"""
+
+
+def test_spec_generator_generate_single_functional_role(single_functional_role_object):
+    spec_generator = Spec_Generator("0.14.0")
+    spec_generator.generate(single_functional_role_object)
+    assert spec_generator.functional_roles == """roles:\n  - role2:\n      warehouses:\n        - warehouse1\n      member_of:\n        - ar_db_database1_r\n        - ar_db_database1_w\n        - ar_db_database2_r\n        - ar_db_database2_w\n""" 
