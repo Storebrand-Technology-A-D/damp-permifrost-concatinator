@@ -13,55 +13,6 @@ space = " " * 2
 # roles
 
 @pytest.fixture
-def roles_object():
-    roles = Roles_Module()
-    roles.spesification = {
-        "role1": {"member_of": ["role2"]},
-        "role2": {
-            "member_of": [
-                "ar_db_database1_r",
-                "ar_db_database1_w",
-                "ar_db_database2_r",
-                "ar_db_database2_w",
-            ]
-        },
-        "ar_db_database1_r": {
-            "privileges": {
-                "databases": {"read": ["database1"]},
-                "schemas": {"read": ["database1.*"]},
-                "tables": {"read": ["database1.*.*"]},
-            }
-        },
-        "ar_db_database1_w": {
-            "privileges": {
-                "databases": {"write": ["database1"]},
-                "schemas": {"write": ["database1.*"]},
-                "tables": {"write": ["database1.*.*"]},
-            }
-        },
-        "ar_db_database2_r": {
-            "privileges": {
-                "databases": {"read": ["database2"]},
-                "schemas": {"read": ["database2.*"]},
-                "tables": {"read": ["database2.*.*"]},
-            }
-        },
-        "ar_db_database2_w": {
-            "privileges": {
-                "databases": {"write": ["database2"]},
-                "schemas": {"write": ["database2.*"]},
-                "tables": {"write": ["database2.*.*"]},
-            }
-        },
-    }
-    return roles
-
-@pytest.fixture
-def roles_object_identified(roles_object):
-    roles_object.identify_roles()
-    return roles_object
-
-@pytest.fixture
 def roles_object1():
     return [
         {"role1": {"member_of": ["role2"]}},
@@ -112,6 +63,18 @@ def roles_object1():
             }
         },
     ]
+
+
+@pytest.fixture
+def roles_object(roles_object1):
+    roles = Roles_Module()
+    roles.spesification = roles_object1
+    return roles
+
+@pytest.fixture
+def roles_object_identified(roles_object):
+    roles_object.identify_roles()
+    return roles_object
 
 
 @pytest.fixture
