@@ -47,9 +47,9 @@ def test_roles_module_add_entities(roles_object1):
     }
 
 
-def test_roles_module_get_role(roles_loaded):
-    assert roles_loaded.get_entities("role1") == {"member_of": ["role2"]}
-    assert roles_loaded.get_entities("role2") == {
+def test_roles_module_get_role(roles_object):
+    assert roles_object.get_entities("role1") == {"member_of": ["role2"]}
+    assert roles_object.get_entities("role2") == {
         "member_of": [
             "ar_db_database1_r",
             "ar_db_database1_w",
@@ -59,21 +59,21 @@ def test_roles_module_get_role(roles_loaded):
     }
 
 
-def test_roles_module_get_role_not_found(roles_loaded):
+def test_roles_module_get_role_not_found(roles_object):
     with pytest.raises(Exception):
-        roles_loaded.get_entities("role3")
+        roles_object.get_entities("role3")
 
 
-def test_roles_module_is_role(roles_loaded):
-    assert roles_loaded.is_entity("role1") == True
+def test_roles_module_is_role(roles_object):
+    assert roles_object.is_entity("role1") == True
 
 
-def test_roles_module_is_role_not_found(roles_loaded):
-    assert roles_loaded.is_entity("role3") == False
+def test_roles_module_is_role_not_found(roles_object):
+    assert roles_object.is_entity("role3") == False
 
 
-def test_roles_module_describe(roles_loaded):
-    roles_description = roles_loaded.describe()
+def test_roles_module_describe(roles_object):
+    roles_description = roles_object.describe()
     assert roles_description.count == 6
     assert set(roles_description.entities) == set(
         [
@@ -87,10 +87,10 @@ def test_roles_module_describe(roles_loaded):
     )
 
 
-def test_roles_module_identify(roles_loaded):
-    roles_loaded.identify_roles()
-    assert set(roles_loaded.functional_roles) == set(["role1", "role2"])
-    assert set(roles_loaded.functional_roles_dependencies) == set(
+def test_roles_module_identify(roles_object):
+    roles_object.identify_roles()
+    assert set(roles_object.functional_roles) == set(["role1", "role2"])
+    assert set(roles_object.functional_roles_dependencies) == set(
         [
             "role2",
             "ar_db_database1_r",
@@ -99,7 +99,7 @@ def test_roles_module_identify(roles_loaded):
             "ar_db_database2_w",
         ]
     )
-    assert set(roles_loaded.access_roles) == set(
+    assert set(roles_object.access_roles) == set(
         [
             "ar_db_database1_r",
             "ar_db_database1_w",

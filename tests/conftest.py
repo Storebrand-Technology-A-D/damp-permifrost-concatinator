@@ -67,8 +67,11 @@ def roles_object1():
 
 @pytest.fixture
 def roles_object(roles_object1):
+    roles_object = {}
+    for i in roles_object1:
+        roles_object.update(i)
     roles = Roles_Module()
-    roles.spesification = roles_object1
+    roles.spesification = roles_object
     return roles
 
 @pytest.fixture
@@ -76,50 +79,6 @@ def roles_object_identified(roles_object):
     roles_object.identify_roles()
     return roles_object
 
-
-@pytest.fixture
-def roles_loaded():
-    roles = Roles_Module()
-    roles.spesification = {
-        "role1": {"member_of": ["role2"]},
-        "role2": {
-            "member_of": [
-                "ar_db_database1_r",
-                "ar_db_database1_w",
-                "ar_db_database2_r",
-                "ar_db_database2_w",
-            ]
-        },
-        "ar_db_database1_r": {
-            "privileges": {
-                "databases": {"read": ["database1"]},
-                "schemas": {"read": ["database1.*"]},
-                "tables": {"read": ["database1.*.*"]},
-            }
-        },
-        "ar_db_database1_w": {
-            "privileges": {
-                "databases": {"write": ["database1"]},
-                "schemas": {"write": ["database1.*"]},
-                "tables": {"write": ["database1.*.*"]},
-            }
-        },
-        "ar_db_database2_r": {
-            "privileges": {
-                "databases": {"read": ["database2"]},
-                "schemas": {"read": ["database2.*"]},
-                "tables": {"read": ["database2.*.*"]},
-            }
-        },
-        "ar_db_database2_w": {
-            "privileges": {
-                "databases": {"write": ["database2"]},
-                "schemas": {"write": ["database2.*"]},
-                "tables": {"write": ["database2.*.*"]},
-            }
-        },
-    }
-    return roles
 
 
 @pytest.fixture
@@ -148,19 +107,12 @@ def single_functional_role_object():
 
 
 @pytest.fixture
-def functional_roles_object():
+def functional_roles_object(single_functional_role_object):
     functional_roles = Roles_Module()
-    functional_roles.spesification = {
-        "role1": {"member_of": ["role2"]},
-        "role2": {
-            "member_of": [
-                "ar_db_database1_r",
-                "ar_db_database1_w",
-                "ar_db_database2_r",
-                "ar_db_database2_w",
-            ]
-        },
-    }
+    roles_object = single_functional_role_object.spesification
+    roles_object.update({"role1": {"member_of": ["role2"]}})
+
+    functional_roles.spesification = roles_object
     functional_roles.identify_roles()
     return functional_roles
 
@@ -170,11 +122,9 @@ def single_functional_role_object_str_results():
     return f"""{space*1}- role2:\n{space*2}warehouses:\n{space*3}- warehouse1\n{space*2}member_of:\n{space*3}- ar_db_database1_r\n{space*3}- ar_db_database1_w\n{space*3}- ar_db_database2_r\n{space*3}- ar_db_database2_w\n\n"""
 
 
-
-
 @pytest.fixture
-def functional_roles_object_str_results():
-    return f"""{space*1}- role1:\n{space*2}member_of:\n{space*3}- role2\n{space*1}- role2:\n{space*2}member_of:\n{space*3}- ar_db_database1_r\n{space*3}- ar_db_database1_w\n{space*3}- ar_db_database2_r\n{space*3}- ar_db_database2_w\n\n"""
+def functional_roles_object_str_results(single_functional_role_object_str_results):
+    return single_functional_role_object_str_results[:-1]+f"""{space*1}- role1:\n{space*2}member_of:\n{space*3}- role2\n\n"""
 
 
 # Access roles
@@ -196,16 +146,9 @@ def single_accsess_role_object():
 
 
 @pytest.fixture
-def accsess_roles_object():
-    accsess_roles = Roles_Module()
-    accsess_roles.spesification = {
-        "ar_db_database1_r": {
-            "privileges": {
-                "databases": {"read": ["database1"]},
-                "schemas": {"read": ["database1.*"]},
-                "tables": {"read": ["database1.*.*"]},
-            }
-        },
+def accsess_roles_object(single_accsess_role_object):
+    roles_object = single_accsess_role_object.spesification
+    roles_object.update( {
         "ar_db_database1_w": {
             "privileges": {
                 "databases": {"write": ["database1"]},
@@ -227,7 +170,9 @@ def accsess_roles_object():
                 "tables": {"write": ["database2.*.*"]},
             }
         },
-    }
+    })
+    accsess_roles = Roles_Module()
+    accsess_roles.spesification = roles_object
     accsess_roles.identify_roles()
     return accsess_roles
 
@@ -238,8 +183,8 @@ def single_accsess_role_object_str_results():
 
 
 @pytest.fixture
-def accsess_roles_object_str_results():
-    return f"""{space*1}- ar_db_database1_r:\n{space*2}privileges:\n{space*3}databases:\n{space*4}read:\n{space*5}- database1\n{space*3}schemas:\n{space*4}read:\n{space*5}- database1.*\n{space*3}tables:\n{space*4}read:\n{space*5}- database1.*.*\n{space*1}- ar_db_database1_w:\n{space*2}privileges:\n{space*3}databases:\n{space*4}write:\n{space*5}- database1\n{space*3}schemas:\n{space*4}write:\n{space*5}- database1.*\n{space*3}tables:\n{space*4}write:\n{space*5}- database1.*.*\n{space*1}- ar_db_database2_r:\n{space*2}privileges:\n{space*3}databases:\n{space*4}read:\n{space*5}- database2\n{space*3}schemas:\n{space*4}read:\n{space*5}- database2.*\n{space*3}tables:\n{space*4}read:\n{space*5}- database2.*.*\n{space*1}- ar_db_database2_w:\n{space*2}privileges:\n{space*3}databases:\n{space*4}write:\n{space*5}- database2\n{space*3}schemas:\n{space*4}write:\n{space*5}- database2.*\n{space*3}tables:\n{space*4}write:\n{space*5}- database2.*.*\n"""
+def accsess_roles_object_str_results(single_accsess_role_object_str_results):
+    return single_accsess_role_object_str_results+f"""{space*1}- ar_db_database1_w:\n{space*2}privileges:\n{space*3}databases:\n{space*4}write:\n{space*5}- database1\n{space*3}schemas:\n{space*4}write:\n{space*5}- database1.*\n{space*3}tables:\n{space*4}write:\n{space*5}- database1.*.*\n{space*1}- ar_db_database2_r:\n{space*2}privileges:\n{space*3}databases:\n{space*4}read:\n{space*5}- database2\n{space*3}schemas:\n{space*4}read:\n{space*5}- database2.*\n{space*3}tables:\n{space*4}read:\n{space*5}- database2.*.*\n{space*1}- ar_db_database2_w:\n{space*2}privileges:\n{space*3}databases:\n{space*4}write:\n{space*5}- database2\n{space*3}schemas:\n{space*4}write:\n{space*5}- database2.*\n{space*3}tables:\n{space*4}write:\n{space*5}- database2.*.*\n"""
 
 
 
