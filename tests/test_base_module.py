@@ -2,27 +2,6 @@ import pytest
 from src.Base_module import Base_Module
 
 
-@pytest.fixture
-def object1():
-    return [{"entitiy1": {"key": "value"}}, {"entitiy2": {"key": "value"}}]
-
-
-@pytest.fixture
-def object2():
-    return [{"entitiy2": {"key": "value"}}, {"entitiy3": {"key": "value"}}]
-
-
-@pytest.fixture
-def base_module_loaded():
-    base_module = Base_Module()
-    base_module.spesification = {
-        "entitiy1": {"key": "value"},
-        "entitiy2": {"key": "value"},
-        "entitiy3": {"key": "value"},
-    }
-    return base_module
-
-
 def test_base_module_add_entities(object1):
     base_module = Base_Module()
     base_module.add_entities(object1)

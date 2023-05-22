@@ -8,7 +8,7 @@ class Spec_Generator:
         self.functional_roles = ""
         self.access_roles = ""
         self.roles = ""
-        self.space = " "*2
+        self.space = " " * 2
 
     def generate_users(self, module):
         self.users = "users:\n"
@@ -30,13 +30,9 @@ class Spec_Generator:
             self.databases += f"""{self.space*1}- {database}:\n"""
             for key in module.spesification[database]:
                 if key == "owner":
-                    self.databases += (
-                        f"""{self.space*2}{key}: {module.spesification[database][key]}\n"""
-                    )
+                    self.databases += f"""{self.space*2}{key}: {module.spesification[database][key]}\n"""
                 elif key == "shared":
-                    self.databases += (
-                        f"""{self.space*2}{key}: {module.spesification[database][key]}\n"""
-                    )
+                    self.databases += f"""{self.space*2}{key}: {module.spesification[database][key]}\n"""
 
     def generate_warehouses(self, module):
         self.warehouses = "warehouses:\n"
@@ -59,7 +55,7 @@ class Spec_Generator:
                 self.__access_role(module)
             else:
                 raise Exception("No roles found in module")
-        
+
         self.roles += f"{self.functional_roles}"
         self.roles += f"{self.access_roles}"
 
@@ -78,9 +74,7 @@ class Spec_Generator:
                             for database in module.spesification[access_role][key][
                                 privilege
                             ][read_write]:
-                                self.access_roles += (
-                                    f"""{self.space*5}- {database}\n"""
-                                )
+                                self.access_roles += f"""{self.space*5}- {database}\n"""
 
     def __functional_role(self, module):
         for functional_role in module.functional_roles:
@@ -97,7 +91,6 @@ class Spec_Generator:
         self.functional_roles += "\n"
 
     def generate(self, module):
-        
         if module.type == "User":
             self.generate_users(module)
         elif module.type == "Database":
@@ -106,7 +99,7 @@ class Spec_Generator:
             self.generate_warehouses(module)
         elif module.type == "Role":
             self.generate_roles(module)
-    
+
     def get_output(self):
         self.output += f"""version: \"{self.version}\"\n"""
         self.output += self.databases
