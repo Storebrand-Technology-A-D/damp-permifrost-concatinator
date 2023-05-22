@@ -1,5 +1,5 @@
-import pytest
 from src.Databases import Databases_Module
+import pytest
 
 
 def test_database_module_add_entities(databases_object1):

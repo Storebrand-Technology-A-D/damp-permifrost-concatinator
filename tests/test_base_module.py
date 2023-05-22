@@ -1,5 +1,5 @@
-import pytest
 from src.Base_module import Base_Module
+import pytest
 
 
 def test_base_module_add_entities(object1):

@@ -1,7 +1,5 @@
-import pytest
-import yaml
 from src.Roles import Roles_Module
-
+import pytest
 
 def test_roles_module_add_entities(roles_object1):
     roles = Roles_Module()

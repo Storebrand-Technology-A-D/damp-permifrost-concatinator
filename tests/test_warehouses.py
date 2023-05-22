@@ -1,5 +1,5 @@
-import pytest
 from src.Warehouses import Warehouses_Module
+import pytest
 
 
 def test_warehouse_module_add_entities(warehouses_object1):
