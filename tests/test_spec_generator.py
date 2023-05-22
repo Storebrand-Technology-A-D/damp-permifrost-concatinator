@@ -4,9 +4,16 @@ from src.Warehouses import Warehouses_Module
 from src.Databases import Databases_Module
 from src.Roles import Roles_Module
 
+from src.Spesification import Spesification
+
 import pytest
 space = " "*2
 
+
+def load_yaml(yaml_file):
+    with open(yaml_file, "r") as in_fh:
+        file = yaml.safe_load(in_fh)
+    return file
 
 @pytest.fixture
 def users_object():
@@ -299,3 +306,14 @@ def test_spec_generator_generate_roles(roles_object):
         spec_generator.roles
         ==f"""roles:\n{space*1}- role1:\n{space*2}member_of:\n{space*3}- role2\n{space*1}- role2:\n{space*2}member_of:\n{space*3}- ar_db_database1_r\n{space*3}- ar_db_database1_w\n{space*3}- ar_db_database2_r\n{space*3}- ar_db_database2_w\n\n{space*1}- ar_db_database1_r:\n{space*2}privileges:\n{space*3}databases:\n{space*4}read:\n{space*5}- database1\n{space*3}schemas:\n{space*4}read:\n{space*5}- database1.*\n{space*3}tables:\n{space*4}read:\n{space*5}- database1.*.*\n{space*1}- ar_db_database1_w:\n{space*2}privileges:\n{space*3}databases:\n{space*4}write:\n{space*5}- database1\n{space*3}schemas:\n{space*4}write:\n{space*5}- database1.*\n{space*3}tables:\n{space*4}write:\n{space*5}- database1.*.*\n{space*1}- ar_db_database2_r:\n{space*2}privileges:\n{space*3}databases:\n{space*4}read:\n{space*5}- database2\n{space*3}schemas:\n{space*4}read:\n{space*5}- database2.*\n{space*3}tables:\n{space*4}read:\n{space*5}- database2.*.*\n{space*1}- ar_db_database2_w:\n{space*2}privileges:\n{space*3}databases:\n{space*4}write:\n{space*5}- database2\n{space*3}schemas:\n{space*4}write:\n{space*5}- database2.*\n{space*3}tables:\n{space*4}write:\n{space*5}- database2.*.*\n"""  )
 
+
+def test_spec_generator_generate_multiple_modules(databases_object, warehouses_object):
+
+    module_list = [databases_object, warehouses_object]
+    spec_generator = Spec_Generator("0.14.0")
+    for spec in module_list:
+        spec_generator.generate(spec)
+    assert (
+        spec_generator.get_output()
+        == f"""version: "0.14.0"\ndatabases:\n{space*1}- database1:\n{space*2}shared: yes\n{space*2}owner: loader_qlik\n{space*1}- database2:\n{space*2}shared: no\n{space*2}owner: loader_qlik\n{space*1}- database3:\n{space*2}shared: yes\nwarehouses:\n{space*1}- warehouse1:\n{space*2}size: xsmall\n{space*1}- warehouse2:\n{space*2}size: xsmall\n{space*1}- warehouse3:\n{space*2}size: medium\n"""
+    )

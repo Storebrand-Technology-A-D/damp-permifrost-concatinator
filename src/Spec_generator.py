@@ -2,12 +2,12 @@ class Spec_Generator:
     def __init__(self, version):
         self.version = version
         self.output = ""
-        self.users = "\n"
-        self.databases = "\n"
-        self.warehouses = "\n"
+        self.users = ""
+        self.databases = ""
+        self.warehouses = ""
         self.functional_roles = ""
         self.access_roles = ""
-        self.roles = "\n"
+        self.roles = ""
         self.space = " "*2
 
     def generate_users(self, module):
@@ -97,7 +97,7 @@ class Spec_Generator:
         self.functional_roles += "\n"
 
     def generate(self, module):
-        self.output += f"""version: \"{self.version}\"\n"""
+        
         if module.type == "User":
             self.generate_users(module)
         elif module.type == "Database":
@@ -106,7 +106,9 @@ class Spec_Generator:
             self.generate_warehouses(module)
         elif module.type == "Role":
             self.generate_roles(module)
-
+    
+    def get_output(self):
+        self.output += f"""version: \"{self.version}\"\n"""
         self.output += self.databases
         self.output += self.roles
         self.output += self.users
