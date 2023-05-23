@@ -1,6 +1,6 @@
 import pytest
 from src.Module_description import Module_description
-from src.Databases import Databases_Module
+from src.Databases_module import Databases_Module
 
 
 def test_module_description_gather_description(databases_object):

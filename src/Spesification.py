@@ -1,7 +1,7 @@
-from src.Databases import Databases_Module
-from src.Warehouses import Warehouses_Module
-from src.Users import Users_Module
-from src.Roles import Roles_Module
+from src.Databases_module import Databases_Module
+from src.Warehouses_module import Warehouses_Module
+from src.Users_module import Users_Module
+from src.Roles_module import Roles_Module
 from src.Spesification_description import Spessification_description
 
 

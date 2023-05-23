@@ -1,4 +1,4 @@
-from src.Warehouses import Warehouses_Module
+from src.Warehouses_module import Warehouses_Module
 import pytest
 
 

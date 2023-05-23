@@ -1,5 +1,5 @@
 from src.Spec_generator import Spec_Generator
-from src.Users import Users_Module
+from src.Users_module import Users_Module
 
 
 def test_spec_generator_singel_user_generator(
