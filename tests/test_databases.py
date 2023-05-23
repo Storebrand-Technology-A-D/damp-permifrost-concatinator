@@ -21,9 +21,13 @@ def test_database_module_add_entities_multiple(
 
 
 def test_database_module_get_database(databases_object):
-    assert databases_object.get_entities("database1") == {"shared": "yes", "owner": "loader_qlik"}
+    assert databases_object.get_entities("database1") == {
+        "shared": "yes",
+        "owner": "loader_qlik",
+    }
     assert databases_object.get_entities("database2") == {
-        "shared": "no", "owner": "loader_qlik"
+        "shared": "no",
+        "owner": "loader_qlik",
     }
 
 

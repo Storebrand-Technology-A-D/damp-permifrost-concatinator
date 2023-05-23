@@ -1,4 +1,5 @@
 import pytest
+import yaml
 
 from src.Warehouses import Warehouses_Module
 from src.Databases import Databases_Module
@@ -6,11 +7,19 @@ from src.Roles import Roles_Module
 from src.Users import Users_Module
 from src.Base_module import Base_Module
 from src.Spesification_description import Spessification_description
+from src.Spesification import Spesification
 
 space = " " * 2
 
 
+def load_yaml(yaml_file):
+    with open(yaml_file, "r") as in_fh:
+        file = yaml.safe_load(in_fh)
+    return file
+
+
 # roles
+
 
 @pytest.fixture
 def roles_object1():
@@ -74,11 +83,11 @@ def roles_object(roles_object1):
     roles.spesification = roles_object
     return roles
 
+
 @pytest.fixture
 def roles_object_identified(roles_object):
     roles_object.identify_roles()
     return roles_object
-
 
 
 @pytest.fixture
@@ -86,7 +95,8 @@ def roles_object_str_results():
     return f"""roles:\n{space*1}- role1:\n{space*2}member_of:\n{space*3}- role2\n{space*1}- role2:\n{space*2}member_of:\n{space*3}- ar_db_database1_r\n{space*3}- ar_db_database1_w\n{space*3}- ar_db_database2_r\n{space*3}- ar_db_database2_w\n\n{space*1}- ar_db_database1_r:\n{space*2}privileges:\n{space*3}databases:\n{space*4}read:\n{space*5}- database1\n{space*3}schemas:\n{space*4}read:\n{space*5}- database1.*\n{space*3}tables:\n{space*4}read:\n{space*5}- database1.*.*\n{space*1}- ar_db_database1_w:\n{space*2}privileges:\n{space*3}databases:\n{space*4}write:\n{space*5}- database1\n{space*3}schemas:\n{space*4}write:\n{space*5}- database1.*\n{space*3}tables:\n{space*4}write:\n{space*5}- database1.*.*\n{space*1}- ar_db_database2_r:\n{space*2}privileges:\n{space*3}databases:\n{space*4}read:\n{space*5}- database2\n{space*3}schemas:\n{space*4}read:\n{space*5}- database2.*\n{space*3}tables:\n{space*4}read:\n{space*5}- database2.*.*\n{space*1}- ar_db_database2_w:\n{space*2}privileges:\n{space*3}databases:\n{space*4}write:\n{space*5}- database2\n{space*3}schemas:\n{space*4}write:\n{space*5}- database2.*\n{space*3}tables:\n{space*4}write:\n{space*5}- database2.*.*\n"""
 
 
-#Functional roles
+# Functional roles
+
 
 @pytest.fixture
 def single_functional_role_object():
@@ -124,10 +134,14 @@ def single_functional_role_object_str_results():
 
 @pytest.fixture
 def functional_roles_object_str_results(single_functional_role_object_str_results):
-    return single_functional_role_object_str_results[:-1]+f"""{space*1}- role1:\n{space*2}member_of:\n{space*3}- role2\n\n"""
+    return (
+        single_functional_role_object_str_results[:-1]
+        + f"""{space*1}- role1:\n{space*2}member_of:\n{space*3}- role2\n\n"""
+    )
 
 
 # Access roles
+
 
 @pytest.fixture
 def single_accsess_role_object():
@@ -148,48 +162,53 @@ def single_accsess_role_object():
 @pytest.fixture
 def accsess_roles_object(single_accsess_role_object):
     roles_object = single_accsess_role_object.spesification
-    roles_object.update( {
-        "ar_db_database1_w": {
-            "privileges": {
-                "databases": {"write": ["database1"]},
-                "schemas": {"write": ["database1.*"]},
-                "tables": {"write": ["database1.*.*"]},
-            }
-        },
-        "ar_db_database2_r": {
-            "privileges": {
-                "databases": {"read": ["database2"]},
-                "schemas": {"read": ["database2.*"]},
-                "tables": {"read": ["database2.*.*"]},
-            }
-        },
-        "ar_db_database2_w": {
-            "privileges": {
-                "databases": {"write": ["database2"]},
-                "schemas": {"write": ["database2.*"]},
-                "tables": {"write": ["database2.*.*"]},
-            }
-        },
-    })
+    roles_object.update(
+        {
+            "ar_db_database1_w": {
+                "privileges": {
+                    "databases": {"write": ["database1"]},
+                    "schemas": {"write": ["database1.*"]},
+                    "tables": {"write": ["database1.*.*"]},
+                }
+            },
+            "ar_db_database2_r": {
+                "privileges": {
+                    "databases": {"read": ["database2"]},
+                    "schemas": {"read": ["database2.*"]},
+                    "tables": {"read": ["database2.*.*"]},
+                }
+            },
+            "ar_db_database2_w": {
+                "privileges": {
+                    "databases": {"write": ["database2"]},
+                    "schemas": {"write": ["database2.*"]},
+                    "tables": {"write": ["database2.*.*"]},
+                }
+            },
+        }
+    )
     accsess_roles = Roles_Module()
     accsess_roles.spesification = roles_object
     accsess_roles.identify_roles()
     return accsess_roles
+
 
 @pytest.fixture
 def single_accsess_role_object_str_results():
     return f"""{space*1}- ar_db_database1_r:\n{space*2}privileges:\n{space*3}databases:\n{space*4}read:\n{space*5}- database1\n{space*3}schemas:\n{space*4}read:\n{space*5}- database1.*\n{space*3}tables:\n{space*4}read:\n{space*5}- database1.*.*\n"""
 
 
-
 @pytest.fixture
 def accsess_roles_object_str_results(single_accsess_role_object_str_results):
-    return single_accsess_role_object_str_results+f"""{space*1}- ar_db_database1_w:\n{space*2}privileges:\n{space*3}databases:\n{space*4}write:\n{space*5}- database1\n{space*3}schemas:\n{space*4}write:\n{space*5}- database1.*\n{space*3}tables:\n{space*4}write:\n{space*5}- database1.*.*\n{space*1}- ar_db_database2_r:\n{space*2}privileges:\n{space*3}databases:\n{space*4}read:\n{space*5}- database2\n{space*3}schemas:\n{space*4}read:\n{space*5}- database2.*\n{space*3}tables:\n{space*4}read:\n{space*5}- database2.*.*\n{space*1}- ar_db_database2_w:\n{space*2}privileges:\n{space*3}databases:\n{space*4}write:\n{space*5}- database2\n{space*3}schemas:\n{space*4}write:\n{space*5}- database2.*\n{space*3}tables:\n{space*4}write:\n{space*5}- database2.*.*\n"""
-
-
+    return (
+        single_accsess_role_object_str_results
+        + f"""{space*1}- ar_db_database1_w:\n{space*2}privileges:\n{space*3}databases:\n{space*4}write:\n{space*5}- database1\n{space*3}schemas:\n{space*4}write:\n{space*5}- database1.*\n{space*3}tables:\n{space*4}write:\n{space*5}- database1.*.*\n{space*1}- ar_db_database2_r:\n{space*2}privileges:\n{space*3}databases:\n{space*4}read:\n{space*5}- database2\n{space*3}schemas:\n{space*4}read:\n{space*5}- database2.*\n{space*3}tables:\n{space*4}read:\n{space*5}- database2.*.*\n{space*1}- ar_db_database2_w:\n{space*2}privileges:\n{space*3}databases:\n{space*4}write:\n{space*5}- database2\n{space*3}schemas:\n{space*4}write:\n{space*5}- database2.*\n{space*3}tables:\n{space*4}write:\n{space*5}- database2.*.*\n"""
+    )
 
 
 # Databases
+
+
 @pytest.fixture
 def databases_object():
     databases = Databases_Module()
@@ -199,6 +218,7 @@ def databases_object():
         "database3": {"shared": "yes"},
     }
     return databases
+
 
 @pytest.fixture
 def databases_object1():
@@ -214,6 +234,7 @@ def databases_object2():
         {"database3": {"shared": "yes"}},
         {"database2": {"shared": "no", "owner": "loader_qlik"}},
     ]
+
 
 @pytest.fixture
 def single_database_object():
@@ -234,11 +255,30 @@ def single_database_object_str_results():
 
 @pytest.fixture
 def databases_object_str_results(single_database_object_str_results):
-    return single_database_object_str_results+f"""{space*1}- database2:\n{space*2}shared: no\n{space*2}owner: loader_qlik\n{space*1}- database3:\n{space*2}shared: yes\n"""
-
+    return (
+        single_database_object_str_results
+        + f"""{space*1}- database2:\n{space*2}shared: no\n{space*2}owner: loader_qlik\n{space*1}- database3:\n{space*2}shared: yes\n"""
+    )
 
 
 # Users
+
+
+@pytest.fixture
+def user_object1():
+    return [
+        {"user1": {"can_login": "yes", "member_of": ["role1"]}},
+        {"user2": {"can_login": "yes", "member_of": ["role2"]}},
+    ]
+
+
+@pytest.fixture
+def user_object2():
+    return [
+        {"user3": {"can_login": "no", "member_of": ["role3"]}},
+        {"user2": {"can_login": "yes", "member_of": ["role2"]}},
+    ]
+
 
 @pytest.fixture
 def users_object():
@@ -259,6 +299,7 @@ def singel_user_object():
     }
     return users
 
+
 @pytest.fixture
 def singel_user_object_str_result():
     return f"""users:\n{space*1}- user1:\n{space*2}can_login: yes\n{space*2}member_of:\n{space*3}- role1\n"""
@@ -266,11 +307,15 @@ def singel_user_object_str_result():
 
 @pytest.fixture
 def users_object_str_results(singel_user_object_str_result):
-    return singel_user_object_str_result+f"""{space*1}- user2:\n{space*2}can_login: yes\n{space*2}member_of:\n{space*3}- role2\n{space*1}- user3:\n{space*2}can_login: no\n{space*2}member_of:\n{space*3}- role3\n"""
-
+    return (
+        singel_user_object_str_result
+        + f"""{space*1}- user2:\n{space*2}can_login: yes\n{space*2}member_of:\n{space*3}- role2\n{space*1}- user3:\n{space*2}can_login: no\n{space*2}member_of:\n{space*3}- role3\n"""
+    )
 
 
 # Warehouses
+
+
 @pytest.fixture
 def warehouses_object():
     warehouses = Warehouses_Module()
@@ -283,8 +328,9 @@ def warehouses_object():
 
 
 @pytest.fixture
-def warehouses(warehouses_object):
+def warehouses_description(warehouses_object):
     return warehouses_object.describe()
+
 
 @pytest.fixture
 def single_warehouse_object():
@@ -335,3 +381,23 @@ def base_module_loaded():
         "entitiy3": {"key": "value"},
     }
     return base_module
+
+
+# Spessification
+
+
+@pytest.fixture
+def yaml_spessification_a():
+    return load_yaml("tests/data/base_premissions/team_a_permisions.yml")
+
+
+@pytest.fixture
+def yaml_spessification_b():
+    return load_yaml("tests/data/base_premissions/team_b_permisions.yml")
+
+
+@pytest.fixture
+def spesification_object_a():
+    spec = Spesification()
+    spec.spec_file = load_yaml("tests/data/base_premissions/team_a_permisions.yml")
+    return spec

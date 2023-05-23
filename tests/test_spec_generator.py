@@ -87,7 +87,9 @@ def test_spec_generator_generate_multiple_accsess_roles(
     assert spec_generator.access_roles == accsess_roles_object_str_results
 
 
-def test_spec_generator_generate_roles(roles_object_identified, roles_object_str_results):
+def test_spec_generator_generate_roles(
+    roles_object_identified, roles_object_str_results
+):
     spec_generator = Spec_Generator("0.14.0")
     spec_generator.generate(roles_object_identified)
     assert spec_generator.roles == roles_object_str_results
