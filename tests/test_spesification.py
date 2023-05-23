@@ -1,12 +1,13 @@
 import pytest
 import yaml
+import os
 
 from src.Spesification import Spesification
 
 
-def test_spessification_load_spec(yaml_spessification_a):
+def test_spessification_load_spec_file(yaml_spessification_a):
     spesification = Spesification()
-    spesification.load(yaml_spessification_a)
+    spesification.load("tests/data/base_premissions/team_a_permisions.yml")
     assert spesification.spec_file == yaml_spessification_a
 
 
@@ -48,3 +49,24 @@ def test_spesification_append_spec(spesification_object_a, yaml_spessification_b
         pre_description.warehouses["entities"]
         == post_description.warehouses["entities"]
     )
+
+def test_Spesification_generate(spesification_object_a):
+    spesification_object_a.identify_modules()
+    spesification_object_a.identify_entities()
+    spesification_object_a.generate()
+    assert spesification_object_a.generated == True
+    assert isinstance(spesification_object_a.output, str)
+    assert spesification_object_a.output != ""
+
+def test_spesification_export(spesification_object_a):
+    spesification_object_a.identify_modules()
+    spesification_object_a.identify_entities()
+    spesification_object_a.generate()
+    spesification_object_a.export("exported.yml")
+    with open("exported.yml", "r") as file:
+        output = file.read()
+    assert output == spesification_object_a.output
+    try:
+        os.remove("exported.yml")
+    except FileNotFoundError:
+        pass

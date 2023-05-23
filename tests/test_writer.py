@@ -6,22 +6,22 @@ from src.Writer_yaml_file import Yaml_file_Writer
 
 def test_yaml_file_Writer_file_exists():
     writer = Yaml_file_Writer()
-    writer.write("test.yml", "test")
-    assert os.path.isfile("test.yml") == True
+    writer.write("test1.yml", "test")
+    assert os.path.isfile("test1.yml") == True
     try:
-        os.remove("test.yml")
+        os.remove("test1.yml")
     except:
         pass
 
 
 def test_yaml_file_Writer_file_content():
     writer = Yaml_file_Writer()
-    writer.write("test.yml", "test")
-    with open("test.yml", "r") as file:
+    writer.write("test2.yml", "test")
+    with open("test2.yml", "r") as file:
         content = file.read()
     assert content == "test"
     try:
-        os.remove("test.yml")
+        os.remove("test2.yml")
     except:
         pass
 
@@ -35,12 +35,12 @@ def test_yaml_file_Writer_formatting(
         + warehouses_object_str_results
     )
     writer = Yaml_file_Writer()
-    writer.write("test.yml", spec_output)
-    with open("test.yml", "r") as file:
+    writer.write("test3.yml", spec_output)
+    with open("test3.yml", "r") as file:
         content = file.read()
     assert content == spec_output
     try:
-        os.remove("test.yml")
+        os.remove("test3.yml")
     except:
         pass
 
@@ -55,13 +55,13 @@ def test_yaml_file_Writer_file_is_yaml(
         + roles_object_str_results
     )
     writer = Yaml_file_Writer()
-    writer.write("test.yml", spec_output)
+    writer.write("test4.yml", spec_output)
 
     reader = Reader()
-    test_file = reader.get_file("test.yml")
+    test_file = reader.get_file("test4.yml")
 
     assert test_file != None
     try:
-        os.remove("test.yml")
+        os.remove("test4.yml")
     except:
         pass

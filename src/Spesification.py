@@ -3,7 +3,9 @@ from src.Warehouses_module import Warehouses_Module
 from src.Users_module import Users_Module
 from src.Roles_module import Roles_Module
 from src.Spesification_description import Spessification_description
-
+from src.Reader import Reader
+from src.Spec_generator import Spec_Generator
+from src.Writer_yaml_file import Yaml_file_Writer
 
 class Spesification:
     """
@@ -19,7 +21,8 @@ class Spesification:
         self.spec_file = {}
 
     def load(self, spec_file):
-        self.spec_file = spec_file
+        reader = Reader()
+        self.spec_file = reader.get_file(spec_file)
 
     def identify_modules(self):
         """
@@ -35,6 +38,7 @@ class Spesification:
         for module in self.module_list:
             if module == "roles":
                 self.roles.add_entities(self.spec_file[module])
+                self.roles.identify_roles()
             elif module == "users":
                 self.users.add_entities(self.spec_file[module])
             elif module == "warehouses":
@@ -86,3 +90,22 @@ class Spesification:
             else:
                 raise Exception("Module not found")
         return description
+    
+    def generate(self, generator=Spec_Generator("0.14.0")):
+        
+        self.output = ""
+        generator.generate(self.roles)
+        generator.generate(self.users)
+        generator.generate(self.warehouses)
+        generator.generate(self.databases)
+
+        self.output += generator.get_output()
+        self.generated = True
+        return self.output
+    
+    def export(self, file_name, writer=Yaml_file_Writer()):
+        if self.generated:
+            writer.write(file_name, self.output)
+            self.exported = True
+        else:
+            raise Exception("Spec not generated")
