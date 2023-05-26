@@ -50,6 +50,7 @@ def test_spesification_append_spec(spesification_object_a, yaml_spessification_b
         == post_description.warehouses["entities"]
     )
 
+
 def test_Spesification_generate(spesification_object_a):
     spesification_object_a.identify_modules()
     spesification_object_a.identify_entities()
@@ -57,6 +58,7 @@ def test_Spesification_generate(spesification_object_a):
     assert spesification_object_a.generated == True
     assert isinstance(spesification_object_a.output, str)
     assert spesification_object_a.output != ""
+
 
 def test_spesification_export(spesification_object_a):
     spesification_object_a.identify_modules()

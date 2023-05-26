@@ -14,7 +14,7 @@ class Roles_Module(Base_Module):
         for role in self.spesification:
             if "privileges" in self.spesification[role]:
                 self.access_roles.append(role)
-            else:
+            elif "member_of" in self.spesification[role]:
                 self.functional_roles.append(role)
                 self.functional_roles_dependencies.extend(
                     dependency

@@ -7,6 +7,7 @@ from src.Reader import Reader
 from src.Spec_generator import Spec_Generator
 from src.Writer_yaml_file import Yaml_file_Writer
 
+
 class Spesification:
     """
     Class for holding onto a permifrost spessification as imported from a spec file.
@@ -22,7 +23,22 @@ class Spesification:
 
     def load(self, spec_file):
         reader = Reader()
-        self.spec_file = reader.get_file(spec_file)
+        try:
+            self.spec_file = reader.get_file(spec_file)
+            self.identify_modules()
+        except:
+            reader.read_dir(spec_file)
+            if len(reader.files) == 0:
+                raise Exception("No files found")
+            elif len(reader.files) == 1:
+                self.spec_file = reader.get_file(reader.files[0])
+                self.identify_modules()
+            else:
+                self.spec_file = reader.get_file(reader.files[0])
+                self.identify_modules()
+                self.identify_entities()
+                for file in reader.files[1:]:
+                    self.append_spec(reader.get_file(file))
 
     def identify_modules(self):
         """
@@ -59,6 +75,7 @@ class Spesification:
         for module in new_module_list:
             if module == "roles":
                 self.roles.add_entities(new_spec_file[module])
+                self.roles.identify_roles()
             elif module == "users":
                 self.users.add_entities(new_spec_file[module])
             elif module == "warehouses":
@@ -90,19 +107,19 @@ class Spesification:
             else:
                 raise Exception("Module not found")
         return description
-    
-    def generate(self, generator=Spec_Generator("0.14.0")):
-        
+
+    def generate(self):
         self.output = ""
+        generator = Spec_Generator("0.14.0")
         generator.generate(self.roles)
         generator.generate(self.users)
         generator.generate(self.warehouses)
         generator.generate(self.databases)
 
-        self.output += generator.get_output()
+        self.output = generator.get_output()
         self.generated = True
         return self.output
-    
+
     def export(self, file_name, writer=Yaml_file_Writer()):
         if self.generated:
             writer.write(file_name, self.output)
