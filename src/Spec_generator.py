@@ -1,3 +1,5 @@
+import logging
+
 class Spec_Generator:
     def __init__(self, version):
         self.version = version
@@ -9,10 +11,15 @@ class Spec_Generator:
         self.access_roles = ""
         self.roles = ""
         self.space = " " * 2
+        self.log = logging.getLogger(__name__)
+        self.log.info("Spec generator initialized")
 
     def generate_users(self, module):
+        self.log.info("Generating users")
         self.users = "users:\n"
         for user in module.spesification:
+            self.log.info(f"Generating user: {user}")
+            self.log.debug(f"User spec: {module.spesification[user]}")
             self.users += f"""{self.space*1}- {user}:\n"""
             for key in module.spesification[user]:
                 if key == "member_of":
@@ -23,44 +30,64 @@ class Spec_Generator:
                     self.users += (
                         f"""{self.space*2}{key}: {module.spesification[user][key]}\n"""
                     )
+            self.log.debug(f"user output:\n{self.users}")
 
     def generate_databases(self, module):
+        self.log.info("Generating databases")
         self.databases = "databases:\n"
         for database in module.spesification:
+            self.log.info(f"Generating database: {database}")
+            self.log.debug(f"Database spec: {module.spesification[database]}")
             self.databases += f"""{self.space*1}- {database}:\n"""
             for key in module.spesification[database]:
                 if key == "owner":
                     self.databases += f"""{self.space*2}{key}: {module.spesification[database][key]}\n"""
                 elif key == "shared":
                     self.databases += f"""{self.space*2}{key}: {module.spesification[database][key]}\n"""
+            self.log.debug(f"database output:\n{self.databases}")
 
     def generate_warehouses(self, module):
+        self.log.info("Generating warehouses")
         self.warehouses = "warehouses:\n"
         for warehouse in module.spesification:
+            self.log.info(f"Generating warehouse: {warehouse}")
+            self.log.debug(f"Warehouse spec: {module.spesification[warehouse]}")
             self.warehouses += f"""{self.space*1}- {warehouse}:\n"""
             for key in module.spesification[warehouse]:
                 self.warehouses += (
                     f"""{self.space*2}{key}: {module.spesification[warehouse][key]}\n"""
                 )
+            self.log.debug(f"warehouse output:\n{self.warehouses}")
 
     def generate_roles(self, module):
+        self.log.info("Generating roles")
         self.roles = "roles:\n"
         try:
             self.__functional_role(module)
             self.__access_role(module)
+            self.log.info(f"Functional and Accsess roles have been generated")
         except:
+            self.log.info(f"spec contained either accsess or functional roles only")
             if module.functional_roles != []:
                 self.__functional_role(module)
             elif module.access_roles != []:
                 self.__access_role(module)
             else:
+                self.log.error("No roles found in module")
                 raise Exception("No roles found in module")
+            self.log.info(f"Roles have been generated")
 
+        self.log.debug(f"Functional roles output:\n{self.functional_roles}")
+        self.log.debug(f"Access roles output:\n{self.access_roles}")
         self.roles += f"{self.functional_roles}"
         self.roles += f"{self.access_roles}"
+        self.log.debug(f"Roles output:\n{self.roles}")
 
     def __access_role(self, module):
+        self.log.info("Generating access roles")
         for access_role in module.access_roles:
+            self.log.info(f"Generating access role: {access_role}")
+            self.log.debug(f"Access role spec: {module.spesification[access_role]}")
             self.access_roles += f"""{self.space*1}- {access_role}:\n"""
             for key in module.spesification[access_role]:
                 if key == "privileges":
@@ -75,9 +102,16 @@ class Spec_Generator:
                                 privilege
                             ][read_write]:
                                 self.access_roles += f"""{self.space*5}- {database}\n"""
+            self.log.debug(f"Access role output:\n{self.access_roles}")
+        self.log.info("Accses role generation complete")
 
     def __functional_role(self, module):
+        self.log.info("Generating functional roles")
         for functional_role in module.functional_roles:
+            self.log.info(f"Generating functional role: {functional_role}")
+            self.log.debug(
+                f"Functional role spec: {module.spesification[functional_role]}"
+            )
             self.functional_roles += f"""{self.space*1}- {functional_role}:\n"""
             for key in module.spesification[functional_role]:
                 if key == "member_of":
@@ -88,6 +122,8 @@ class Spec_Generator:
                     self.functional_roles += f"""{self.space*2}{key}:\n"""
                     for warehouse in module.spesification[functional_role][key]:
                         self.functional_roles += f"""{self.space*3}- {warehouse}\n"""
+            self.log.debug(f"Functional role output:\n{self.functional_roles}")
+        self.log.info("Functional role generation complete")
         self.functional_roles += "\n"
 
     def generate(self, module):

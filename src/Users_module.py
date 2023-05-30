@@ -1,5 +1,5 @@
 from src.Base_module import Base_Module
-
+import logging
 
 class Users_Module(Base_Module):
     """
@@ -10,6 +10,8 @@ class Users_Module(Base_Module):
     def __init__(self):
         self.spesification = {}
         self.type = "User"
+        self.log = logging.getLogger(__name__)
+        
 
     def __get_roles(self):
         """

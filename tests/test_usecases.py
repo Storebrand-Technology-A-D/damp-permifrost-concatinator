@@ -1,5 +1,6 @@
 import pytest
 import os
+import logging
 
 from src.Spesification import Spesification
 from src.Reader import Reader
@@ -13,7 +14,8 @@ def yaml_spessification_conctinated(file_path):
     return control_spec.spec_file
 
 
-def test_simple_generation():
+def test_simple_generation(caplog):
+    caplog.set_level(logging.DEBUG)
     spec = Spesification()
     spec.load("tests/data/base_premissions/team_a_permisions.yml")
     spec.identify_modules()
