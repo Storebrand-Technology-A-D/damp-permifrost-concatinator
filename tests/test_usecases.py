@@ -34,8 +34,7 @@ def test_simple_generation():
         pass
 
 
-def test_simple_generation_with_append(caplog):
-    # caplog.set_level(logging.DEBUG)
+def test_simple_generation_with_append():
     spec = Spesification()
     spec.load("tests/data/base_premissions/")
     spec.identify_modules()
@@ -55,3 +54,13 @@ def test_simple_generation_with_append(caplog):
         os.remove("tests/data/generated/Concatinated_permissions.yml")
     except:
         pass
+
+def test_appended_concatination_with_verification():
+    spec = Spesification(verification=True)
+    spec.load("tests/data/verification_error_premissions/")
+    spec.identify_modules()
+    spec.identify_entities()
+    spec.generate()
+    spec.export("tests/data/generated/verified_permissions.yml")
+    assert spec.verified == True
+    assert spec.spec_file == yaml_spessification_conctinated("tests/data/verified_permissions.yml")
