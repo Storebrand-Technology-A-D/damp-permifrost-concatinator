@@ -2,6 +2,7 @@ import os
 import yaml
 import logging
 
+
 class Reader:
     def __init__(self):
         self.files = []

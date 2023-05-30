@@ -1,6 +1,7 @@
 from src.Base_module import Base_Module
 import logging
 
+
 class Users_Module(Base_Module):
     """
     Class for holding onto a permifrost users as imported from a spec file.
@@ -11,7 +12,6 @@ class Users_Module(Base_Module):
         self.spesification = {}
         self.type = "User"
         self.log = logging.getLogger(__name__)
-        
 
     def __get_roles(self):
         """

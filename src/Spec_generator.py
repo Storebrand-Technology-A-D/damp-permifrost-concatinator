@@ -1,5 +1,6 @@
 import logging
 
+
 class Spec_Generator:
     def __init__(self, version):
         self.version = version
