@@ -57,6 +57,8 @@ class Spesification:
         """
         self.module_list = list(self.spec_file.keys())
         self.module_list.remove("version")
+        for module in self.module_list:
+            self.spec_file[module] = sorted(self.spec_file[module], key=lambda d: list(d.keys())) 
         self.log.debug("Modules identified: " + str(self.module_list))
         self.log.info("Modules identified")
 
@@ -127,6 +129,12 @@ class Spesification:
             else:
                 self.log.error("Module not found")
                 raise Exception("Module not found")
+        for module in self.module_list:
+            for entity in new_spec_file[module]:
+                if entity not in self.spec_file[module]:
+                    self.spec_file[module].append(entity)
+        for module in self.module_list:
+            self.spec_file[module] = sorted(self.spec_file[module], key=lambda d: list(d.keys())) 
         self.log.info("Spec file appended")
 
     def describe(self):

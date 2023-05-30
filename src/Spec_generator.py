@@ -45,9 +45,9 @@ class Spec_Generator:
             result += f"""{self.space*1}- {database}:\n"""
             for key in module.spesification[database]:
                 if key == "owner":
-                    result += f"""{self.space*2}{key}: {module.spesification[database][key]}\n"""
+                    result += f"""{self.space*3}{key}: {module.spesification[database][key]}\n"""
                 elif key == "shared":
-                    result += f"""{self.space*2}{key}: {module.spesification[database][key]}\n"""
+                    result += f"""{self.space*3}{key}: {module.spesification[database][key]}\n"""
             self.log.debug(f"database output:\n{result}")
             self.databases += result
 
@@ -61,7 +61,7 @@ class Spec_Generator:
             result += f"""{self.space*1}- {warehouse}:\n"""
             for key in module.spesification[warehouse]:
                 result += (
-                    f"""{self.space*2}{key}: {module.spesification[warehouse][key]}\n"""
+                    f"""{self.space*3}{key}: {module.spesification[warehouse][key]}\n"""
                 )
             self.log.debug(f"warehouse output:\n{result}")
             self.warehouses += result
@@ -99,17 +99,17 @@ class Spec_Generator:
             result += f"""{self.space*1}- {access_role}:\n"""
             for key in module.spesification[access_role]:
                 if key == "privileges":
-                    result += f"""{self.space*2}{key}:\n"""
+                    result += f"""{self.space*3}{key}:\n"""
                     for privilege in module.spesification[access_role][key]:
-                        result += f"""{self.space*3}{privilege}:\n"""
+                        result += f"""{self.space*4}{privilege}:\n"""
                         for read_write in module.spesification[access_role][key][
                             privilege
                         ]:
-                            result += f"""{self.space*4}{read_write}:\n"""
+                            result += f"""{self.space*5}{read_write}:\n"""
                             for database in module.spesification[access_role][key][
                                 privilege
                             ][read_write]:
-                                result += f"""{self.space*5}- {database}\n"""
+                                result += f"""{self.space*6}- {database}\n"""
             self.log.debug(f"Access role output:\n{result}")
             self.access_roles += result
         self.log.info("Accses role generation complete")
@@ -125,13 +125,13 @@ class Spec_Generator:
             result += f"""{self.space*1}- {functional_role}:\n"""
             for key in module.spesification[functional_role]:
                 if key == "member_of":
-                    result += f"""{self.space*2}{key}:\n"""
+                    result += f"""{self.space*3}{key}:\n"""
                     for role in module.spesification[functional_role][key]:
-                        result += f"""{self.space*3}- {role}\n"""
+                        result += f"""{self.space*4}- {role}\n"""
                 elif key == "warehouses":
-                    result += f"""{self.space*2}{key}:\n"""
+                    result += f"""{self.space*3}{key}:\n"""
                     for warehouse in module.spesification[functional_role][key]:
-                        result += f"""{self.space*3}- {warehouse}\n"""
+                        result += f"""{self.space*4}- {warehouse}\n"""
             self.log.debug(f"Functional role output:\n{result}")
             self.functional_roles += result
         self.log.info("Functional role generation complete")
