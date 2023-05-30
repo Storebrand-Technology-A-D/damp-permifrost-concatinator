@@ -22,7 +22,7 @@ class Spesification:
         self.roles = Roles_Module()
         self.spec_file = {}
         self.log = logging.getLogger(__name__)
-        self.log.debug("Spesification object created")
+        self.log.info("Spesification object created")
 
     def load(self, spec_file):
         self.log.info("Loading spec file: " + spec_file)
