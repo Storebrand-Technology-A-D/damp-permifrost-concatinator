@@ -25,12 +25,12 @@ class Spec_Generator:
             result += f"""{self.space*1}- {user}:\n"""
             for key in module.spesification[user]:
                 if key == "member_of":
-                    result += f"""{self.space*2}{key}:\n"""
+                    result += f"""{self.space*3}{key}:\n"""
                     for role in module.spesification[user][key]:
-                        result += f"""{self.space*3}- {role}\n"""
+                        result += f"""{self.space*4}- {role}\n"""
                 elif key == "can_login":
                     result += (
-                        f"""{self.space*2}{key}: {module.spesification[user][key]}\n"""
+                        f"""{self.space*3}{key}: {module.spesification[user][key]}\n"""
                     )
             self.log.debug(f"user output:\n{result}")
             self.users += result
