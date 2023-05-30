@@ -34,7 +34,7 @@ def test_simple_generation():
         pass
 
 
-def test_simple_generation_with_append():
+def test_simple_concatination():
     spec = Spesification()
     spec.load("tests/data/base_premissions/")
     spec.identify_modules()
@@ -64,3 +64,9 @@ def test_appended_concatination_with_verification():
     spec.export("tests/data/generated/verified_permissions.yml")
     assert spec.verified == True
     assert spec.spec_file == yaml_spessification_conctinated("tests/data/verified_permissions.yml")
+    try:
+        os.remove("tests/data/generated/verified_permissions.yml")
+    except:
+        pass
+
+    
