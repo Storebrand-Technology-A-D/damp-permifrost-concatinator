@@ -394,7 +394,7 @@ def yaml_spessification_a():
             continue
         else:
             print(key)
-            file[key] = sorted(file[key], key=lambda d:list(d.keys()))
+            file[key] = sorted(file[key], key=lambda d: list(d.keys()))
     return file
 
 

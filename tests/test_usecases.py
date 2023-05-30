@@ -35,7 +35,7 @@ def test_simple_generation():
 
 
 def test_simple_generation_with_append(caplog):
-    #caplog.set_level(logging.DEBUG)
+    # caplog.set_level(logging.DEBUG)
     spec = Spesification()
     spec.load("tests/data/base_premissions/")
     spec.identify_modules()
