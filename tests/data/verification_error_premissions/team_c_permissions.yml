@@ -1,0 +1,91 @@
+version: "0.14.0"
+# ==========================================
+# databases
+# ==========================================
+databases: 
+  - database2:
+      shared: no
+      owner: loader_qlik
+
+# ==========================================
+# Functional Roles
+# ==========================================
+
+roles:
+    - role1:
+          warehouse: warehouse1
+          member_of:
+            - role2
+    - role2:
+          member_of:
+            - ar_db_database1_r
+            - ar_db_database1_w
+            - ar_db_database2_r
+            - ar_db_database2_w
+
+# ==========================================
+# Accsess Roles
+# ==========================================
+
+
+    - ar_db_database1_w:
+          privileges:
+            databases:
+                write: 
+                    - database1
+            schemas:
+                write:
+                    - database1.*
+            tables:
+                write:
+                    - database1.*.*
+
+    - ar_db_database2_r:
+          privileges:
+            databases:
+                read: 
+                    - database2
+            schemas:
+                read:
+                    - database2.*
+            tables:
+                read:
+                    - database2.*.*
+    - ar_db_database2_w:
+          privileges:
+            databases:
+                write: 
+                    - database2
+            schemas:
+                write:
+                    - database2.*
+            tables:
+                write:
+                    - database2.*.*
+
+# ==========================================
+# users
+# ==========================================
+
+
+users:
+  - user1:
+      can_login: yes
+      member_of:
+        - role1
+  - user2:
+      can_login: yes
+      member_of:
+        - role2
+  - user2:
+      can_login: yes
+      member_of:
+        - role3
+
+# ==========================================
+# warehouses  
+# ==========================================
+
+warehouses:
+  - warehouse2:
+      size: xsmall
