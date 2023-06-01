@@ -74,17 +74,18 @@ def test_spesification_export(spesification_object_a):
     except FileNotFoundError:
         pass
 
+
 def test_verify_spec_failing(spesification_team_c, caplog):
     caplog.set_level(logging.ERROR)
     with pytest.raises(Exception) as exception_info:
         spesification_team_c.verify()
-        assert exception_info.value.args[0]=="Spec verification failed"
+        assert exception_info.value.args[0] == "Spec verification failed"
     assert spesification_team_c.verified == False
     assert len(caplog.records) == 7
-    
+
+
 def test_verify_spec_passing(spesification_team_c_verified, caplog):
     caplog.set_level(logging.ERROR)
     spesification_team_c_verified.verify()
     assert spesification_team_c_verified.verified == True
     assert len(caplog.records) == 0
-

@@ -430,6 +430,7 @@ def spesification_team_c():
     spec.identify_entities()
     return spec
 
+
 @pytest.fixture
 def spesification_team_c_verified():
     spec = Spesification(verification=True)

@@ -225,6 +225,5 @@ class Spesification:
             self.verified = False
             self.log.debug("Spec verification recipet: " + str(recipet))
             raise Exception("Spec verification failed")
-        
-        self.log.info("Spec verification complete")
 
+        self.log.info("Spec verification complete")

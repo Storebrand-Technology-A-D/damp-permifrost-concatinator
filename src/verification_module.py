@@ -31,7 +31,7 @@ class SpecVerification:
                 )
                 user_verified = False
         return user_verified
-    
+
     def warehouses(self):
         self.log.info("Verifying warehouses")
         warehouse_verified = True
@@ -43,7 +43,7 @@ class SpecVerification:
                 )
                 warehouse_verified = False
         return warehouse_verified
-    
+
     def roles(self):
         self.log.info("Verifying roles")
         role_verified = True

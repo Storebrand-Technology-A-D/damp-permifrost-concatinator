@@ -56,7 +56,6 @@ def test_simple_concatination():
         pass
 
 
-
 def test_spec_verification_with_error(caplog):
     caplog.set_level(logging.ERROR)
     with pytest.raises(Exception) as exception_info:
@@ -66,9 +65,10 @@ def test_spec_verification_with_error(caplog):
         spec.identify_entities()
         spec.generate()
         spec.export("tests/data/generated/verified_permissions.yml")
-        assert exception_info.value.args[0]=="Spec verification failed"
+        assert exception_info.value.args[0] == "Spec verification failed"
     assert spec.verified == False
     assert len(caplog.records) == 7
+
 
 def test_spec_verification_pass():
     spec = Spesification(verification=True)
@@ -86,6 +86,7 @@ def test_spec_verification_pass():
     except:
         pass
 
+
 @pytest.mark.skip(reason="Not working on impelementing imputation")
 def test_appended_concatination_with_imputation():
     spec = Spesification(verification=True, imputation=True)
@@ -102,6 +103,7 @@ def test_appended_concatination_with_imputation():
         os.remove("tests/data/generated/imputed_permissions.yml")
     except:
         pass
+
 
 @pytest.mark.skip(reason="only for timning purposes")
 def test_spec_verification_real(caplog):
