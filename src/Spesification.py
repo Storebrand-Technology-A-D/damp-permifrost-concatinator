@@ -6,6 +6,7 @@ from src.Spesification_description import Spessification_description
 from src.Reader import Reader
 from src.Spec_generator import Spec_Generator
 from src.Writer_yaml_file import Yaml_file_Writer
+from src.verification_module import SpecVerification
 import logging
 
 
@@ -208,3 +209,22 @@ class Spesification:
     def verify(self):
         self.log.info("Verifying spec")
         self.verified = True
+        recipet = []
+        spec_verification = SpecVerification(self)
+        self.log.info("Verifying databases")
+        recipet.append(spec_verification.databases())
+        self.log.info("Verifying warehouses")
+        recipet.append(spec_verification.warehouses())
+        self.log.info("Verifying users")
+        recipet.append(spec_verification.users())
+        self.log.info("Verifying roles")
+        recipet.append(spec_verification.roles())
+
+        if False in recipet:
+            self.log.error("Spec verification failed")
+            self.verified = False
+            self.log.debug("Spec verification recipet: " + str(recipet))
+            raise Exception("Spec verification failed")
+        
+        self.log.info("Spec verification complete")
+

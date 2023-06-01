@@ -56,10 +56,23 @@ def test_simple_concatination():
         pass
 
 
-@pytest.mark.skip(reason="Working on impelementing verification")
-def test_appended_concatination_with_verification():
+
+def test_spec_verification_with_error(caplog):
+    caplog.set_level(logging.ERROR)
+    with pytest.raises(Exception) as exception_info:
+        spec = Spesification(verification=True)
+        spec.load("tests/data/verification_error_premissions/team_c_permissions.yml")
+        spec.identify_modules()
+        spec.identify_entities()
+        spec.generate()
+        spec.export("tests/data/generated/verified_permissions.yml")
+        assert exception_info.value.args[0]=="Spec verification failed"
+    assert spec.verified == False
+    assert len(caplog.records) == 7
+
+def test_spec_verification_pass():
     spec = Spesification(verification=True)
-    spec.load("tests/data/verification_error_premissions/")
+    spec.load("tests/data/verified_permissions.yml")
     spec.identify_modules()
     spec.identify_entities()
     spec.generate()
@@ -72,3 +85,30 @@ def test_appended_concatination_with_verification():
         os.remove("tests/data/generated/verified_permissions.yml")
     except:
         pass
+
+@pytest.mark.skip(reason="Not working on impelementing imputation")
+def test_appended_concatination_with_imputation():
+    spec = Spesification(verification=True, imputation=True)
+    spec.load("tests/data/verification_error_premissions/team_c_permissions.yml")
+    spec.identify_modules()
+    spec.identify_entities()
+    spec.generate()
+    spec.export("tests/data/generated/imputed_permissions.yml")
+    assert spec.imputed == True
+    assert spec.spec_file == yaml_spessification_conctinated(
+        "tests/data/verified_permissions.yml"
+    )
+    try:
+        os.remove("tests/data/generated/imputed_permissions.yml")
+    except:
+        pass
+
+@pytest.mark.skip(reason="only for timning purposes")
+def test_spec_verification_real(caplog):
+    caplog.set_level(logging.INFO)
+    spec = Spesification(verification=True)
+    spec.load("tests/data/real_permisions.yml")
+    spec.identify_modules()
+    spec.identify_entities()
+    spec.generate()
+    assert spec.verified == True
