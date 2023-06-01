@@ -55,6 +55,7 @@ def test_simple_concatination():
     except:
         pass
 
+
 @pytest.mark.skip(reason="Working on impelementing verification")
 def test_appended_concatination_with_verification():
     spec = Spesification(verification=True)
@@ -64,10 +65,10 @@ def test_appended_concatination_with_verification():
     spec.generate()
     spec.export("tests/data/generated/verified_permissions.yml")
     assert spec.verified == True
-    assert spec.spec_file == yaml_spessification_conctinated("tests/data/verified_permissions.yml")
+    assert spec.spec_file == yaml_spessification_conctinated(
+        "tests/data/verified_permissions.yml"
+    )
     try:
         os.remove("tests/data/generated/verified_permissions.yml")
     except:
         pass
-
-

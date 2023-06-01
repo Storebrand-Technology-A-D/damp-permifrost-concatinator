@@ -41,18 +41,28 @@ class Roles_Module(Base_Module):
                 self.log.error(f"Role {role} not found")
                 raise Exception(f"Role {role} not found")
             elif len(role) == 1 and "privileges" not in self.spesification[role]:
-                self.log.error(f"Role {role} is not an access role, and does not have databases")
-                raise Exception(f"Role {role} is not an access role, and does not have databases")
-            
+                self.log.error(
+                    f"Role {role} is not an access role, and does not have databases"
+                )
+                raise Exception(
+                    f"Role {role} is not an access role, and does not have databases"
+                )
+
             elif "privileges" in self.spesification[role]:
-                self.log.debug(f"Role {role} is an access role")   
-                self.log.debug(f"Privileges for role {role}: {self.spesification[role]['privileges']}")
+                self.log.debug(f"Role {role} is an access role")
+                self.log.debug(
+                    f"Privileges for role {role}: {self.spesification[role]['privileges']}"
+                )
                 try:
-                    privileges.extend(self.spesification[role]["privileges"]["databases"]["read"])
+                    privileges.extend(
+                        self.spesification[role]["privileges"]["databases"]["read"]
+                    )
                 except KeyError:
                     pass
                 try:
-                    privileges.extend(self.spesification[role]["privileges"]["databases"]["write"])
+                    privileges.extend(
+                        self.spesification[role]["privileges"]["databases"]["write"]
+                    )
                 except KeyError:
                     pass
         self.log.debug(f"Databases for roles: {privileges}")

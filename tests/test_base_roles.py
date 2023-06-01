@@ -107,19 +107,34 @@ def test_roles_module_identify(roles_object):
         ]
     )
 
+
 def test_roles_get_dependencies(roles_object):
-    assert set(roles_object.get_dependencies("member_of")) == set(['role2', 'ar_db_database1_r', 'ar_db_database1_w', 'ar_db_database2_r', 'ar_db_database2_w'])
+    assert set(roles_object.get_dependencies("member_of")) == set(
+        [
+            "role2",
+            "ar_db_database1_r",
+            "ar_db_database1_w",
+            "ar_db_database2_r",
+            "ar_db_database2_w",
+        ]
+    )
+
 
 def test_roles_get_databases(roles_object):
-    assert set(roles_object.get_databases("ar_db_database1_r")) == set(['database1'])
-    assert set(roles_object.get_databases()) == set(['database1', 'database2'])
+    assert set(roles_object.get_databases("ar_db_database1_r")) == set(["database1"])
+    assert set(roles_object.get_databases()) == set(["database1", "database2"])
+
 
 def test_roles_get_databases_not_found(roles_object):
     with pytest.raises(Exception) as exception_info:
         roles_object.get_databases("monkeydo")
     assert exception_info.value.args[0] == "Role monkeydo not found"
 
+
 def test_roles_get_databases_not_accsess_roles(roles_object):
     with pytest.raises(Exception) as exception_info:
         roles_object.get_databases("role1")
-        assert exception_info.value.args[0] == "Role role1 is not an access role, and does not have databases"
+        assert (
+            exception_info.value.args[0]
+            == "Role role1 is not an access role, and does not have databases"
+        )

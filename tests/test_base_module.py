@@ -42,10 +42,19 @@ def test_base_module_describe(base_module_loaded):
     assert description.count == 3
     assert description.entities == ["entitiy1", "entitiy2", "entitiy3"]
 
-def test_base_module_get_dependencies(base_module_loaded_with_dependencies, base_module_loaded):
-    assert base_module_loaded_with_dependencies.get_dependencies("member_of") == ["dependency1", "dependency2"]
-    assert base_module_loaded_with_dependencies.get_dependencies("warehouse") == ["dependency4"]
+
+def test_base_module_get_dependencies(
+    base_module_loaded_with_dependencies, base_module_loaded
+):
+    assert base_module_loaded_with_dependencies.get_dependencies("member_of") == [
+        "dependency1",
+        "dependency2",
+    ]
+    assert base_module_loaded_with_dependencies.get_dependencies("warehouse") == [
+        "dependency4"
+    ]
     assert base_module_loaded.get_dependencies("key") == ["value"]
+
 
 def test_base_module_get_dependencies_not_found(base_module_loaded_with_dependencies):
     with pytest.warns(Warning) as Warning_info:

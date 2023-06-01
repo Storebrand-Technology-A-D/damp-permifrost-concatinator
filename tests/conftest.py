@@ -382,6 +382,7 @@ def base_module_loaded():
     }
     return base_module
 
+
 @pytest.fixture
 def base_module_loaded_with_dependencies():
     base_module = Base_Module()
@@ -392,6 +393,7 @@ def base_module_loaded_with_dependencies():
         "entitiy4": {"warehouse": "dependency4"},
     }
     return base_module
+
 
 # Spessification
 
@@ -418,6 +420,7 @@ def spesification_object_a():
     spec = Spesification()
     spec.spec_file = load_yaml("tests/data/base_premissions/team_a_permisions.yml")
     return spec
+
 
 @pytest.fixture
 def spesification_team_c():

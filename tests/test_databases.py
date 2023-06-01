@@ -58,5 +58,6 @@ def test_database_describe_empty():
     assert databases_description.count == 0
     assert databases_description.entities == []
 
+
 def test_database_get_dependencies(databases_object):
     assert databases_object.get_dependencies("owner") == ["loader_qlik"]

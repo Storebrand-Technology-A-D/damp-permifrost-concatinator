@@ -25,7 +25,6 @@ class Spesification:
         self.log = logging.getLogger(__name__)
         self.log.info("Spesification object created")
 
-
     def load(self, spec_file):
         self.log.info("Loading spec file: " + spec_file)
         reader = Reader()
@@ -205,7 +204,7 @@ class Spesification:
         else:
             self.log.error("Spec not generated")
             raise Exception("Spec not generated")
-        
+
     def verify(self):
         self.log.info("Verifying spec")
         self.verified = True
