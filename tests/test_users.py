@@ -51,3 +51,6 @@ def test_users_describe_empty():
     user_description = users.describe()
     assert user_description.count == 0
     assert user_description.entities == []
+
+def test_users_get_dependencies(users_object):
+    assert users_object.get_dependencies("member_of") == ["role1", "role2", "role3"]

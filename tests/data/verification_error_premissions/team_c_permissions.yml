@@ -77,7 +77,7 @@ users:
       can_login: yes
       member_of:
         - role2
-  - user2:
+  - user3:
       can_login: yes
       member_of:
         - role3

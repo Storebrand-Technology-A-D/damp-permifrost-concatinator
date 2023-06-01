@@ -15,14 +15,16 @@ class Spesification:
 
     """
 
-    def __init__(self):
+    def __init__(self, verification=False):
         self.databases = Databases_Module()
         self.warehouses = Warehouses_Module()
         self.users = Users_Module()
         self.roles = Roles_Module()
         self.spec_file = {}
+        self.verification = verification
         self.log = logging.getLogger(__name__)
         self.log.info("Spesification object created")
+
 
     def load(self, spec_file):
         self.log.info("Loading spec file: " + spec_file)
@@ -172,6 +174,9 @@ class Spesification:
         return description
 
     def generate(self):
+        if self.verification == True:
+            self.verify()
+
         self.output = ""
         self.log.info("Generating spec")
         generator = Spec_Generator("0.14.0")
@@ -200,3 +205,7 @@ class Spesification:
         else:
             self.log.error("Spec not generated")
             raise Exception("Spec not generated")
+        
+    def verify(self):
+        self.log.info("Verifying spec")
+        self.verified = True

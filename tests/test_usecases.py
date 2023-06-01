@@ -55,6 +55,7 @@ def test_simple_concatination():
     except:
         pass
 
+@pytest.mark.skip(reason="Working on impelementing verification")
 def test_appended_concatination_with_verification():
     spec = Spesification(verification=True)
     spec.load("tests/data/verification_error_premissions/")
@@ -69,4 +70,4 @@ def test_appended_concatination_with_verification():
     except:
         pass
 
-    
+

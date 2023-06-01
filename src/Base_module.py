@@ -1,4 +1,5 @@
 import logging
+import warnings
 from src.Module_description import Module_description
 
 
@@ -38,3 +39,21 @@ class Base_Module:
         self.log.info(f"{self.type} described")
         self.log.debug(f"{self.type} description: {description}")
         return description
+
+    def get_dependencies(self, dependency):
+        self.dependencies = []
+        self.log.debug(f"Getting {self.type} dependencies: {dependency}")
+        for entity in self.spesification:
+            if dependency in self.spesification[entity]:
+                if self.spesification[entity][dependency] not in self.dependencies:
+                    if isinstance(self.spesification[entity][dependency], list):
+                        for item in self.spesification[entity][dependency]:
+                            self.dependencies.append(item)
+                    else:
+                        self.dependencies.append(self.spesification[entity][dependency])
+        if len(self.dependencies) == 0:
+            self.log.warning(f"No {dependency} dependencies found in {self.type}")
+            warnings.warn(f"No {dependency} dependencies found in {self.type}")
+        self.log.debug(f"{self.type} dependencies: {self.dependencies}")
+        self.log.info(f"{self.type} dependencies retrieved from spec")
+        return self.dependencies

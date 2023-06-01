@@ -382,6 +382,16 @@ def base_module_loaded():
     }
     return base_module
 
+@pytest.fixture
+def base_module_loaded_with_dependencies():
+    base_module = Base_Module()
+    base_module.spesification = {
+        "entitiy1": {"key": "value"},
+        "entitiy2": {"member_of": "dependency1"},
+        "entitiy3": {"member_of": "dependency2"},
+        "entitiy4": {"warehouse": "dependency4"},
+    }
+    return base_module
 
 # Spessification
 
@@ -407,4 +417,12 @@ def yaml_spessification_b():
 def spesification_object_a():
     spec = Spesification()
     spec.spec_file = load_yaml("tests/data/base_premissions/team_a_permisions.yml")
+    return spec
+
+@pytest.fixture
+def spesification_team_c():
+    spec = Spesification(verification=True)
+    spec.load("tests/data/verification_error_permissions/team_c_permisions.yml")
+    spec.identify_modules()
+    spec.identify_entities()
     return spec
