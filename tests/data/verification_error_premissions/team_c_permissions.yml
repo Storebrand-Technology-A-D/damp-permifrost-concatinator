@@ -89,3 +89,4 @@ users:
 warehouses:
   - warehouse2:
       size: xsmall
+      owner: loader_qlik

@@ -425,7 +425,15 @@ def spesification_object_a():
 @pytest.fixture
 def spesification_team_c():
     spec = Spesification(verification=True)
-    spec.load("tests/data/verification_error_permissions/team_c_permisions.yml")
+    spec.load("tests/data/verification_error_premissions/team_c_permissions.yml")
+    spec.identify_modules()
+    spec.identify_entities()
+    return spec
+
+@pytest.fixture
+def spesification_team_c_verified():
+    spec = Spesification(verification=True)
+    spec.load("tests/data/verified_permissions.yml")
     spec.identify_modules()
     spec.identify_entities()
     return spec

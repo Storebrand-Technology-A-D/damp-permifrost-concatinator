@@ -106,5 +106,6 @@ users:
 warehouses:
   - warehouse1:
       size: xsmall
+      owner: loader_qlik
   - warehouse2:
       size: xsmall
