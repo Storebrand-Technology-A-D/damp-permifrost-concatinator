@@ -1,4 +1,5 @@
 import click
+import logging
 from permifrost_concatinator.Spesification import Spesification
 
 
@@ -9,6 +10,8 @@ from permifrost_concatinator.Spesification import Spesification
     "--verification", help="Verify the spesification", required=False, default=False
 )
 def main(input, output, verification):
+    logging.basicConfig(level=logging.INFO)
+    logger = logging.getLogger(__name__)
     spesification = Spesification(verification=verification)
     spesification.load(input)
     spesification.identify_modules()
