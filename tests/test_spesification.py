@@ -3,7 +3,7 @@ import yaml
 import logging
 import os
 
-from src.Spesification import Spesification
+from src.permifrost_concatinator.Spesification import Spesification
 
 
 def test_spessification_load_spec_file(yaml_spessification_a):

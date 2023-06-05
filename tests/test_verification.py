@@ -1,6 +1,6 @@
 import pytest
 import logging
-from src.verification_module import SpecVerification
+from src.permifrost_concatinator.verification_module import SpecVerification
 
 
 def test_spec_verification_database_missing_owners(spesification_team_c, caplog):

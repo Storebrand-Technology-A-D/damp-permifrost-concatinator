@@ -1,4 +1,4 @@
-from src.Base_module import Base_Module
+from src.permifrost_concatinator.Base_module import Base_Module
 import pytest
 
 

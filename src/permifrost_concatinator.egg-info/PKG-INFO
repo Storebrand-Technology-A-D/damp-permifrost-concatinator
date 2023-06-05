@@ -1,0 +1,9 @@
+Metadata-Version: 2.1
+Name: permifrost-concatinator
+Version: 0.0.1
+Summary: Concatenates multiple Permifrost spec files into one
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+
+# damp-permifrost-concatinator
+Repository for the code related to a Yaml concatinator for Permifrost

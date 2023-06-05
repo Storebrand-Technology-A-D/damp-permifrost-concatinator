@@ -1,5 +1,5 @@
 import click
-from src.Spesification import Spesification
+from permifrost_concatinator.Spesification import Spesification
 
 
 @click.command()

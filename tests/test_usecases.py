@@ -2,8 +2,8 @@ import pytest
 import os
 import logging
 
-from src.Spesification import Spesification
-from src.Reader import Reader
+from src.permifrost_concatinator.Spesification import Spesification
+from src.permifrost_concatinator.Reader import Reader
 
 
 def yaml_spessification_conctinated(file_path):

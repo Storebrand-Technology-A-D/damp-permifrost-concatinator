@@ -1,4 +1,4 @@
-from src.Warehouses_module import Warehouses_Module
+from src.permifrost_concatinator.Warehouses_module import Warehouses_Module
 import pytest
 
 

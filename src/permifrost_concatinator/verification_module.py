@@ -51,10 +51,13 @@ class SpecVerification:
         for role in role_dependencies:
             if role not in self.spec.roles.functional_roles:
                 if role not in self.spec.roles.access_roles:
-                    self.log.error(
-                        f"Role {role} is assigned to a role, but is not defined as a role"
-                    )
-                    role_verified = False
+                    if role in ["aad_provisioner", "useradmin"]:
+                        pass
+                    else:
+                        self.log.error(
+                            f"Role {role} is assigned to a role, but is not defined as a role"
+                        )
+                        role_verified = False
         privilage_dependencies = self.spec.roles.get_databases()
         for database in privilage_dependencies:
             if database not in self.spec.databases.spesification:

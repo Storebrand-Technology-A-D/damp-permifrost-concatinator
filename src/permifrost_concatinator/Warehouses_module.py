@@ -1,4 +1,4 @@
-from src.Base_module import Base_Module
+from .Base_module import Base_Module
 import logging
 
 

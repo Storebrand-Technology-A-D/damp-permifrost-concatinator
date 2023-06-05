@@ -1,7 +1,7 @@
 import pytest
 import os.path
-from src.Reader import Reader
-from src.Writer_yaml_file import Yaml_file_Writer
+from src.permifrost_concatinator.Reader import Reader
+from src.permifrost_concatinator.Writer_yaml_file import Yaml_file_Writer
 
 
 def test_yaml_file_Writer_file_exists():

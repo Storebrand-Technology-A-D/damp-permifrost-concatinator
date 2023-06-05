@@ -1,6 +1,6 @@
 import yaml
 import pytest
-from src.Reader import Reader
+from src.permifrost_concatinator.Reader import Reader
 
 
 def load_yaml(yaml_file):

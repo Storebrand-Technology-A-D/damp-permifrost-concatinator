@@ -1,6 +1,6 @@
 import logging
 import warnings
-from src.Module_description import Module_description
+from .Module_description import Module_description
 
 
 class Base_Module:

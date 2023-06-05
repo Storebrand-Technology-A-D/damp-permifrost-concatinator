@@ -1,12 +1,12 @@
-from src.Databases_module import Databases_Module
-from src.Warehouses_module import Warehouses_Module
-from src.Users_module import Users_Module
-from src.Roles_module import Roles_Module
-from src.Spesification_description import Spessification_description
-from src.Reader import Reader
-from src.Spec_generator import Spec_Generator
-from src.Writer_yaml_file import Yaml_file_Writer
-from src.verification_module import SpecVerification
+from .Databases_module import Databases_Module
+from .Warehouses_module import Warehouses_Module
+from .Users_module import Users_Module
+from .Roles_module import Roles_Module
+from .Spesification_description import Spessification_description
+from .Reader import Reader
+from .Spec_generator import Spec_Generator
+from .Writer_yaml_file import Yaml_file_Writer
+from .verification_module import SpecVerification
 import logging
 
 

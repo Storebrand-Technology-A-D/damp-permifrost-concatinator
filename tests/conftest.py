@@ -1,13 +1,13 @@
 import pytest
 import yaml
 
-from src.Warehouses_module import Warehouses_Module
-from src.Databases_module import Databases_Module
-from src.Roles_module import Roles_Module
-from src.Users_module import Users_Module
-from src.Base_module import Base_Module
-from src.Spesification_description import Spessification_description
-from src.Spesification import Spesification
+from src.permifrost_concatinator.Warehouses_module import Warehouses_Module
+from src.permifrost_concatinator.Databases_module import Databases_Module
+from src.permifrost_concatinator.Roles_module import Roles_Module
+from src.permifrost_concatinator.Users_module import Users_Module
+from src.permifrost_concatinator.Base_module import Base_Module
+from src.permifrost_concatinator.Spesification_description import Spessification_description
+from src.permifrost_concatinator.Spesification import Spesification
 
 space = " " * 2
 

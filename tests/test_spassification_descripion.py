@@ -1,5 +1,5 @@
 import pytest
-from src.Spesification_description import Spessification_description
+from src.permifrost_concatinator.Spesification_description import Spessification_description
 
 
 def test_spesification_description_load_module_description(warehouses_description):

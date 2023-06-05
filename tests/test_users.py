@@ -1,5 +1,5 @@
 import pytest
-from src.Users_module import Users_Module
+from src.permifrost_concatinator.Users_module import Users_Module
 
 
 def test_user_add_users(user_object1):
