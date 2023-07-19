@@ -26,4 +26,4 @@ jobs:
           source venv/bin/activate
           pip install build
           pip install -r requierements.txt
-          python build
+          
