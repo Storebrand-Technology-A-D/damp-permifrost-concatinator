@@ -18,3 +18,23 @@ class Databases_Module(Base_Module):
                 users.append(self.spesification[database]["owner"])
                 self.log.debug(f"Current users: {users}")
         return list(set(users))
+
+    def generate_accsess_roles(self):
+        self.log.info("Generating access roles from Databases")
+        accsess_roles = {}
+        for databases in self.spesification:
+            self.log.debug(f"Generating access role from database: {databases}")
+            accsess_roles[f"ar_db_{databases}_w"] = {"privileges": {
+                    "databases": {"write": [f"{databases}"]},
+                    "schemas": {"write": [f"{databases}.*"]},
+                    "tables": {"write": [f"{databases}.*.*"]},
+                }
+            }
+            accsess_roles[f"ar_db_{databases}_r"] = {
+                "privileges": {
+                    "databases": {"read": [f"{databases}"]},
+                    "schemas": {"read": [f"{databases}.*"]},
+                    "tables": {"read": [f"{databases}.*.*"]},
+                }
+            }
+        return accsess_roles

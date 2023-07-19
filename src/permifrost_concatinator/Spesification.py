@@ -16,7 +16,7 @@ class Spesification:
 
     """
 
-    def __init__(self, verification=False):
+    def __init__(self, verification=False, imputation=False):
         self.databases = Databases_Module()
         self.warehouses = Warehouses_Module()
         self.users = Users_Module()
