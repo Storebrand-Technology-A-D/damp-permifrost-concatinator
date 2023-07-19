@@ -87,10 +87,10 @@ def test_spec_verification_pass():
         pass
 
 
-@pytest.mark.skip(reason="Not working on impelementing imputation")
+@pytest.mark.skip(reason="implementing imputation")
 def test_appended_concatination_with_imputation():
     spec = Spesification(verification=True, imputation=True)
-    spec.load("tests/data/verification_error_premissions/team_c_permissions.yml")
+    spec.load("tests/data/permissions_without_ar.yml")
     spec.identify_modules()
     spec.identify_entities()
     spec.generate()
