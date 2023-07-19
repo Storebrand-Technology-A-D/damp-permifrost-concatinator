@@ -11,8 +11,8 @@ jobs:
         run: |
           python3 -m venv venv
           source venv/bin/activate
-          python3 -m pip install --upgrade pip
-          pip install -r pyproject.toml
+          pip install --upgrade build
+          python3 -m build
           pytest tests/
   build:
     needs: run_test
