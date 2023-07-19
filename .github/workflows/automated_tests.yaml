@@ -1,0 +1,27 @@
+name: Automated Tests
+on:
+  push
+
+jobs:
+  run_test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run tests
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -r pyproject.toml
+          pytest tests/
+  build:
+    needs: run_test
+    if: success() && github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build
+        run: |
+          python3 -m venv venv
+          source venv/bin/activate
+          pip install -r pyproject.toml
+          python build
