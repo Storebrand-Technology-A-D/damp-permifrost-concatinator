@@ -10,7 +10,7 @@ from permifrost_concatinator.Spesification import Spesification
     "--verification", help="Verify the spesification", required=False, default=False
 )
 def main(input, output, verification):
-    logformat = logging.Formatter(fmt='%(levelname)s - %(message)s')
+    logformat = logging.Formatter(fmt="%(levelname)s - %(message)s")
     consolHandler = logging.StreamHandler()
     consolHandler.setLevel(logging.INFO)
     consolHandler.setFormatter(logformat)

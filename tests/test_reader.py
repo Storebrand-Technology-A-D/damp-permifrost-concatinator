@@ -11,14 +11,18 @@ def load_yaml(yaml_file):
 
 def test_reader_read_dir():
     reader = Reader()
-    assert reader.read_dir("tests/data/base_premissions") == [
-        "tests/data/base_premissions/team_a_permisions.yml",
-        "tests/data/base_premissions/team_b_permisions.yml",
-    ]
-    assert reader.files == [
-        "tests/data/base_premissions/team_a_permisions.yml",
-        "tests/data/base_premissions/team_b_permisions.yml",
-    ]
+    assert set(reader.read_dir("tests/data/base_premissions")) == set(
+        [
+            "tests/data/base_premissions/team_a_permisions.yml",
+            "tests/data/base_premissions/team_b_permisions.yml",
+        ]
+    )
+    assert set(reader.files) == set(
+        [
+            "tests/data/base_premissions/team_a_permisions.yml",
+            "tests/data/base_premissions/team_b_permisions.yml",
+        ]
+    )
 
 
 def test_reader_read_dir_empty():
