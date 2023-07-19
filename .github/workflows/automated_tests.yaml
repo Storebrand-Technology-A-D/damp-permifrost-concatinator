@@ -12,7 +12,7 @@ jobs:
           python3 -m venv venv
           source venv/bin/activate
           pip install -r requierements.txt
-          mkdir -p tests/data/empty
+          mkdir -p tests/data/empty tests/data/generated
           pytest tests/
   build:
     needs: run_test
