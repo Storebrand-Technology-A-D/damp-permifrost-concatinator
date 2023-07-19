@@ -16,7 +16,7 @@ jobs:
           pytest tests/
   build:
     needs: run_test
-    if: success() && github.ref == 'refs/heads/master'
+    if: success() && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
