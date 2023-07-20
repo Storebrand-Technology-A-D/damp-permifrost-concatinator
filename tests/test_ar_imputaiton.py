@@ -52,7 +52,7 @@ def test_functional_roles_and_accsess_roles(functional_roles_object, accsess_rol
 def test_dev_prod_accsess_roles(caplog, dev_prod_accsess_role_object):
     caplog.set_level(logging.ERROR)
     roles = Roles_Module()
-    roles.spessification = {
+    roles.spesification = {
         "role2": {
             "warehouses": ["warehouse1"],
             "member_of": [
