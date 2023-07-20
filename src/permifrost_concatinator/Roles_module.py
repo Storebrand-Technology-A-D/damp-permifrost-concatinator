@@ -1,6 +1,6 @@
 from .Base_module import Base_Module
 import logging
-import regex
+import regex as re
 
 
 class Roles_Module(Base_Module):
@@ -72,10 +72,13 @@ class Roles_Module(Base_Module):
 
     def generate_accsess_roles(self):
         accsess_roles = {}
+        self.log.info("Generating accsess roles")
+        self.log.debug(f"Functional roles: {self.functional_roles_dependencies}")
         for role in self.functional_roles_dependencies:
-            if regex.match("ar_db_*", role):
+            self.log.info(f"Generating accsess role for functional role: {role}")
+            if re.match("ar_db_.*_(w|r)$", role):
                 database = role[6:-2]
-                if regex.match(".*_w$", role):
+                if re.match(".*_w$", role):
                     accsess_roles[role] = {
                         "privileges": {
                             "databases": {"write": [f"{database}"]},
@@ -91,4 +94,8 @@ class Roles_Module(Base_Module):
                             "tables": {"read": [f"{database}.*.*"]},
                         }
                     }
+                
+            elif re.match("ar_|_db_|.*_(r|w)$", role):
+                self.log.error(f"Malformed Accsess roles: {role}")
+            
         return accsess_roles
