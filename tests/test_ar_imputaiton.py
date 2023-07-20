@@ -43,10 +43,10 @@ def test_malformed_ar_roles(caplog):
     assert len(caplog.records) == 3 
 
 
-@pytest.mark.skip(reason="not yet working on")
+
 def test_functional_roles_and_accsess_roles(functional_roles_object, accsess_roles_object):
     accsess_roles = functional_roles_object.generate_accsess_roles()
-    assert accsess_roles == accsess_roles_object.spesifications
+    assert accsess_roles == accsess_roles_object.spesification
 
 @pytest.mark.skip(reason="not jet working on")
 def test_dev_prod_accsess_roles(caplog, dev_prod_accsess_role_object):
