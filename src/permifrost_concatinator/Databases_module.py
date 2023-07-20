@@ -24,7 +24,8 @@ class Databases_Module(Base_Module):
         accsess_roles = {}
         for databases in self.spesification:
             self.log.debug(f"Generating access role from database: {databases}")
-            accsess_roles[f"ar_db_{databases}_w"] = {"privileges": {
+            accsess_roles[f"ar_db_{databases}_w"] = {
+                "privileges": {
                     "databases": {"write": [f"{databases}"]},
                     "schemas": {"write": [f"{databases}.*"]},
                     "tables": {"write": [f"{databases}.*.*"]},

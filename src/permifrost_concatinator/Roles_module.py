@@ -1,5 +1,6 @@
 from .Base_module import Base_Module
 import logging
+import regex
 
 
 class Roles_Module(Base_Module):
@@ -68,3 +69,26 @@ class Roles_Module(Base_Module):
         self.log.debug(f"Databases for roles: {privileges}")
         self.log.info(f"Databases for roles retrieved from spec")
         return privileges
+
+    def generate_accsess_roles(self):
+        accsess_roles = {}
+        for role in self.functional_roles_dependencies:
+            if regex.match("ar_db_*", role):
+                database = role[6:-2]
+                if regex.match(".*_w$", role):
+                    accsess_roles[role] = {
+                        "privileges": {
+                            "databases": {"write": [f"{database}"]},
+                            "schemas": {"write": [f"{database}.*"]},
+                            "tables": {"write": [f"{database}.*.*"]},
+                        }
+                    }
+                else:
+                    accsess_roles[role] = {
+                        "privileges": {
+                            "databases": {"read": [f"{database}"]},
+                            "schemas": {"read": [f"{database}.*"]},
+                            "tables": {"read": [f"{database}.*.*"]},
+                        }
+                    }
+        return accsess_roles
