@@ -193,9 +193,12 @@ def accsess_roles_object(single_accsess_role_object):
     accsess_roles.spesification = roles_object
     accsess_roles.identify_roles()
     return accsess_roles
+
+
 @pytest.fixture
 def dev_prod_accsess_role_object():
     pass
+
 
 @pytest.fixture
 def single_accsess_role_object_str_results():
