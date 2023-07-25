@@ -445,3 +445,11 @@ def spesification_team_c_verified():
     spec.identify_modules()
     spec.identify_entities()
     return spec
+
+@pytest.fixture
+def spesification_without_ar_roles():
+    spec = Spesification(verification=True)
+    spec.load("tests/data/permissions_without_ar.yml")
+    spec.identify_modules()
+    spec.identify_entities()
+    return spec
