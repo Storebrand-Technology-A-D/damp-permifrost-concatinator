@@ -89,3 +89,20 @@ def test_verify_spec_passing(spesification_team_c_verified, caplog):
     spesification_team_c_verified.verify()
     assert spesification_team_c_verified.verified == True
     assert len(caplog.records) == 0
+
+def test_role_generation_from_databases(spesification_without_ar_roles, caplog):
+    caplog.set_level(logging.DEBUG)
+    spesification_without_ar_roles.generate_roles()
+    assert spesification_without_ar_roles.roles.is_entity("ar_db_database1_r") == True
+
+def test_role_generation_from_depencies(spesification_without_ar_roles):
+    pass
+
+def test_role_generation_combined_databases_dependencies(spesification_without_ar_roles):
+    pass
+
+def test_role_generation_missig_databases():
+    pass
+
+def test_role_generation_missing_dependencies():
+    pass

@@ -124,13 +124,20 @@ class Spec_Generator:
             )
             result += f"""{self.space*1}- {functional_role}:\n"""
             for key in module.spesification[functional_role]:
+                self.log.debug(f"Generating {key} for {functional_role}")
                 if key == "member_of":
-                    result += f"""{self.space*3}{key}:\n"""
-                    for role in module.spesification[functional_role][key]:
-                        result += f"""{self.space*4}- {role}\n"""
+                    self.log.debug(f"Generating membership for {functional_role}")
+                    if module.spesification[functional_role][key] != []:
+                        result += f"""{self.space*3}{key}:\n"""
+                        for role in module.spesification[functional_role][key]:
+                            result += f"""{self.space*4}- {role}\n"""
+                    else:
+                        result += f"""{self.space*3}{key}: []\n"""
                 elif key == "warehouses":
+                    self.log.debug(f"adding warehouses for {functional_role}")
                     result += f"""{self.space*3}{key}:\n"""
                     for warehouse in module.spesification[functional_role][key]:
+                        self.log.debug(f"Generating {warehouse} for {functional_role}")
                         result += f"""{self.space*4}- {warehouse}\n"""
             self.log.debug(f"Functional role output:\n{result}")
             self.functional_roles += result

@@ -2,7 +2,7 @@ version: "0.14.0"
 # ==========================================
 # databases
 # ==========================================
-databases: 
+databases:
   - database1:
       shared: no
   - database2:
@@ -15,7 +15,8 @@ databases:
 
 roles:
     - role1:
-          warehouse: warehouse1
+          warehouses:
+            - warehouse1
           member_of:
             - role2
     - role2:
@@ -25,7 +26,8 @@ roles:
             - ar_db_database2_r
             - ar_db_database2_w
     - role3:
-          warehouse: warehouse1
+          warehouses:
+            - warehouse1
           member_of: []
     - loader_qlik:
           member_of: []
@@ -37,7 +39,7 @@ roles:
     - ar_db_database1_r:
           privileges:
             databases:
-                read: 
+                read:
                     - database1
             schemas:
                 read:
@@ -48,7 +50,7 @@ roles:
     - ar_db_database1_w:
           privileges:
             databases:
-                write: 
+                write:
                     - database1
             schemas:
                 write:
@@ -60,7 +62,7 @@ roles:
     - ar_db_database2_r:
           privileges:
             databases:
-                read: 
+                read:
                     - database2
             schemas:
                 read:
@@ -71,7 +73,7 @@ roles:
     - ar_db_database2_w:
           privileges:
             databases:
-                write: 
+                write:
                     - database2
             schemas:
                 write:
@@ -100,7 +102,7 @@ users:
         - role3
 
 # ==========================================
-# warehouses  
+# warehouses
 # ==========================================
 
 warehouses:

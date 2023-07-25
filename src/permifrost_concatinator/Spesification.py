@@ -16,13 +16,14 @@ class Spesification:
 
     """
 
-    def __init__(self, verification=False, imputation=False):
+    def __init__(self, verification=False, generate_roles=False):
         self.databases = Databases_Module()
         self.warehouses = Warehouses_Module()
         self.users = Users_Module()
         self.roles = Roles_Module()
         self.spec_file = {}
         self.verification = verification
+        self.roles_generation = generate_roles
         self.log = logging.getLogger(__name__)
         self.log.info("Spesification object created")
 
@@ -173,7 +174,18 @@ class Spesification:
         self.log.info("Spesification described")
         return description
 
+    def generate_roles(self):
+        self.log.info("Start ipmutation of AR roles")
+        self.log.info("generationg roles from Databases")
+        database_accsess_roles = self.databases.generate_accsess_roles()
+        self.roles.add_entities([database_accsess_roles])
+        self.identify_entities()
+
+
     def generate(self):
+        if self.roles_generation == True:
+            self.generate_roles()
+
         if self.verification == True:
             self.verify()
 

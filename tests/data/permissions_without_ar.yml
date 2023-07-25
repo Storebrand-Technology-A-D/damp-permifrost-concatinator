@@ -2,7 +2,7 @@ version: "0.14.0"
 # ==========================================
 # databases
 # ==========================================
-databases: 
+databases:
   - database1:
       shared: no
   - database2:
@@ -15,7 +15,8 @@ databases:
 
 roles:
     - role1:
-          warehouse: warehouse1
+          warehouses:
+            - warehouse1
           member_of:
             - role2
     - role2:
@@ -25,7 +26,8 @@ roles:
             - ar_db_database2_r
             - ar_db_database2_w
     - role3:
-          warehouse: warehouse1
+          warehouses:
+            - warehouse1
           member_of: []
     - loader_qlik:
           member_of: []
@@ -51,7 +53,7 @@ users:
         - role3
 
 # ==========================================
-# warehouses  
+# warehouses
 # ==========================================
 
 warehouses:

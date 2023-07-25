@@ -1,3 +1,4 @@
+import pytest
 from src.permifrost_concatinator.Spec_generator import Spec_Generator
 from src.permifrost_concatinator.Users_module import Users_Module
 
@@ -111,3 +112,7 @@ def test_spec_generator_generate_multiple_modules(
         + databases_object_str_results
         + warehouses_object_str_results
     )
+
+@pytest.mark.skip(reason="Not implemented")
+def test_spec_generator_singel_warehous_input():
+    pass
