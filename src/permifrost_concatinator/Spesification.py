@@ -177,8 +177,12 @@ class Spesification:
     def generate_roles(self):
         self.log.info("Start ipmutation of AR roles")
         self.log.info("generationg roles from Databases")
-        database_accsess_roles = self.databases.generate_accsess_roles()
-        self.roles.add_entities([database_accsess_roles])
+        accsess_roles_from_database = self.databases.generate_accsess_roles()
+        self.roles.add_entities([accsess_roles_from_database])
+        self.log.info("generationg roles from functional roles dependency")
+        accsess_roles_from_functional_roles = self.roles.generate_accsess_roles()
+        self.roles.add_entities([accsess_roles_from_functional_roles])
+        self.log.info("identification of generated roles")
         self.identify_entities()
 
 
