@@ -87,16 +87,16 @@ def test_spec_verification_pass():
         pass
 
 
-@pytest.mark.skip(reason="implementing imputation")
-def test_appended_concatination_with_imputation():
-    spec = Spesification(verification=True, imputation=True)
+def test_appended_concatination_with_role_generation(caplog):
+    caplog.set_level(logging.DEBUG)
+    spec = Spesification(verification=True, generate_roles=True)
     spec.load("tests/data/permissions_without_ar.yml")
     spec.identify_modules()
     spec.identify_entities()
     spec.generate()
     spec.export("tests/data/generated/imputed_permissions.yml")
-    assert spec.imputed == True
-    assert spec.spec_file == yaml_spessification_conctinated(
+
+    assert yaml_spessification_conctinated("tests/data/generated/imputed_permissions.yml") == yaml_spessification_conctinated(
         "tests/data/verified_permissions.yml"
     )
     try:
