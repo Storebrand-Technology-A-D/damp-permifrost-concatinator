@@ -88,7 +88,7 @@ def test_spec_verification_pass():
 
 
 def test_appended_concatination_with_role_generation(caplog):
-    caplog.set_level(logging.DEBUG)
+    caplog.set_level(logging.ERROR)
     spec = Spesification(verification=True, generate_roles=True)
     spec.load("tests/data/permissions_without_ar.yml")
     spec.identify_modules()
