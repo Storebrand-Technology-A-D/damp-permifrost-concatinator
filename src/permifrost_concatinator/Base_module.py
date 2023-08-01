@@ -53,7 +53,6 @@ class Base_Module:
                         self.dependencies.append(self.spesification[entity][dependency])
         if len(self.dependencies) == 0:
             self.log.warning(f"No {dependency} dependencies found in {self.type}")
-            #warnings.warn(f"No {dependency} dependencies found in {self.type}")
         self.log.debug(f"{self.type} dependencies: {self.dependencies}")
         self.log.info(f"{self.type} dependencies retrieved from spec")
         return self.dependencies
