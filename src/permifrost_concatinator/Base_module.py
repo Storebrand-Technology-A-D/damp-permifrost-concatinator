@@ -57,3 +57,8 @@ class Base_Module:
         self.log.debug(f"{self.type} dependencies: {self.dependencies}")
         self.log.info(f"{self.type} dependencies retrieved from spec")
         return self.dependencies
+
+    def get_state(self):
+        self.log.debug(f"Getting {self.type} state")
+        self.log.info(f"{self.type} state retrieved")
+        return self.spesification

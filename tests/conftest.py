@@ -453,3 +453,18 @@ def spesification_without_ar_roles():
     spec.identify_modules()
     spec.identify_entities()
     return spec
+
+# State
+@pytest.fixture
+def team_c_verefied_state_file():
+    return {
+        'version': '0.1.0',
+        'serial': 1,
+        'modules': {
+            'databases': {'database1': {'shared': False}, 'database2': {'owner': 'loader_qlik', 'shared': False}},
+            'warehouses': {'warehouse1': {'owner': 'loader_qlik','size': 'xsmall'}, 'warehouse2': {'size': 'xsmall'}},
+            'users': {'user1': {'can_login': True, 'member_of': ['role1']}, 'user2': {'can_login': True, 'member_of': ['role2']}, 'user3': {'can_login': True, 'member_of': ['role3']}},
+            'roles': {'role1': {'member_of': ['role2'], 'warehouses': ['warehouse1']}, 'role2': {'member_of': ['ar_db_database1_r', 'ar_db_database1_w', 'ar_db_database2_r', 'ar_db_database2_w']}, 'role3': {'member_of': [], 'warehouses': ['warehouse1']},  'loader_qlik': {'member_of': []}, 'ar_db_database1_r': {'privileges': {'databases': {'read': ['database1']}, 'schemas': {'read': ['database1.*']}, 'tables': {'read': ['database1.*.*']}}}, 'ar_db_database1_w': {'privileges': {'databases': {'write': ['database1']}, 'schemas': {'write': ['database1.*']}, 'tables': {'write': ['database1.*.*']}}}, 'ar_db_database2_r': {'privileges': {'databases': {'read': ['database2']}, 'schemas': {'read': ['database2.*']}, 'tables': {'read': ['database2.*.*']}}}, 'ar_db_database2_w': {'privileges': {'databases': {'write': ['database2']}, 'schemas': {'write': ['database2.*']}, 'tables': {'write': ['database2.*.*']}}}}
+        },
+        'generated':False
+    }

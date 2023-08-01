@@ -106,3 +106,13 @@ def test_role_generation_missig_databases():
 
 def test_role_generation_missing_dependencies():
     pass
+
+def test_spessification_get_state(spesification_team_c_verified, team_c_verefied_state_file):
+    user_state = spesification_team_c_verified.get_state("users")
+    assert user_state == team_c_verefied_state_file['modules']['users']
+    role_state = spesification_team_c_verified.get_state("roles")
+    assert role_state == team_c_verefied_state_file['modules']['roles']
+    database_state = spesification_team_c_verified.get_state("databases")
+    assert database_state == team_c_verefied_state_file['modules']['databases']
+    warehouse_state = spesification_team_c_verified.get_state("warehouses")
+    assert warehouse_state == team_c_verefied_state_file['modules']['warehouses']

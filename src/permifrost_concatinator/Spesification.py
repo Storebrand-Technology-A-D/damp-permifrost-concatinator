@@ -243,3 +243,16 @@ class Spesification:
             raise Exception("Spec verification failed")
 
         self.log.info("Spec verification complete")
+
+    def get_state(self, module):
+        if module == "roles":
+            return self.roles.get_state()
+        elif module == "users":
+            return self.users.get_state()
+        elif module == "warehouses":
+            return self.warehouses.get_state()
+        elif module == "databases":
+            return self.databases.get_state()
+        else:
+            self.log.error("Module not found")
+            raise Exception("Module not found")
