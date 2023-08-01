@@ -1,4 +1,6 @@
 import pytest
+import os
+import json
 from src.permifrost_concatinator.Permission_state import Permission_state
 
 
@@ -28,3 +30,18 @@ def test_permisison_state_generate(
     assert permission_state.state_file == team_c_verefied_state_file
 
 
+def test_permision_state_export(
+    spesification_team_c_verified, team_c_verefied_state_file
+):
+    """
+    Test that the Permission_state class exports a permission state file
+    """
+    permission_state = Permission_state(spesification_team_c_verified)
+    permission_state.export("tests/data/generated/permision_state_export.json")
+    with open("tests/data/generated/permision_state_export.json", "r") as file:
+        output = json.load(file)
+    assert output == team_c_verefied_state_file
+    try:
+        os.remove("tests/data/generated/permision_state_export.json")
+    except FileNotFoundError:
+        pass
