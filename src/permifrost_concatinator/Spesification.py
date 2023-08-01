@@ -185,7 +185,6 @@ class Spesification:
         self.log.info("identification of generated roles")
         self.identify_entities()
 
-
     def generate(self):
         if self.roles_generation == True:
             self.generate_roles()

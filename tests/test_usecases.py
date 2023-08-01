@@ -96,9 +96,9 @@ def test_appended_concatination_with_role_generation(caplog):
     spec.generate()
     spec.export("tests/data/generated/imputed_permissions.yml")
 
-    assert yaml_spessification_conctinated("tests/data/generated/imputed_permissions.yml") == yaml_spessification_conctinated(
-        "tests/data/verified_permissions.yml"
-    )
+    assert yaml_spessification_conctinated(
+        "tests/data/generated/imputed_permissions.yml"
+    ) == yaml_spessification_conctinated("tests/data/verified_permissions.yml")
     try:
         os.remove("tests/data/generated/imputed_permissions.yml")
     except:

@@ -90,29 +90,39 @@ def test_verify_spec_passing(spesification_team_c_verified, caplog):
     assert spesification_team_c_verified.verified == True
     assert len(caplog.records) == 0
 
+
 def test_role_generation_from_databases(spesification_without_ar_roles, caplog):
     caplog.set_level(logging.DEBUG)
     spesification_without_ar_roles.generate_roles()
     assert spesification_without_ar_roles.roles.is_entity("ar_db_database1_r") == True
 
+
 def test_role_generation_from_depencies(spesification_without_ar_roles):
     pass
 
-def test_role_generation_combined_databases_dependencies(spesification_without_ar_roles):
+
+def test_role_generation_combined_databases_dependencies(
+    spesification_without_ar_roles,
+):
     pass
+
 
 def test_role_generation_missig_databases():
     pass
 
+
 def test_role_generation_missing_dependencies():
     pass
 
-def test_spessification_get_state(spesification_team_c_verified, team_c_verefied_state_file):
+
+def test_spessification_get_state(
+    spesification_team_c_verified, team_c_verefied_state_file
+):
     user_state = spesification_team_c_verified.get_state("users")
-    assert user_state == team_c_verefied_state_file['modules']['users']
+    assert user_state == team_c_verefied_state_file["modules"]["users"]
     role_state = spesification_team_c_verified.get_state("roles")
-    assert role_state == team_c_verefied_state_file['modules']['roles']
+    assert role_state == team_c_verefied_state_file["modules"]["roles"]
     database_state = spesification_team_c_verified.get_state("databases")
-    assert database_state == team_c_verefied_state_file['modules']['databases']
+    assert database_state == team_c_verefied_state_file["modules"]["databases"]
     warehouse_state = spesification_team_c_verified.get_state("warehouses")
-    assert warehouse_state == team_c_verefied_state_file['modules']['warehouses']
+    assert warehouse_state == team_c_verefied_state_file["modules"]["warehouses"]
