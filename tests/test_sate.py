@@ -26,3 +26,5 @@ def test_permisison_state_generate(
         "generated",
     }
     assert permission_state.state_file == team_c_verefied_state_file
+
+
