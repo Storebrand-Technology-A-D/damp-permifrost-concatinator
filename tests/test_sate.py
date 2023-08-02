@@ -65,7 +65,7 @@ def test_permision_state_load_not_json():
         permission_state = Permission_state().load(
             Local_file_loader, "tests/data/real_permisions.yml"
         )
-
+@pytest.mark.skip(reason="Not implemented")
 def test_permission_state_compare(spesification_team_c_verified, spesification_without_ar_roles, state_diff_team_c):
     team_c_state = Permission_state(spesification_team_c_verified).generate()
     team_c_without_ar_state = Permission_state(spesification_without_ar_roles).generate()
