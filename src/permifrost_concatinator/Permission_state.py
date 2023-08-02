@@ -3,7 +3,7 @@ from src.permifrost_concatinator.Spesification import Spesification
 
 
 class Permission_state:
-    def __init__(self, specification: Spesification):
+    def __init__(self, specification: Spesification=None):
         self.serial = 0
         self.specification = specification
         self.state_file = None
@@ -25,3 +25,8 @@ class Permission_state:
         except:
             with open(file_path, "x") as file:
                 file.write(json.dumps(self.state_file, indent=4))
+
+    def load(self, loader, file_path: str):
+        json = loader("json")
+        self.state_file = json.load(file_path)
+        return self

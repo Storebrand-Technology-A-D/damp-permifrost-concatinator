@@ -2,6 +2,7 @@ import pytest
 import os
 import json
 from src.permifrost_concatinator.Permission_state import Permission_state
+from src.permifrost_concatinator.loader_local_file import Local_file_loader
 
 
 def test_permision_state_exists(spesification_team_c_verified):
@@ -45,3 +46,7 @@ def test_permision_state_export(
         os.remove("tests/data/generated/permision_state_export.json")
     except FileNotFoundError:
         pass
+
+def test_permision_state_load(team_c_verefied_state_file ):
+    permission_state = Permission_state().load(Local_file_loader, "tests/data/permision_state.json")
+    assert permission_state.state_file == team_c_verefied_state_file
