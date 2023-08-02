@@ -112,8 +112,3 @@ def test_spec_generator_generate_multiple_modules(
         + databases_object_str_results
         + warehouses_object_str_results
     )
-
-
-@pytest.mark.skip(reason="Not implemented")
-def test_spec_generator_singel_warehous_input():
-    pass
