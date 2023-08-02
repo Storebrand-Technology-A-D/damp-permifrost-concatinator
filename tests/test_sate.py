@@ -53,3 +53,15 @@ def test_permision_state_load(team_c_verefied_state_file):
         Local_file_loader, "tests/data/permision_state.json"
     )
     assert permission_state.state_file == team_c_verefied_state_file
+
+def test_permision_state_load_not_found():
+    with pytest.raises(FileNotFoundError):
+        permission_state = Permission_state().load(
+            Local_file_loader, "tests/data/permision_state_not_found.json"
+        )
+
+def test_permision_state_load_not_json():
+    with pytest.raises(json.decoder.JSONDecodeError):
+        permission_state = Permission_state().load(
+            Local_file_loader, "tests/data/real_permisions.yml"
+        )
