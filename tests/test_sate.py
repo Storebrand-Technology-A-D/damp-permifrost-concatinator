@@ -65,3 +65,11 @@ def test_permision_state_load_not_json():
         permission_state = Permission_state().load(
             Local_file_loader, "tests/data/real_permisions.yml"
         )
+
+def test_permission_state_compare(spesification_team_c_verified, spesification_without_ar_roles, state_diff_team_c):
+    team_c_state = Permission_state(spesification_team_c_verified).generate()
+    team_c_without_ar_state = Permission_state(spesification_without_ar_roles).generate()
+    state_diff = team_c_without_ar_state.compare(team_c_state)
+
+    assert set(state_diff.keys()) == set({"create", "update", "delete"})
+    assert state_diff.create.keys() == {"roles", "users", "databases", "warehouses"}

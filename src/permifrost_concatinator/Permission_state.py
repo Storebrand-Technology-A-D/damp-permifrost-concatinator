@@ -1,5 +1,5 @@
 import json
-from src.permifrost_concatinator.Spesification import Spesification
+from .Spesification import Spesification
 
 
 class Permission_state:

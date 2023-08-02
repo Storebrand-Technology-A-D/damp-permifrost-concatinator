@@ -520,3 +520,29 @@ def team_c_verefied_state_file():
         },
         "generated": False,
     }
+
+@pytest.fixture
+def state_diff_team_c():
+    return {
+        "create":{
+            "databases":{},
+            "warehouses":{},
+            "users":{},
+            "roles":{}
+        },
+        "delete":{
+
+            "databases":{},
+            "warehouses":{},
+            "users":{},
+            "roles":{}
+        },
+        "update":{
+
+            "databases":{},
+            "warehouses":{},
+            "users":{},
+            "roles":{}
+        }
+
+    }
