@@ -47,6 +47,9 @@ def test_permision_state_export(
     except FileNotFoundError:
         pass
 
-def test_permision_state_load(team_c_verefied_state_file ):
-    permission_state = Permission_state().load(Local_file_loader, "tests/data/permision_state.json")
+
+def test_permision_state_load(team_c_verefied_state_file):
+    permission_state = Permission_state().load(
+        Local_file_loader, "tests/data/permision_state.json"
+    )
     assert permission_state.state_file == team_c_verefied_state_file

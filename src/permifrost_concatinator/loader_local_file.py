@@ -3,7 +3,8 @@ import os
 import json
 import yaml
 
-class Local_file_loader():
+
+class Local_file_loader:
     def __init__(self, format) -> None:
         self.format = format
 
@@ -11,7 +12,7 @@ class Local_file_loader():
         if self.format == "json":
             file = self.__json(key)
 
-        elif self.format=="yaml":
+        elif self.format == "yaml":
             file = self.__yaml(key)
         return file
 

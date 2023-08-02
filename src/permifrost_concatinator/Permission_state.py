@@ -3,7 +3,7 @@ from src.permifrost_concatinator.Spesification import Spesification
 
 
 class Permission_state:
-    def __init__(self, specification: Spesification=None):
+    def __init__(self, specification: Spesification = None):
         self.serial = 0
         self.specification = specification
         self.state_file = None

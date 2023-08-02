@@ -2,6 +2,7 @@ from src.permifrost_concatinator.Base_module import Base_Module
 import pytest
 import logging
 
+
 def test_base_module_add_entities(object1):
     base_module = Base_Module()
     base_module.add_entities(object1)
@@ -56,7 +57,9 @@ def test_base_module_get_dependencies(
     assert base_module_loaded.get_dependencies("key") == ["value"]
 
 
-def test_base_module_get_dependencies_not_found(base_module_loaded_with_dependencies, caplog):
+def test_base_module_get_dependencies_not_found(
+    base_module_loaded_with_dependencies, caplog
+):
     caplog.set_level(logging.WARNING)
     base_module_loaded_with_dependencies.get_dependencies("not_a_dependency")
     assert "No not_a_dependency dependencies found in Entity" in caplog.text
