@@ -1,7 +1,7 @@
 import logging
 
 
-class Spec_Generator:
+class Permifrost_Spec_Generator:
     def __init__(self, version):
         self.version = version
         self.output = ""

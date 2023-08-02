@@ -58,6 +58,5 @@ class Base_Module:
         return self.dependencies
 
     def get_state(self):
-        self.log.debug(f"Getting {self.type} state")
         self.log.info(f"{self.type} state retrieved")
         return self.spesification

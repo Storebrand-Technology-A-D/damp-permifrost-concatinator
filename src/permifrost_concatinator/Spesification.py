@@ -4,7 +4,7 @@ from .Users_module import Users_Module
 from .Roles_module import Roles_Module
 from .Spesification_description import Spessification_description
 from .Reader import Reader
-from .Spec_generator import Spec_Generator
+from .Spec_generator import Permifrost_Spec_Generator
 from .Writer_yaml_file import Yaml_file_Writer
 from .verification_module import SpecVerification
 import logging
@@ -194,7 +194,7 @@ class Spesification:
 
         self.output = ""
         self.log.info("Generating spec")
-        generator = Spec_Generator("0.14.0")
+        generator = Permifrost_Spec_Generator("0.14.0")
         generator.generate(self.roles)
         self.log.info("Roles generated")
         generator.generate(self.users)
