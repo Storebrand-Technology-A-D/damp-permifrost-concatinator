@@ -18,7 +18,7 @@ class Base_Module:
         self.log.debug(f"New {self.type}s: {self.spesification}")
         self.log.info(f"{self.type}s added to spec")
 
-    def get_entities(self, entity):
+    def get_entity(self, entity):
         self.log.debug(f"Getting {self.type}s: {entity}")
         self.log.info(f"{self.type}s retrieved from spec")
 
