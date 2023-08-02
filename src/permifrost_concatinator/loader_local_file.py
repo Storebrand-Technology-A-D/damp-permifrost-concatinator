@@ -32,7 +32,11 @@ class Local_file_loader:
 
     def __yaml(self, key):
         self.log.debug(f"Yaml loader recived {key}")
-        with open(key, "r") as file:
-            file = yaml.safe_load(file)
-            self.log.debug(f"Managed to read files")
+        try:
+            with open(key, "r") as file:
+                file = yaml.safe_load(file)
+                self.log.debug(f"Managed to read files")
+        except yaml.YAMLError:
+                    self.log.error(f"File not yaml: {file}")
+                    raise Exception("File not yaml")
         return file

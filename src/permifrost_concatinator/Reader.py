@@ -2,6 +2,7 @@ import os
 import yaml
 import logging
 
+from src.permifrost_concatinator.loader_local_file import Local_file_loader
 
 class Reader:
     def __init__(self):
@@ -37,13 +38,10 @@ class Reader:
         """
         self.log.info(f"Reading file: {spec_file}")
         try:
-            with open(spec_file, "r") as file_to_read:
-                try:
-                    file = yaml.safe_load(file_to_read)
-                    self.log.debug(f"File read: {file}")
-                except yaml.YAMLError:
-                    self.log.error(f"File not yaml: {spec_file}")
-                    raise Exception("File not yaml")
+            yaml = Local_file_loader("yaml")
+            file = yaml.load(spec_file)
+            self.log.debug(f"File read: {file}")
+
         except FileNotFoundError:
             self.log.error(f"File not found: {spec_file}")
             raise Exception("File not found")
