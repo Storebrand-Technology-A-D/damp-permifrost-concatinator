@@ -10,7 +10,8 @@ requires-python = ">=3.6"
 dependencies = [
     "click",
     "pyyaml",
-    "regex"
+    "regex",
+    "dictdiffer"
 ]
 
 [project.scripts]
