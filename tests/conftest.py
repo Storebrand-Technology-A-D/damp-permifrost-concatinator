@@ -430,6 +430,15 @@ def spesification_object_a():
 
 
 @pytest.fixture
+def spesification_team_a():
+    spec = Spesification()
+    spec.load("tests/data/base_premissions/team_a_permisions.yml")
+    spec.identify_modules()
+    spec.identify_entities()
+    return spec
+
+
+@pytest.fixture
 def spesification_team_c():
     spec = Spesification(verification=True)
     spec.load("tests/data/verification_error_premissions/team_c_permissions.yml")
@@ -521,28 +530,35 @@ def team_c_verefied_state_file():
         "generated": False,
     }
 
+
 @pytest.fixture
-def state_diff_team_c():
-    return {
-        "create":{
-            "databases":{},
-            "warehouses":{},
-            "users":{},
-            "roles":{}
+def team_ac_state_create():
+    {
+        "roles": {
+            "role3": {"member_of": [], "warehouses": ["warehouse1"]},
+            "loader_qlik": {"member_of": []},
         },
-        "delete":{
-
-            "databases":{},
-            "warehouses":{},
-            "users":{},
-            "roles":{}
+        "users": {
+            "user3": {"can_login": True, "member_of": ["role3"]},
         },
-        "update":{
-
-            "databases":{},
-            "warehouses":{},
-            "users":{},
-            "roles":{}
-        }
-
     }
+
+
+@pytest.fixture
+def team_ac_state_update():
+    {
+        "databases": {
+            "database2": {"owner": "loader_qlik", "shared": False},
+        },
+        "roles": {
+            "role1": {"member_of": ["role2"], "warehouses": ["warehouse1"]},
+        },
+        "warehouses": {
+            "warehouse1": {"owner": "loader_qlik", "size": "xsmall"},
+        },
+    }
+
+
+@pytest.fixture
+def team_c_state_delete():
+    pass

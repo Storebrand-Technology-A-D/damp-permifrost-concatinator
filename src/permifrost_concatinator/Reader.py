@@ -4,6 +4,7 @@ import logging
 
 from .loader_local_file import Local_file_loader
 
+
 class Reader:
     def __init__(self):
         self.files = []

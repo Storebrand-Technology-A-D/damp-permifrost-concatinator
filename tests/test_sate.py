@@ -54,22 +54,31 @@ def test_permision_state_load(team_c_verefied_state_file):
     )
     assert permission_state.state_file == team_c_verefied_state_file
 
+
 def test_permision_state_load_not_found():
     with pytest.raises(FileNotFoundError):
         permission_state = Permission_state().load(
             Local_file_loader, "tests/data/permision_state_not_found.json"
         )
 
+
 def test_permision_state_load_not_json():
     with pytest.raises(json.decoder.JSONDecodeError):
         permission_state = Permission_state().load(
             Local_file_loader, "tests/data/real_permisions.yml"
         )
-@pytest.mark.skip(reason="Not implemented")
-def test_permission_state_compare(spesification_team_c_verified, spesification_without_ar_roles, state_diff_team_c):
-    team_c_state = Permission_state(spesification_team_c_verified).generate()
-    team_c_without_ar_state = Permission_state(spesification_without_ar_roles).generate()
-    state_diff = team_c_without_ar_state.compare(team_c_state)
 
-    assert set(state_diff.keys()) == set({"create", "update", "delete"})
-    assert state_diff.create.keys() == {"roles", "users", "databases", "warehouses"}
+
+@pytest.mark.skip(reason="Not implemented")
+def test_permission_state_compare(
+    spesification_team_c_verified,
+    spesification_team_a,
+    team_ac_state_create,
+    team_ac_state_update,
+):
+    team_c_state = Permission_state(spesification_team_c_verified).generate()
+    team_a_state = Permission_state(spesification_team_a).generate()
+    state_diff = team_c_state.compare(team_a_state)
+
+    assert state_diff.create == team_ac_state_create
+    assert state_diff.update == team_ac_state_update

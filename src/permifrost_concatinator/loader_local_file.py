@@ -37,6 +37,6 @@ class Local_file_loader:
                 file = yaml.safe_load(file)
                 self.log.debug(f"Managed to read files")
         except yaml.YAMLError:
-                    self.log.error(f"File not yaml: {file}")
-                    raise Exception("File not yaml")
+            self.log.error(f"File not yaml: {file}")
+            raise Exception("File not yaml")
         return file
