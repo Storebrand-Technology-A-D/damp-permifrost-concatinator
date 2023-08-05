@@ -531,31 +531,24 @@ def team_c_verefied_state_file():
     }
 
 
-@pytest.fixture
-def team_ac_state_create():
-    {
-        "roles": {
-            "role3": {"member_of": [], "warehouses": ["warehouse1"]},
-            "loader_qlik": {"member_of": []},
-        },
-        "users": {
-            "user3": {"can_login": True, "member_of": ["role3"]},
-        },
-    }
+
 
 
 @pytest.fixture
 def team_ac_state_update():
-    {
-        "databases": {
-            "database2": {"owner": "loader_qlik", "shared": False},
-        },
+    return{
+        "databases":{},
         "roles": {
             "role1": {"member_of": ["role2"], "warehouses": ["warehouse1"]},
+            "role3": {"member_of": [], "warehouses": ["warehouse1"]},
+            "loader_qlik": {"member_of": []},
         },
         "warehouses": {
             "warehouse1": {"owner": "loader_qlik", "size": "xsmall"},
         },
+        "users": {
+            "user3": {"can_login": True, "member_of": ["role3"]},
+        }
     }
 
 

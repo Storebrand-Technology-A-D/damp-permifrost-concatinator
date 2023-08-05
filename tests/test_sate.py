@@ -21,14 +21,14 @@ def test_permisison_state_generate(
     """
     permission_state = Permission_state(spesification_team_c_verified)
     permission_state.generate()
-    assert permission_state.state_file is not None
-    assert permission_state.state_file.keys() == {
+    assert permission_state.state is not None
+    assert permission_state.state.keys() == {
         "version",
         "serial",
         "modules",
         "generated",
     }
-    assert permission_state.state_file == team_c_verefied_state_file
+    assert permission_state.state == team_c_verefied_state_file
 
 
 def test_permision_state_export(
@@ -52,7 +52,7 @@ def test_permision_state_load(team_c_verefied_state_file):
     permission_state = Permission_state().load(
         Local_file_loader, "tests/data/permision_state.json"
     )
-    assert permission_state.state_file == team_c_verefied_state_file
+    assert permission_state.state == team_c_verefied_state_file
 
 
 def test_permision_state_load_not_found():
@@ -69,16 +69,15 @@ def test_permision_state_load_not_json():
         )
 
 
-@pytest.mark.skip(reason="Not implemented")
 def test_permission_state_compare(
     spesification_team_c_verified,
     spesification_team_a,
-    team_ac_state_create,
     team_ac_state_update,
+    caplog,
 ):
+    caplog.set_level("DEBUG")
     team_c_state = Permission_state(spesification_team_c_verified).generate()
     team_a_state = Permission_state(spesification_team_a).generate()
-    state_diff = team_c_state.compare(team_a_state)
+    ac_state_diff = team_a_state.compare(team_c_state)
 
-    assert state_diff.create == team_ac_state_create
-    assert state_diff.update == team_ac_state_update
+    assert ac_state_diff.update == team_ac_state_update
