@@ -1,5 +1,6 @@
 import json
 import logging
+import sys
 from dictdiffer import diff
 from dictdiffer.utils import PathLimit
 from .Spesification import Spesification
@@ -40,8 +41,8 @@ class Permission_state:
     def compare(self, comparative_state_file: "Permission_state"):
         self.log.info("Comparing state")
         state_diff = diff(
-            self.state,
             comparative_state_file.state,
+            self.state,
             path_limit=PathLimit(),
             ignore=["serial", "generated", "version"],
         )
@@ -53,7 +54,7 @@ class Permission_state:
             self.log.info(f"{difference[0]} change in {difference[1]}")
             changes.append(difference[1])
 
-        self.state_changes = []
+        self.state_changes=[]
 
         for change in changes:
             self.log.info(f"Change: {change}")
@@ -63,4 +64,11 @@ class Permission_state:
                 self.log.debug(f"Module: {module}, entity: {entity}")
                 self.state_changes.append((module, entity))
 
+
         return self
+
+    def plan(self):
+        print("Changes to the following objects:")
+        for change in self.state_changes:
+            print(f"    {change[0]}: {change[1]}: {self.specification.get_entity(change[0], change[1])}")
+        return

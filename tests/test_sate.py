@@ -79,8 +79,23 @@ def test_permission_state_compare(
     caplog.set_level("DEBUG")
     team_c_state = Permission_state(spesification_team_c_verified).generate()
     team_a_state = Permission_state(spesification_team_a).generate()
-    ac_state_diff = team_a_state.compare(team_c_state)
+    ac_state_diff = team_c_state.compare(team_a_state)
 
     assert set(ac_state_diff.state_changes) == team_ac_state_update
-    ca_state_diff = team_c_state.compare(team_a_state)
+    ca_state_diff = team_a_state.compare(team_c_state)
     assert set(ca_state_diff.state_changes) == team_ca_state_update
+
+def test_permission_state_plan(
+    spesification_team_c_verified,
+    spesification_team_a,
+    team_ca_plan,
+    capsys,
+    caplog
+):
+    caplog.set_level("DEBUG")
+    team_c_state = Permission_state(spesification_team_c_verified).generate()
+    team_a_state = Permission_state(spesification_team_a).generate()
+    team_c_state.compare(team_a_state)
+    team_c_state.plan()
+    captured = capsys.readouterr()
+    assert captured.out == team_ca_plan

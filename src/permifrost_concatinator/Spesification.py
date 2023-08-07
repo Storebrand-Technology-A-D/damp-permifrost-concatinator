@@ -255,3 +255,16 @@ class Spesification:
         else:
             self.log.error("Module not found")
             raise Exception("Module not found")
+
+    def get_entity(self, module, entity):
+        if module == "roles":
+            return self.roles.get_entities(entity)
+        elif module == "users":
+            return self.users.get_entities(entity)
+        elif module == "warehouses":
+            return self.warehouses.get_entities(entity)
+        elif module == "databases":
+            return self.databases.get_entities(entity)
+        else:
+            self.log.error("Module not found")
+            raise Exception("Module not found")
