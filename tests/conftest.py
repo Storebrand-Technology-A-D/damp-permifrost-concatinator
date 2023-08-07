@@ -536,20 +536,22 @@ def team_c_verefied_state_file():
 
 @pytest.fixture
 def team_ac_state_update():
-    return{
-        "databases":{},
-        "roles": {
-            "role1": {"member_of": ["role2"], "warehouses": ["warehouse1"]},
-            "role3": {"member_of": [], "warehouses": ["warehouse1"]},
-            "loader_qlik": {"member_of": []},
-        },
-        "warehouses": {
-            "warehouse1": {"owner": "loader_qlik", "size": "xsmall"},
-        },
-        "users": {
-            "user3": {"can_login": True, "member_of": ["role3"]},
-        }
-    }
+    return set([
+
+        ("roles","role1"),
+        ("roles","role3"),
+        ("roles","loader_qlik"),
+        ("warehouses","warehouse1"),
+        ("users","user3"),
+    ])
+
+@pytest.fixture
+def team_ca_state_update():
+    return set([
+
+        ("roles","role1"),
+        ("warehouses","warehouse1"),
+    ])
 
 
 @pytest.fixture

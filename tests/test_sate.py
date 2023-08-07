@@ -73,6 +73,7 @@ def test_permission_state_compare(
     spesification_team_c_verified,
     spesification_team_a,
     team_ac_state_update,
+    team_ca_state_update,
     caplog,
 ):
     caplog.set_level("DEBUG")
@@ -80,4 +81,6 @@ def test_permission_state_compare(
     team_a_state = Permission_state(spesification_team_a).generate()
     ac_state_diff = team_a_state.compare(team_c_state)
 
-    assert ac_state_diff.update == team_ac_state_update
+    assert set(ac_state_diff.state_changes) == team_ac_state_update
+    ca_state_diff = team_c_state.compare(team_a_state)
+    assert set(ca_state_diff.state_changes) == team_ca_state_update

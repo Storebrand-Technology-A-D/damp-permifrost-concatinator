@@ -46,28 +46,14 @@ class Permission_state:
             ignore=["serial", "generated", "version"],
         )
 
-        deletions = []
         changes = []
 
         for difference in list(state_diff):
             self.log.debug(f"Difference: {difference}")
-            if difference[0] == "change":
-                self.log.info(
-                    f"Change in {difference[1]} from {difference[2]} to {difference[3]}"
-                )
-                changes.append(difference[1])
-            elif difference[0] == "add":
-                self.log.info(f"Addition of {difference[1]}")
-                changes.append(difference[1])
-
-            elif difference[0] == "remove":
-                self.log.info(f"Removal of {difference[1]}")
-                deletions.append(difference[1])
-            else:
-                self.log.info(f"Unknown change {difference[0]}")
+            self.log.info(f"{difference[0]} change in {difference[1]}")
+            changes.append(difference[1])
 
         self.state_changes=[]
-        self.state_deletions=[]
 
         for change in changes:
             self.log.info(f"Change: {change}")
@@ -77,17 +63,5 @@ class Permission_state:
                 self.log.debug(f"Module: {module}, entity: {entity}")
                 self.state_changes.append((module, entity))
 
-        for deletion in deletions:
-            self.log.info(f"Deletion: {deletion}")
-            split_deletion = deletion.split(".")
-            if len(split_deletion) == 3:
-                base, module, entity = split_deletion
-                self.log.debug(f"Module: {module}, entity: {entity}")
-                self.state_deletions.append((module, entity))
-        self.update = {"roles": {}, "warehouses": {}, "users": {}, "databases": {}}
-        for change in self.state_changes:
-            self.log.info(f"Change: {change}")
-            self.log.debug(f'new state for {change[1]} : {comparative_state_file.state["modules"][change[0]][change[1]]}')
-            self.update[change[0]][change[1]] = comparative_state_file.state["modules"][change[0]][change[1]]
 
         return self
