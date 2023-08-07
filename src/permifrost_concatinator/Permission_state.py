@@ -53,7 +53,7 @@ class Permission_state:
             self.log.info(f"{difference[0]} change in {difference[1]}")
             changes.append(difference[1])
 
-        self.state_changes=[]
+        self.state_changes = []
 
         for change in changes:
             self.log.info(f"Change: {change}")
@@ -62,6 +62,5 @@ class Permission_state:
                 base, module, entity = split_change
                 self.log.debug(f"Module: {module}, entity: {entity}")
                 self.state_changes.append((module, entity))
-
 
         return self

@@ -531,27 +531,27 @@ def team_c_verefied_state_file():
     }
 
 
-
-
-
 @pytest.fixture
 def team_ac_state_update():
-    return set([
+    return set(
+        [
+            ("roles", "role1"),
+            ("roles", "role3"),
+            ("roles", "loader_qlik"),
+            ("warehouses", "warehouse1"),
+            ("users", "user3"),
+        ]
+    )
 
-        ("roles","role1"),
-        ("roles","role3"),
-        ("roles","loader_qlik"),
-        ("warehouses","warehouse1"),
-        ("users","user3"),
-    ])
 
 @pytest.fixture
 def team_ca_state_update():
-    return set([
-
-        ("roles","role1"),
-        ("warehouses","warehouse1"),
-    ])
+    return set(
+        [
+            ("roles", "role1"),
+            ("warehouses", "warehouse1"),
+        ]
+    )
 
 
 @pytest.fixture
