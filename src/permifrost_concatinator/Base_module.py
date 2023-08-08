@@ -26,7 +26,8 @@ class Base_Module:
             return self.spesification[entity]
         else:
             self.log.error(f"{self.type} not found")
-            raise Exception(f"{self.type} not found")
+            return None
+
 
     def is_entity(self, entity):
         self.log.debug(f"Checking if {self.type} exists: {entity}")

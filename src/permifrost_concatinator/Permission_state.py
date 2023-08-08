@@ -47,28 +47,49 @@ class Permission_state:
             ignore=["serial", "generated", "version"],
         )
 
-        changes = []
+        self.state_changes = []
 
         for difference in list(state_diff):
             self.log.debug(f"Difference: {difference}")
             self.log.info(f"{difference[0]} change in {difference[1]}")
-            changes.append(difference[1])
-
-        self.state_changes=[]
-
-        for change in changes:
-            self.log.info(f"Change: {change}")
-            split_change = change.split(".")
+            split_change = difference[1].split(".")
             if len(split_change) == 3:
                 base, module, entity = split_change
                 self.log.debug(f"Module: {module}, entity: {entity}")
-                self.state_changes.append((module, entity))
-
+                self.state_changes.append((module, entity)) if (module, entity) not in self.state_changes else self.state_changes
+            elif len(split_change) == 2:
+                base, module = split_change
+                self.log.debug(f"Module: {module}, entity: {difference[2][0][0]}")
+                if len(difference[2]) > 1:
+                    for change in difference[2]:
+                        self.log.debug(f"Change: {change}")
+                        self.state_changes.append((module, change[0])) if (module, change[0]) not in self.state_changes else self.state_changes
+                else:
+                    self.state_changes.append((module, difference[2][0][0])) if (module, difference[2][0][0]) not in self.state_changes else self.state_changes
 
         return self
 
     def plan(self):
         print("Changes to the following objects:")
+        deletions = []
+        self.log.info(f"Number of changes: {len(self.state_changes)}")
+        self.log.debug(f"State changes: {self.state_changes}")
         for change in self.state_changes:
-            print(f"    {change[0]}: {change[1]}: {self.specification.get_entity(change[0], change[1])}")
+            self.log.debug(f"Change: {change}")
+            self.log.debug(f"Entity: {self.specification.get_entity(change[0], change[1])}")
+            self.log.debug(f"type: {type(self.specification.get_entity(change[0], change[1]))}")
+            new_state = self.specification.get_entity(change[0], change[1])
+            if new_state is not None:
+                print(f"    {change[0]}: {change[1]}: {new_state}")
+            else:
+                self.log.debug(f"Entity: {change} to be deleted")
+                deletions.append(change)
+
+        if len(deletions) > 0:
+            self.log.info(f"Number of deletions: {len(deletions)}")
+            self.log.debug(f"Deletions: {deletions}")
+            print("Entities to be removed:")
+            for deletion in deletions:
+                print(f"    {deletion[0]}: {deletion[1]}")
+
         return

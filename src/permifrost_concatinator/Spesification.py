@@ -267,4 +267,4 @@ class Spesification:
             return self.databases.get_entities(entity)
         else:
             self.log.error("Module not found")
-            raise Exception("Module not found")
+            return None

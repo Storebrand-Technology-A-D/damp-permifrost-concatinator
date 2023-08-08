@@ -1,5 +1,6 @@
 from src.permifrost_concatinator.Databases_module import Databases_Module
 import pytest
+import logging
 
 
 def test_database_module_add_entities(databases_object1):
@@ -31,11 +32,10 @@ def test_database_module_get_database(databases_object):
     }
 
 
-def test_database_module_get_database_not_found(databases_object):
-    with pytest.raises(Exception) as exception_info:
-        databases_object.get_entities("database4")
-    assert exception_info.type == Exception
-    assert exception_info.value.args[0] == "Database not found"
+def test_database_module_get_database_not_found(databases_object, caplog):
+    caplog.set_level(logging.WARNING)
+    databases_object.get_entities("database4")
+    assert "Database not found" in caplog.text
 
 
 def test_database_is_database(databases_object):

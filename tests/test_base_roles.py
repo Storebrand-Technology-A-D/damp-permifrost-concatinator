@@ -1,6 +1,6 @@
 from src.permifrost_concatinator.Roles_module import Roles_Module
 import pytest
-
+import logging
 
 def test_roles_module_add_entities(roles_object1):
     roles = Roles_Module()
@@ -58,9 +58,10 @@ def test_roles_module_get_role(roles_object):
     }
 
 
-def test_roles_module_get_role_not_found(roles_object):
-    with pytest.raises(Exception):
-        roles_object.get_entities("role3")
+def test_roles_module_get_role_not_found(roles_object, caplog):
+    caplog.set_level(logging.WARNING)
+    roles_object.get_entities("role3")
+    assert "Role not found" in caplog.text
 
 
 def test_roles_module_is_role(roles_object):

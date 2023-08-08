@@ -1,5 +1,6 @@
 import pytest
 from src.permifrost_concatinator.Users_module import Users_Module
+import logging
 
 
 def test_user_add_users(user_object1):
@@ -25,11 +26,10 @@ def test_users_get_user(users_object):
     }
 
 
-def test_users_get_user_not_found(users_object):
-    with pytest.raises(Exception) as exception_info:
-        users_object.get_entities("user4")
-    assert exception_info.type == Exception
-    assert exception_info.value.args[0] == "User not found"
+def test_users_get_user_not_found(users_object, caplog):
+    caplog.set_level(logging.WARNING)
+    users_object.get_entities("user4")
+    assert "User not found" in caplog.text
 
 
 def test_users_is_user(users_object):

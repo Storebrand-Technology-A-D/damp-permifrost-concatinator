@@ -1,6 +1,6 @@
 from src.permifrost_concatinator.Warehouses_module import Warehouses_Module
 import pytest
-
+import logging
 
 def test_warehouse_module_add_entities(warehouses_object1):
     warehouses = Warehouses_Module()
@@ -24,11 +24,10 @@ def test_warehouse_module_get_warehouse(warehouses_object):
     assert warehouses_object.get_entities("warehouse1") == {"size": "xsmall"}
 
 
-def test_warehouse_module_get_warehouse_not_found(warehouses_object):
-    with pytest.raises(Exception) as exception_info:
-        warehouses_object.get_entities("warehouse4")
-    assert exception_info.type == Exception
-    assert exception_info.value.args[0] == "Warehouse not found"
+def test_warehouse_module_get_warehouse_not_found(warehouses_object,caplog):
+    caplog.set_level(logging.WARNING)
+    warehouses_object.get_entities("warehouse4")
+    assert "Warehouse not found" in caplog.text
 
 
 def test_warehouse_is_warehouse(warehouses_object):
