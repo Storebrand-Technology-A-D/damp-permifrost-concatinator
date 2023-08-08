@@ -2,6 +2,7 @@ from src.permifrost_concatinator.Roles_module import Roles_Module
 import pytest
 import logging
 
+
 def test_roles_module_add_entities(roles_object1):
     roles = Roles_Module()
     roles.add_entities(roles_object1)

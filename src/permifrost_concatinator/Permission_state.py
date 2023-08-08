@@ -56,16 +56,25 @@ class Permission_state:
             if len(split_change) == 3:
                 base, module, entity = split_change
                 self.log.debug(f"Module: {module}, entity: {entity}")
-                self.state_changes.append((module, entity)) if (module, entity) not in self.state_changes else self.state_changes
+                self.state_changes.append((module, entity)) if (
+                    module,
+                    entity,
+                ) not in self.state_changes else self.state_changes
             elif len(split_change) == 2:
                 base, module = split_change
                 self.log.debug(f"Module: {module}, entity: {difference[2][0][0]}")
                 if len(difference[2]) > 1:
                     for change in difference[2]:
                         self.log.debug(f"Change: {change}")
-                        self.state_changes.append((module, change[0])) if (module, change[0]) not in self.state_changes else self.state_changes
+                        self.state_changes.append((module, change[0])) if (
+                            module,
+                            change[0],
+                        ) not in self.state_changes else self.state_changes
                 else:
-                    self.state_changes.append((module, difference[2][0][0])) if (module, difference[2][0][0]) not in self.state_changes else self.state_changes
+                    self.state_changes.append((module, difference[2][0][0])) if (
+                        module,
+                        difference[2][0][0],
+                    ) not in self.state_changes else self.state_changes
 
         return self
 
@@ -76,8 +85,12 @@ class Permission_state:
         self.log.debug(f"State changes: {self.state_changes}")
         for change in self.state_changes:
             self.log.debug(f"Change: {change}")
-            self.log.debug(f"Entity: {self.specification.get_entity(change[0], change[1])}")
-            self.log.debug(f"type: {type(self.specification.get_entity(change[0], change[1]))}")
+            self.log.debug(
+                f"Entity: {self.specification.get_entity(change[0], change[1])}"
+            )
+            self.log.debug(
+                f"type: {type(self.specification.get_entity(change[0], change[1]))}"
+            )
             new_state = self.specification.get_entity(change[0], change[1])
             if new_state is not None:
                 print(f"    {change[0]}: {change[1]}: {new_state}")

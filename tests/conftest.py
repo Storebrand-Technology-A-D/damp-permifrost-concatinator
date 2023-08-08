@@ -548,7 +548,11 @@ def team_ac_state_update():
 def team_ca_state_update():
     return set(
         [
-            ('users', 'user3'), ('warehouses', 'warehouse1'), ('roles', 'loader_qlik'), ('roles', 'role3'), ('roles', 'role1')
+            ("users", "user3"),
+            ("warehouses", "warehouse1"),
+            ("roles", "loader_qlik"),
+            ("roles", "role3"),
+            ("roles", "role1"),
         ]
     )
 
@@ -562,6 +566,7 @@ def team_ca_plan():
     users: user3: {'can_login': True, 'member_of': ['role3']}
     warehouses: warehouse1: {'size': 'xsmall', 'owner': 'loader_qlik'}
 """
+
 
 @pytest.fixture
 def team_ac_plan():
