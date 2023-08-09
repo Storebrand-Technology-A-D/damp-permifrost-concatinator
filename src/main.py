@@ -29,7 +29,7 @@ from permifrost_concatinator.loader_local_file import Local_file_loader
     required=False,
     default=False,
 )
-@click.option("--state", help="path to state file", required=False, default=False)
+@click.option("--state", help="path to state file", required=False, default='')
 def main(input, output, verification, plan, apply, state, role_generation):
     logformat = logging.Formatter(fmt="%(levelname)s - %(message)s")
     consolHandler = logging.StreamHandler()
