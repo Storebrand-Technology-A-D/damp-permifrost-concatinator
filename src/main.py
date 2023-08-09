@@ -54,7 +54,7 @@ def main(input, output, verification, plan, apply, state, role_generation):
             logger.error("Failed to load state")
 
         new_state = Permission_state(spesification).generate()
-        new_state.compare(state)
+        new_state.compare(current_state)
         new_state.plan()
 
     spesification.export(output)
