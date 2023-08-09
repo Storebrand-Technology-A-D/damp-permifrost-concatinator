@@ -80,7 +80,7 @@ class Permission_state:
         return self
 
     def plan(self, file_path: str = None):
-        if file_path is not None:
+        if file_path is not '':
             with open(file_path, "w") as file:
                 if len(self.state_changes) == 0:
                     self.log.info("No changes to apply")
