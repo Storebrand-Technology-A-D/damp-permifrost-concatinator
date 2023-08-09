@@ -8,14 +8,19 @@ from permifrost_concatinator.loader_local_file import Local_file_loader
 @click.command()
 @click.option("--input", help="Input file or directory", required=True)
 @click.option("--output", help="Output path and filename", required=True)
+
+
 @click.option(
     "--verification", help="Verify the spesification", required=False, default=False
 )
+
+@click.option("--role_generation", help="Generate AR roles based on functional roles and databases", required=False, default=False)
+
 @click.option("--plan",help="output planned changes based on spec comparison", required=False, default=False )
 @click.option("--apply",help="apply planned changes based on spec comparison", required=False, default=False )
 @click.option("--state",help="path to state file", required=False, default=False )
 
-def main(input, output, verification, plan, apply, state):
+def main(input, output, verification, plan, apply, state, role_generation):
     logformat = logging.Formatter(fmt="%(levelname)s - %(message)s")
     consolHandler = logging.StreamHandler()
     consolHandler.setLevel(logging.INFO)
@@ -24,7 +29,7 @@ def main(input, output, verification, plan, apply, state):
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
     logger.addHandler(consolHandler)
-    spesification = Spesification(verification=verification)
+    spesification = Spesification(verification=verification, role_generation=role_generation)
     spesification.load(input)
     spesification.identify_modules()
     spesification.identify_entities()
