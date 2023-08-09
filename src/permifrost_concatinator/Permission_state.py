@@ -84,9 +84,9 @@ class Permission_state:
             with open(file_path, "w") as file:
                 if len(self.state_changes) == 0:
                     self.log.info("No changes to apply")
-                    print("No Changes")
+                    file.write("No Changes")
                     return
-                print("Changes to the following objects:")
+                file.write("Changes to the following objects:")
                 deletions = []
                 self.log.info(f"Number of changes: {len(self.state_changes)}")
                 self.log.debug(f"State changes: {self.state_changes}")
@@ -100,10 +100,16 @@ class Permission_state:
                     )
                     new_state = self.specification.get_entity(change[0], change[1])
                     if new_state is not None:
-                        print(f"    {change[0]}: {change[1]}: {new_state}")
+                        file.write(f"    {change[0]}: {change[1]}: {new_state}")
                     else:
                         self.log.debug(f"Entity: {change} to be deleted")
                         deletions.append(change)
+                if len(deletions) > 0:
+                    self.log.info(f"Number of deletions: {len(deletions)}")
+                    self.log.debug(f"Deletions: {deletions}")
+                    file.write("Entities to be removed:")
+                    for deletion in deletions:
+                        file.write(f"    {deletion[0]}: {deletion[1]}")
         else:
             if len(self.state_changes) == 0:
                 self.log.info("No changes to apply")
