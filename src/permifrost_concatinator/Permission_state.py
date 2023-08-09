@@ -36,6 +36,7 @@ class Permission_state:
     def load(self, loader, file_path: str):
         json = loader("json")
         self.state = json.load(file_path)
+        self.serial = self.state["serial"]
         return self
 
     def compare(self, comparative_state_file: "Permission_state"):
@@ -79,6 +80,10 @@ class Permission_state:
         return self
 
     def plan(self):
+        if len(self.state_changes) == 0:
+            self.log.info("No changes to apply")
+            print("No Changes")
+            return
         print("Changes to the following objects:")
         deletions = []
         self.log.info(f"Number of changes: {len(self.state_changes)}")

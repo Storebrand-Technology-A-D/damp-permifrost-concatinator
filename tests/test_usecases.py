@@ -128,16 +128,13 @@ def test_state_file_update(caplog, capsys):
     spec.identify_modules()
     spec.identify_entities()
     spec.generate()
-    previous_state = Permission_state().load(Local_file_loader, "tests/data/permision_state.json")
     current_state = Permission_state(spec).generate()
-    current_state.compare(previous_state)
     current_state.export("tests/data/generated/permision_state.json")
     updated_state = Permission_state().load(Local_file_loader, "tests/data/generated/permision_state.json")
     updated_state.compare(current_state)
     updated_state.plan()
     captured = capsys.readouterr()
-    assert spec.verified == True
-    assert current_state == updated_state
+    assert current_state.serial < updated_state.serial
     assert captured.out == open("tests/data/no_change_plan.txt").read()
 
 

@@ -1,0 +1,322 @@
+{
+    "version": "0.1.0",
+    "serial": 1,
+    "generated": true,
+    "modules": {
+        "databases": {
+            "database1": {
+                "shared": false
+            },
+            "database2": {
+                "shared": false,
+                "owner": "loader_qlik"
+            },
+            "database3": {
+                "shared": false
+            },
+            "database4": {
+                "shared": false
+            },
+            "database5": {
+                "shared": false,
+                "owner": "data_engineer"
+            }
+        },
+        "roles": {
+            "loader_qlik": {
+                "member_of": []
+            },
+            "role1": {
+                "member_of": [
+                    "role2"
+                ]
+            },
+            "role2": {
+                "member_of": [
+                    "ar_db_database1_r",
+                    "ar_db_database1_w",
+                    "ar_db_database2_r",
+                    "ar_db_database2_w"
+                ]
+            },
+            "role3": {
+                "member_of": [
+                    "role4"
+                ]
+            },
+            "role4": {
+                "member_of": [
+                    "ar_db_database1_r",
+                    "ar_db_database1_w",
+                    "ar_db_database3_r",
+                    "ar_db_database3_w"
+                ]
+            },
+            "ar_db_database1_r": {
+                "privileges": {
+                    "databases": {
+                        "read": [
+                            "database1"
+                        ]
+                    },
+                    "schemas": {
+                        "read": [
+                            "database1.*"
+                        ]
+                    },
+                    "tables": {
+                        "read": [
+                            "database1.*.*"
+                        ]
+                    }
+                }
+            },
+            "ar_db_database1_w": {
+                "privileges": {
+                    "databases": {
+                        "write": [
+                            "database1"
+                        ]
+                    },
+                    "schemas": {
+                        "write": [
+                            "database1.*"
+                        ]
+                    },
+                    "tables": {
+                        "write": [
+                            "database1.*.*"
+                        ]
+                    }
+                }
+            },
+            "ar_db_database3_r": {
+                "privileges": {
+                    "databases": {
+                        "read": [
+                            "database3"
+                        ]
+                    },
+                    "schemas": {
+                        "read": [
+                            "database3.*"
+                        ]
+                    },
+                    "tables": {
+                        "read": [
+                            "database3.*.*"
+                        ]
+                    }
+                }
+            },
+            "ar_db_database3_w": {
+                "privileges": {
+                    "databases": {
+                        "write": [
+                            "database3"
+                        ]
+                    },
+                    "schemas": {
+                        "write": [
+                            "database3.*"
+                        ]
+                    },
+                    "tables": {
+                        "write": [
+                            "database3.*.*"
+                        ]
+                    }
+                }
+            },
+            "data_engineer": {
+                "warehouses": [
+                    "warehouse1"
+                ],
+                "member_of": [
+                    "analyst",
+                    "reader"
+                ]
+            },
+            "analyst": {
+                "member_of": [
+                    "ar_db_database1_r",
+                    "ar_db_database1_w",
+                    "ar_db_database2_r",
+                    "ar_db_database2_w"
+                ]
+            },
+            "reader": {
+                "warehouses": [
+                    "warehouse1"
+                ],
+                "member_of": [
+                    "ar_db_database4_r",
+                    "ar_db_database4_w",
+                    "ar_db_database5_r",
+                    "ar_db_database5_w"
+                ]
+            },
+            "tag_admin": {
+                "member_of": []
+            },
+            "ar_db_database2_r": {
+                "privileges": {
+                    "databases": {
+                        "read": [
+                            "database2"
+                        ]
+                    },
+                    "schemas": {
+                        "read": [
+                            "database2.*"
+                        ]
+                    },
+                    "tables": {
+                        "read": [
+                            "database2.*.*"
+                        ]
+                    }
+                }
+            },
+            "ar_db_database2_w": {
+                "privileges": {
+                    "databases": {
+                        "write": [
+                            "database2"
+                        ]
+                    },
+                    "schemas": {
+                        "write": [
+                            "database2.*"
+                        ]
+                    },
+                    "tables": {
+                        "write": [
+                            "database2.*.*"
+                        ]
+                    }
+                }
+            },
+            "ar_db_database4_w": {
+                "privileges": {
+                    "databases": {
+                        "write": [
+                            "database4"
+                        ]
+                    },
+                    "schemas": {
+                        "write": [
+                            "database4.*"
+                        ]
+                    },
+                    "tables": {
+                        "write": [
+                            "database4.*.*"
+                        ]
+                    }
+                }
+            },
+            "ar_db_database4_r": {
+                "privileges": {
+                    "databases": {
+                        "read": [
+                            "database4"
+                        ]
+                    },
+                    "schemas": {
+                        "read": [
+                            "database4.*"
+                        ]
+                    },
+                    "tables": {
+                        "read": [
+                            "database4.*.*"
+                        ]
+                    }
+                }
+            },
+            "ar_db_database5_w": {
+                "privileges": {
+                    "databases": {
+                        "write": [
+                            "database5"
+                        ]
+                    },
+                    "schemas": {
+                        "write": [
+                            "database5.*"
+                        ]
+                    },
+                    "tables": {
+                        "write": [
+                            "database5.*.*"
+                        ]
+                    }
+                }
+            },
+            "ar_db_database5_r": {
+                "privileges": {
+                    "databases": {
+                        "read": [
+                            "database5"
+                        ]
+                    },
+                    "schemas": {
+                        "read": [
+                            "database5.*"
+                        ]
+                    },
+                    "tables": {
+                        "read": [
+                            "database5.*.*"
+                        ]
+                    }
+                }
+            }
+        },
+        "users": {
+            "user2": {
+                "can_login": true,
+                "member_of": [
+                    "role2"
+                ]
+            },
+            "user3": {
+                "can_login": true,
+                "member_of": [
+                    "role3"
+                ]
+            },
+            "sysuser": {
+                "can_login": true,
+                "member_of": [
+                    "data_engineer"
+                ]
+            },
+            "pbi_user": {
+                "can_login": true,
+                "member_of": [
+                    "analyst"
+                ]
+            },
+            "loader_user": {
+                "can_login": true,
+                "member_of": [
+                    "loader_qlik"
+                ]
+            }
+        },
+        "warehouses": {
+            "warehouse1": {
+                "size": "xsmall"
+            },
+            "transforming_warehouse": {
+                "size": "medium",
+                "owner": "data_engineer"
+            },
+            "analytics_warehouse": {
+                "size": "xsmall"
+            }
+        }
+    }
+}
