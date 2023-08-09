@@ -106,6 +106,7 @@ def test_appended_concatination_with_role_generation(caplog):
     except:
         pass
 
+
 def test_concatination_plan(caplog, capsys):
     caplog.set_level(logging.INFO)
     spec = Spesification(verification=True, generate_roles=True)
@@ -113,13 +114,16 @@ def test_concatination_plan(caplog, capsys):
     spec.identify_modules()
     spec.identify_entities()
     spec.generate()
-    previous_state = Permission_state().load(Local_file_loader, "tests/data/permision_state.json")
+    previous_state = Permission_state().load(
+        Local_file_loader, "tests/data/permision_state.json"
+    )
     current_state = Permission_state(spec).generate()
     current_state.compare(previous_state)
     current_state.plan()
     captured = capsys.readouterr()
     assert spec.verified == True
     assert captured.out == open("tests/data/plan.txt").read()
+
 
 def test_state_file_update(caplog, capsys):
     caplog.set_level(logging.INFO)
@@ -130,7 +134,9 @@ def test_state_file_update(caplog, capsys):
     spec.generate()
     current_state = Permission_state(spec).generate()
     current_state.export("tests/data/generated/permision_state.json")
-    updated_state = Permission_state().load(Local_file_loader, "tests/data/generated/permision_state.json")
+    updated_state = Permission_state().load(
+        Local_file_loader, "tests/data/generated/permision_state.json"
+    )
     updated_state.compare(current_state)
     updated_state.plan()
     captured = capsys.readouterr()
@@ -142,9 +148,6 @@ def test_state_file_update(caplog, capsys):
         pass
 
 
-
-
-
 @pytest.mark.skip(reason="only for timning purposes")
 def test_spec_verification_real(caplog):
     caplog.set_level(logging.INFO)
@@ -154,4 +157,3 @@ def test_spec_verification_real(caplog):
     spec.identify_entities()
     spec.generate()
     assert spec.verified == True
-
