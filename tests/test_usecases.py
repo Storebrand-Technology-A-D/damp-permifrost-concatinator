@@ -136,6 +136,10 @@ def test_state_file_update(caplog, capsys):
     captured = capsys.readouterr()
     assert current_state.serial < updated_state.serial
     assert captured.out == open("tests/data/no_change_plan.txt").read()
+    try:
+        os.remove("tests/data/generated/permision_state.json")
+    except:
+        pass
 
 
 
