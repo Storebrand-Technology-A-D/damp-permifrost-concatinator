@@ -49,7 +49,7 @@ def main(input, output, verification, plan, apply, state, role_generation):
     if plan == True:
         try:
             current_state = Permission_state()
-            current_state.load(Local_file_loader(), state)
+            current_state.load(Local_file_loader, state)
         except:
             logger.error("Failed to load state")
 
