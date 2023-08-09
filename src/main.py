@@ -40,7 +40,7 @@ def main(input, output, verification, plan, apply, state, role_generation):
     logger.setLevel(logging.INFO)
     logger.addHandler(consolHandler)
     spesification = Spesification(
-        verification=verification, role_generation=role_generation
+        verification=verification, generate_roles=role_generation
     )
     spesification.load(input)
     spesification.identify_modules()
