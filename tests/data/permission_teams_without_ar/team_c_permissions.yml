@@ -1,0 +1,64 @@
+version: "0.14.0"
+# ==========================================
+# databases
+# ==========================================
+databases:
+  - database1:
+      shared: no
+  - database2:
+      shared: no
+      owner: loader_qlik
+
+# ==========================================
+# Functional Roles
+# ==========================================
+
+roles:
+    - role1:
+          warehouses:
+            - warehouse1
+          member_of:
+            - role2
+    - role2:
+          member_of:
+            - ar_db_database1_r
+            - ar_db_database1_w
+            - ar_db_database2_r
+            - ar_db_database2_w
+    - role3:
+          warehouses:
+            - warehouse1
+          member_of: []
+    - loader_qlik:
+          member_of: []
+
+
+# ==========================================
+# users
+# ==========================================
+
+
+users:
+  - user1:
+      can_login: yes
+      member_of:
+        - role1
+  - user2:
+      can_login: yes
+      member_of:
+        - role2
+  - user3:
+      can_login: yes
+      member_of:
+        - role3
+
+# ==========================================
+# warehouses
+# ==========================================
+
+warehouses:
+  - warehouse1:
+      size: xsmall
+      owner: loader_qlik
+  - warehouse2:
+      size: xsmall
