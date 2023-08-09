@@ -79,35 +79,60 @@ class Permission_state:
 
         return self
 
-    def plan(self):
-        if len(self.state_changes) == 0:
-            self.log.info("No changes to apply")
-            print("No Changes")
+    def plan(self, file_path: str = None):
+        if file_path is not None:
+            with open(file_path, "w") as file:
+                if len(self.state_changes) == 0:
+                    self.log.info("No changes to apply")
+                    print("No Changes")
+                    return
+                print("Changes to the following objects:")
+                deletions = []
+                self.log.info(f"Number of changes: {len(self.state_changes)}")
+                self.log.debug(f"State changes: {self.state_changes}")
+                for change in self.state_changes:
+                    self.log.debug(f"Change: {change}")
+                    self.log.debug(
+                        f"Entity: {self.specification.get_entity(change[0], change[1])}"
+                    )
+                    self.log.debug(
+                        f"type: {type(self.specification.get_entity(change[0], change[1]))}"
+                    )
+                    new_state = self.specification.get_entity(change[0], change[1])
+                    if new_state is not None:
+                        print(f"    {change[0]}: {change[1]}: {new_state}")
+                    else:
+                        self.log.debug(f"Entity: {change} to be deleted")
+                        deletions.append(change)
+        else:
+            if len(self.state_changes) == 0:
+                self.log.info("No changes to apply")
+                print("No Changes")
+                return
+            print("Changes to the following objects:")
+            deletions = []
+            self.log.info(f"Number of changes: {len(self.state_changes)}")
+            self.log.debug(f"State changes: {self.state_changes}")
+            for change in self.state_changes:
+                self.log.debug(f"Change: {change}")
+                self.log.debug(
+                    f"Entity: {self.specification.get_entity(change[0], change[1])}"
+                )
+                self.log.debug(
+                    f"type: {type(self.specification.get_entity(change[0], change[1]))}"
+                )
+                new_state = self.specification.get_entity(change[0], change[1])
+                if new_state is not None:
+                    print(f"    {change[0]}: {change[1]}: {new_state}")
+                else:
+                    self.log.debug(f"Entity: {change} to be deleted")
+                    deletions.append(change)
+
+            if len(deletions) > 0:
+                self.log.info(f"Number of deletions: {len(deletions)}")
+                self.log.debug(f"Deletions: {deletions}")
+                print("Entities to be removed:")
+                for deletion in deletions:
+                    print(f"    {deletion[0]}: {deletion[1]}")
+
             return
-        print("Changes to the following objects:")
-        deletions = []
-        self.log.info(f"Number of changes: {len(self.state_changes)}")
-        self.log.debug(f"State changes: {self.state_changes}")
-        for change in self.state_changes:
-            self.log.debug(f"Change: {change}")
-            self.log.debug(
-                f"Entity: {self.specification.get_entity(change[0], change[1])}"
-            )
-            self.log.debug(
-                f"type: {type(self.specification.get_entity(change[0], change[1]))}"
-            )
-            new_state = self.specification.get_entity(change[0], change[1])
-            if new_state is not None:
-                print(f"    {change[0]}: {change[1]}: {new_state}")
-            else:
-                self.log.debug(f"Entity: {change} to be deleted")
-                deletions.append(change)
-
-        if len(deletions) > 0:
-            self.log.info(f"Number of deletions: {len(deletions)}")
-            self.log.debug(f"Deletions: {deletions}")
-            print("Entities to be removed:")
-            for deletion in deletions:
-                print(f"    {deletion[0]}: {deletion[1]}")
-
-        return
