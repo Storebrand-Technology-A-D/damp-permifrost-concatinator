@@ -4,6 +4,8 @@ import logging
 
 from src.permifrost_concatinator.Spesification import Spesification
 from src.permifrost_concatinator.Reader import Reader
+from src.permifrost_concatinator.Permission_state import Permission_state
+from src.permifrost_concatinator.loader_local_file import Local_file_loader
 
 
 def yaml_spessification_conctinated(file_path):
@@ -104,6 +106,23 @@ def test_appended_concatination_with_role_generation(caplog):
     except:
         pass
 
+def test_concatination_plan(caplog, capsys):
+    caplog.set_level(logging.INFO)
+    spec = Spesification(verification=True, generate_roles=True)
+    spec.load("tests/data/permission_teams_without_ar")
+    spec.identify_modules()
+    spec.identify_entities()
+    spec.generate()
+    previous_state = Permission_state().load(Local_file_loader, "tests/data/permision_state.json")
+    current_state = Permission_state(spec).generate()
+    current_state.compare(previous_state)
+    current_state.plan()
+    captured = capsys.readouterr()
+    assert spec.verified == True
+    assert captured.out == open("tests/data/plan.txt").read()
+
+
+
 
 @pytest.mark.skip(reason="only for timning purposes")
 def test_spec_verification_real(caplog):
@@ -114,3 +133,4 @@ def test_spec_verification_real(caplog):
     spec.identify_entities()
     spec.generate()
     assert spec.verified == True
+

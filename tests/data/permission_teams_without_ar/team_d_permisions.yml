@@ -7,7 +7,7 @@ databases:
       shared: no
   - database5:
       shared: no
-      owner: data_loader
+      owner: data_engineer
 
 # ==========================================
 # Functional Roles

@@ -39,10 +39,6 @@ roles:
 
 
 users:
-  - user1:
-      can_login: yes
-      member_of:
-        - role1
   - user2:
       can_login: yes
       member_of:
@@ -60,5 +56,3 @@ warehouses:
   - warehouse1:
       size: xsmall
       owner: loader_qlik
-  - warehouse2:
-      size: xsmall
