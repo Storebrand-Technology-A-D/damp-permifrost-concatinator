@@ -119,7 +119,7 @@ def test_concatination_plan(caplog, capsys):
     )
     current_state = Permission_state(spec).generate()
     current_state.compare(previous_state)
-    current_state.plan()
+    current_state.plan('')
     captured = capsys.readouterr()
     assert spec.verified == True
     assert captured.out == open("tests/data/plan.txt").read()
@@ -138,7 +138,7 @@ def test_state_file_update(caplog, capsys):
         Local_file_loader, "tests/data/generated/permision_state.json"
     )
     updated_state.compare(current_state)
-    updated_state.plan()
+    updated_state.plan('')
     captured = capsys.readouterr()
     assert current_state.serial < updated_state.serial
     assert captured.out == open("tests/data/no_change_plan.txt").read()

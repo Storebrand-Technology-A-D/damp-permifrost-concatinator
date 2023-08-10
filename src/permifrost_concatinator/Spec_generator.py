@@ -1,4 +1,5 @@
 import logging
+from .txt_generator import txt_generator
 
 
 class Permifrost_Spec_Generator:
@@ -17,21 +18,12 @@ class Permifrost_Spec_Generator:
 
     def generate_users(self, module):
         self.log.info("Generating users")
+        tekst_generator = txt_generator(2)
         self.users = "users:\n"
         for user in module.spesification:
-            result = ""
             self.log.info(f"Generating user: {user}")
             self.log.debug(f"User spec: {module.spesification[user]}")
-            result += f"""{self.space*1}- {user}:\n"""
-            for key in module.spesification[user]:
-                if key == "member_of":
-                    result += f"""{self.space*3}{key}:\n"""
-                    for role in module.spesification[user][key]:
-                        result += f"""{self.space*4}- {role}\n"""
-                elif key == "can_login":
-                    result += (
-                        f"""{self.space*3}{key}: {module.spesification[user][key]}\n"""
-                    )
+            result = tekst_generator.generate_users(user, module.spesification[user])
             self.log.debug(f"user output:\n{result}")
             self.users += result
 
