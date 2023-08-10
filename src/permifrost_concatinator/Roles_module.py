@@ -113,6 +113,8 @@ class Roles_Module(Base_Module):
                             "tables": {"read": [f"dev_{database}.*.*"]},
                         }
                     }
+            elif re.match("^ar_schema.*_r$", role):
+                next
 
             elif re.match("ar_|_db_|.*_(r|w)$", role):
                 self.log.error(f"Malformed Accsess roles: {role}")
