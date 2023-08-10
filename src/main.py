@@ -64,7 +64,6 @@ def main(input, output, verification, plan, apply, state, role_generation, plan_
     if apply == True:
         try:
             new_state = Permission_state(spesification).generate()
-            new_state.compare(state)
             new_state.export(state)
         except:
             logger.error("Failed to update state file")
