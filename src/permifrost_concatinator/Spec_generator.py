@@ -15,15 +15,15 @@ class Permifrost_Spec_Generator:
         self.space = " " * 2
         self.log = logging.getLogger(__name__)
         self.log.info("Spec generator initialized")
+        self.txt = txt_generator(2)
 
     def generate_users(self, module):
         self.log.info("Generating users")
-        tekst_generator = txt_generator(2)
         self.users = "users:\n"
         for user in module.spesification:
             self.log.info(f"Generating user: {user}")
             self.log.debug(f"User spec: {module.spesification[user]}")
-            result = tekst_generator.generate_users(user, module.spesification[user])
+            result = self.txt.generate_users(user, module.spesification[user])
             self.log.debug(f"user output:\n{result}")
             self.users += result
 
@@ -31,15 +31,7 @@ class Permifrost_Spec_Generator:
         self.log.info("Generating databases")
         self.databases = "databases:\n"
         for database in module.spesification:
-            result = ""
-            self.log.info(f"Generating database: {database}")
-            self.log.debug(f"Database spec: {module.spesification[database]}")
-            result += f"""{self.space*1}- {database}:\n"""
-            for key in module.spesification[database]:
-                if key == "owner":
-                    result += f"""{self.space*3}{key}: {module.spesification[database][key]}\n"""
-                elif key == "shared":
-                    result += f"""{self.space*3}{key}: {module.spesification[database][key]}\n"""
+            result = self.txt.generate_databases(database, module.spesification[database])
             self.log.debug(f"database output:\n{result}")
             self.databases += result
 
@@ -47,14 +39,7 @@ class Permifrost_Spec_Generator:
         self.log.info("Generating warehouses")
         self.warehouses = "warehouses:\n"
         for warehouse in module.spesification:
-            result = ""
-            self.log.info(f"Generating warehouse: {warehouse}")
-            self.log.debug(f"Warehouse spec: {module.spesification[warehouse]}")
-            result += f"""{self.space*1}- {warehouse}:\n"""
-            for key in module.spesification[warehouse]:
-                result += (
-                    f"""{self.space*3}{key}: {module.spesification[warehouse][key]}\n"""
-                )
+            result = self.txt.generate_warehouses(warehouse, module.spesification[warehouse])
             self.log.debug(f"warehouse output:\n{result}")
             self.warehouses += result
 
@@ -85,23 +70,11 @@ class Permifrost_Spec_Generator:
     def __access_role(self, module):
         self.log.info("Generating access roles")
         for access_role in module.access_roles:
-            result = ""
             self.log.info(f"Generating access role: {access_role}")
             self.log.debug(f"Access role spec: {module.spesification[access_role]}")
-            result += f"""{self.space*1}- {access_role}:\n"""
-            for key in module.spesification[access_role]:
-                if key == "privileges":
-                    result += f"""{self.space*3}{key}:\n"""
-                    for privilege in module.spesification[access_role][key]:
-                        result += f"""{self.space*4}{privilege}:\n"""
-                        for read_write in module.spesification[access_role][key][
-                            privilege
-                        ]:
-                            result += f"""{self.space*5}{read_write}:\n"""
-                            for database in module.spesification[access_role][key][
-                                privilege
-                            ][read_write]:
-                                result += f"""{self.space*6}- {database}\n"""
+            result = self.txt.generate_accsess_role(
+                access_role, module.spesification[access_role]
+            )
             self.log.debug(f"Access role output:\n{result}")
             self.access_roles += result
         self.log.info("Accses role generation complete")
@@ -109,28 +82,13 @@ class Permifrost_Spec_Generator:
     def __functional_role(self, module):
         self.log.info("Generating functional roles")
         for functional_role in module.functional_roles:
-            result = ""
             self.log.info(f"Generating functional role: {functional_role}")
             self.log.debug(
                 f"Functional role spec: {module.spesification[functional_role]}"
             )
-            result += f"""{self.space*1}- {functional_role}:\n"""
-            for key in module.spesification[functional_role]:
-                self.log.debug(f"Generating {key} for {functional_role}")
-                if key == "member_of":
-                    self.log.debug(f"Generating membership for {functional_role}")
-                    if module.spesification[functional_role][key] != []:
-                        result += f"""{self.space*3}{key}:\n"""
-                        for role in module.spesification[functional_role][key]:
-                            result += f"""{self.space*4}- {role}\n"""
-                    else:
-                        result += f"""{self.space*3}{key}: []\n"""
-                elif key == "warehouses":
-                    self.log.debug(f"adding warehouses for {functional_role}")
-                    result += f"""{self.space*3}{key}:\n"""
-                    for warehouse in module.spesification[functional_role][key]:
-                        self.log.debug(f"Generating {warehouse} for {functional_role}")
-                        result += f"""{self.space*4}- {warehouse}\n"""
+            result = self.txt.generate_functional_role(
+                functional_role, module.spesification[functional_role]
+            )
             self.log.debug(f"Functional role output:\n{result}")
             self.functional_roles += result
         self.log.info("Functional role generation complete")

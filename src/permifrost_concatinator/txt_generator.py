@@ -1,7 +1,8 @@
-
+import logging
 class txt_generator:
     def __init__(self, spaces=2):
         self.space = " " * spaces
+        self.log = logging.getLogger(__name__)
 
     def generate_users(self, user, user_entity):
         result = ""
@@ -52,7 +53,7 @@ class txt_generator:
         return result
 
     def generate_functional_role(self, role, role_entity):
-        result += f"""{self.space*1}- {role}:\n"""
+        result = f"""{self.space*1}- {role}:\n"""
         for key in role_entity:
             self.log.debug(f"Generating {key} for {role}")
             if key == "member_of":
