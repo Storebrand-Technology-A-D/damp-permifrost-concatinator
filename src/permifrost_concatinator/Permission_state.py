@@ -4,6 +4,7 @@ import sys
 from dictdiffer import diff
 from dictdiffer.utils import PathLimit
 from .Spesification import Spesification
+from .txt_generator import txt_generator
 
 
 class Permission_state:
@@ -13,6 +14,7 @@ class Permission_state:
         self.state = None
         self.log = logging.getLogger(__name__)
         self.log.info("Creating Permission_state")
+        self.txt = txt_generator(4)
 
     def generate(self):
         self.state = {}
