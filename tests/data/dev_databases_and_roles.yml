@@ -1,0 +1,67 @@
+version: "0.14.0"
+# ==========================================
+# databases
+# ==========================================
+databases:
+  - database4:
+      shared: no
+  - database5:
+      shared: no
+      owner: data_engineer
+  - dev_database1:
+      shared: no
+  - dev_database2:
+      shared: no
+
+# ==========================================
+# Functional Roles
+# ==========================================
+
+roles:
+    - data_engineer:
+          warehouses:
+            - warehouse1
+          member_of:
+            - analyst
+            - reader
+    - analyst:
+          member_of:
+            - dev_ar_db_database1_r
+            - dev_ar_db_database1_w
+    - reader:
+          warehouses:
+            - warehouse1
+          member_of:
+            - ar_db_database4_r
+            - ar_db_database4_w
+            - ar_db_database5_r
+            - ar_db_database5_w
+    - tag_admin:
+          member_of: []
+
+
+# ==========================================
+# users
+# ==========================================
+
+
+users:
+  - sysuser:
+      can_login: yes
+      member_of:
+        - data_engineer
+  - pbi_user:
+      can_login: yes
+      member_of:
+        - analyst
+
+# ==========================================
+# warehouses
+# ==========================================
+
+warehouses:
+  - transforming_warehouse:
+      size: medium
+      owner: data_engineer
+  - analytics_warehouse:
+      size: xsmall
