@@ -30,19 +30,19 @@ class Databases_Module(Base_Module):
                     f"Database {databases} is a development database, skipping"
                 )
                 accsess_roles[f"dev_ar_db_{databases[4:]}_w"] = {
-                "privileges": {
-                    "databases": {"write": [f"{databases}"]},
-                    "schemas": {"write": [f"{databases}.*"]},
-                    "tables": {"write": [f"{databases}.*.*"]},
+                    "privileges": {
+                        "databases": {"write": [f"{databases}"]},
+                        "schemas": {"write": [f"{databases}.*"]},
+                        "tables": {"write": [f"{databases}.*.*"]},
+                    }
                 }
-            }
                 accsess_roles[f"dev_ar_db_{databases[4:]}_r"] = {
-                "privileges": {
-                    "databases": {"read": [f"{databases}"]},
-                    "schemas": {"read": [f"{databases}.*"]},
-                    "tables": {"read": [f"{databases}.*.*"]},
+                    "privileges": {
+                        "databases": {"read": [f"{databases}"]},
+                        "schemas": {"read": [f"{databases}.*"]},
+                        "tables": {"read": [f"{databases}.*.*"]},
+                    }
                 }
-            }
             else:
                 self.log.debug(f"Database {databases} is a production database")
                 accsess_roles[f"ar_db_{databases}_w"] = {

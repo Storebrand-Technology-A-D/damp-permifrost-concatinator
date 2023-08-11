@@ -93,7 +93,7 @@ def test_permission_state_plan_create(
     team_c_state = Permission_state(spesification_team_c_verified).generate()
     team_a_state = Permission_state(spesification_team_a).generate()
     team_c_state.compare(team_a_state)
-    team_c_state.plan('')
+    team_c_state.plan("")
     captured = capsys.readouterr()
     assert captured.out == team_ca_plan
 
@@ -105,6 +105,6 @@ def test_permission_state_plan_delete(
     team_c_state = Permission_state(spesification_team_c_verified).generate()
     team_a_state = Permission_state(spesification_team_a).generate()
     team_a_state.compare(team_c_state)
-    team_a_state.plan('')
+    team_a_state.plan("")
     captured = capsys.readouterr()
     assert captured.out == team_ac_plan

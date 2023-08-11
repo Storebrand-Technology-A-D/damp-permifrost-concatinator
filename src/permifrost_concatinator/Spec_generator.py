@@ -31,7 +31,9 @@ class Permifrost_Spec_Generator:
         self.log.info("Generating databases")
         self.databases = "databases:\n"
         for database in module.spesification:
-            result = self.txt.generate_databases(database, module.spesification[database])
+            result = self.txt.generate_databases(
+                database, module.spesification[database]
+            )
             self.log.debug(f"database output:\n{result}")
             self.databases += result
 
@@ -39,7 +41,9 @@ class Permifrost_Spec_Generator:
         self.log.info("Generating warehouses")
         self.warehouses = "warehouses:\n"
         for warehouse in module.spesification:
-            result = self.txt.generate_warehouses(warehouse, module.spesification[warehouse])
+            result = self.txt.generate_warehouses(
+                warehouse, module.spesification[warehouse]
+            )
             self.log.debug(f"warehouse output:\n{result}")
             self.warehouses += result
 

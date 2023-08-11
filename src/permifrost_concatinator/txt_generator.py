@@ -1,4 +1,6 @@
 import logging
+
+
 class txt_generator:
     def __init__(self, spaces=2):
         self.space = " " * spaces
@@ -13,9 +15,7 @@ class txt_generator:
                 for role in user_entity[key]:
                     result += f"""{self.space*4}- {role}\n"""
             elif key == "can_login":
-                result += (
-                        f"""{self.space*3}{key}: {user_entity[key]}\n"""
-                )
+                result += f"""{self.space*3}{key}: {user_entity[key]}\n"""
         return result
 
     def generate_databases(self, database, database_entity):
@@ -42,13 +42,9 @@ class txt_generator:
                 result += f"""{self.space*3}{key}:\n"""
                 for privilege in role_entity[key]:
                     result += f"""{self.space*4}{privilege}:\n"""
-                    for read_write in role_entity[key][
-                        privilege
-                    ]:
+                    for read_write in role_entity[key][privilege]:
                         result += f"""{self.space*5}{read_write}:\n"""
-                        for database in role_entity[key][
-                            privilege
-                        ][read_write]:
+                        for database in role_entity[key][privilege][read_write]:
                             result += f"""{self.space*6}- {database}\n"""
         return result
 

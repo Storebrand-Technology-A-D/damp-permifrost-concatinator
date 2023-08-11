@@ -105,17 +105,18 @@ def test_dev_prod_accsess_roles(caplog, dev_prod_accsess_role_object):
     accsess_roles = roles.generate_accsess_roles()
     assert set(accsess_roles) == resultant_roles
 
+
 def test_dev_roles_from_databases_and_functional_roles(
-        caplog,
-    ):
-        caplog.set_level(logging.ERROR)
-        spec = Spesification(verification=True, generate_roles=True)
-        spec.load("tests/data/dev_databases_and_roles.yml")
-        spec.identify_modules()
-        spec.identify_entities()
-        spec.generate()
-        assert set(spec.roles.access_roles) == set(
-            {
+    caplog,
+):
+    caplog.set_level(logging.ERROR)
+    spec = Spesification(verification=True, generate_roles=True)
+    spec.load("tests/data/dev_databases_and_roles.yml")
+    spec.identify_modules()
+    spec.identify_entities()
+    spec.generate()
+    assert set(spec.roles.access_roles) == set(
+        {
             "dev_ar_db_database1_w": {
                 "privileges": {
                     "databases": {"write": ["dev_database2"]},
@@ -171,6 +172,6 @@ def test_dev_roles_from_databases_and_functional_roles(
                     "schemas": {"read": ["database5.*"]},
                     "tables": {"read": ["database5.*.*"]},
                 }
-            }
+            },
         }
-        )
+    )

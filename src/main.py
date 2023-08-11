@@ -23,15 +23,16 @@ from permifrost_concatinator.loader_local_file import Local_file_loader
     required=False,
     default=False,
 )
-@click.option("--plan_output", help="path to plan output file", required=False, default='')
-
+@click.option(
+    "--plan_output", help="path to plan output file", required=False, default=""
+)
 @click.option(
     "--apply",
     help="apply planned changes based on spec comparison",
     required=False,
     default=False,
 )
-@click.option("--state", help="path to state file", required=False, default='')
+@click.option("--state", help="path to state file", required=False, default="")
 def main(input, output, verification, plan, apply, state, role_generation, plan_output):
     logformat = logging.Formatter(fmt="%(levelname)s - %(message)s")
     consolHandler = logging.StreamHandler()
