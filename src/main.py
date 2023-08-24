@@ -34,7 +34,7 @@ from permifrost_concatinator.loader_local_file import Local_file_loader
 )
 @click.option("--state", help="path to state file", required=False, default="")
 def main(input, output, verification, plan, apply, state, role_generation, plan_output):
-    logformat = logging.Formatter(fmt="%(levelname)s - %(message)s")
+    logformat = logging.Formatter(fmt="%(asctime)s [%(threadName)-12.12s] [%(levelname)-5.5s]  %(message)s")
     consolHandler = logging.StreamHandler()
     consolHandler.setLevel(logging.INFO)
     consolHandler.setFormatter(logformat)
@@ -42,6 +42,11 @@ def main(input, output, verification, plan, apply, state, role_generation, plan_
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
     logger.addHandler(consolHandler)
+
+    logging.basicConfig(filename='debug.log', encoding='utf-8', level=logging.DEBUG)
+
+
+
     spesification = Spesification(
         verification=verification, generate_roles=role_generation
     )
