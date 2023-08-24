@@ -39,11 +39,16 @@ def main(input, output, verification, plan, apply, state, role_generation, plan_
     consolHandler.setLevel(logging.INFO)
     consolHandler.setFormatter(logformat)
 
+    fileHandler = logging.FileHandler('debug.log')
+    fileHandler.setLevel(logging.DEBUG)
+    fileHandler.setFormatter(logformat)
+
+
     logger = logging.getLogger(__name__)
     logger.setLevel(logging.INFO)
     logger.addHandler(consolHandler)
+    logger.addHandler(fileHandler)
 
-    logging.basicConfig(filename='debug.log', encoding='utf-8', level=logging.DEBUG)
 
 
 
