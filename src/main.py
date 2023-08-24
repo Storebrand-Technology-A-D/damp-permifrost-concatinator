@@ -45,7 +45,6 @@ def main(input, output, verification, plan, apply, state, role_generation, plan_
 
 
     logger = logging.getLogger(__name__)
-    logger.setLevel(logging.INFO)
     logger.addHandler(consolHandler)
     logger.addHandler(fileHandler)
 
