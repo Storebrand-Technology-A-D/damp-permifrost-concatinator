@@ -50,7 +50,8 @@ def main(input, output, verification, plan, apply, state, role_generation, plan_
 
 
 
-
+    logger.info("Starting Permifrost Concatinator")
+    
     spesification = Spesification(
         verification=verification, generate_roles=role_generation
     )
