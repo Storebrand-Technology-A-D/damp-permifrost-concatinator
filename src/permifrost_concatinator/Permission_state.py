@@ -55,7 +55,10 @@ class Permission_state:
         for difference in list(state_diff):
             self.log.debug(f"Difference: {difference}")
             self.log.info(f"{difference[0]} change in {difference[1]}")
-            split_change = difference[1].split(".")
+            try:
+                split_change = difference[1].split(".")
+            except:
+                split_change = difference[1]
             if len(split_change) == 3:
                 base, module, entity = split_change
                 self.log.debug(f"Module: {module}, entity: {entity}")
