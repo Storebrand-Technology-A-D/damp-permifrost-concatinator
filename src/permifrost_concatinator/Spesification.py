@@ -194,7 +194,7 @@ class Spesification:
 
         self.output = ""
         self.log.info("Generating spec")
-        generator = Permifrost_Spec_Generator("0.14.0")
+        generator = Permifrost_Spec_Generator("0.15.1")
         generator.generate(self.roles)
         self.log.info("Roles generated")
         generator.generate(self.users)
