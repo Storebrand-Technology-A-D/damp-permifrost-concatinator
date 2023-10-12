@@ -560,8 +560,8 @@ def team_ca_state_update():
 @pytest.fixture
 def team_ca_plan():
     return """Changes to the following objects:
-    roles: role1: {'warehouses': ['warehouse1'], 'member_of': ['role2']}
     roles: loader_qlik: {'member_of': []}
+    roles: role1: {'warehouses': ['warehouse1'], 'member_of': ['role2']}
     roles: role3: {'warehouses': ['warehouse1'], 'member_of': []}
     users: user3: {'can_login': True, 'member_of': ['role3']}
     warehouses: warehouse1: {'size': 'xsmall', 'owner': 'loader_qlik'}

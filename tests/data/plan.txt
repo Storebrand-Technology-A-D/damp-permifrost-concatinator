@@ -1,26 +1,26 @@
 Changes to the following objects:
+    roles: analyst: {'member_of': ['ar_db_database1_r', 'ar_db_database1_w', 'ar_db_database2_r', 'ar_db_database2_w']}
+    warehouses: analytics_warehouse: {'size': 'xsmall'}
+    roles: ar_db_database3_r: {'privileges': {'databases': {'read': ['database3']}, 'schemas': {'read': ['database3.*']}, 'tables': {'read': ['database3.*.*']}}}
+    roles: ar_db_database3_w: {'privileges': {'databases': {'write': ['database3']}, 'schemas': {'write': ['database3.*']}, 'tables': {'write': ['database3.*.*']}}}
+    roles: ar_db_database4_r: {'privileges': {'databases': {'read': ['database4']}, 'schemas': {'read': ['database4.*']}, 'tables': {'read': ['database4.*.*']}}}
+    roles: ar_db_database4_w: {'privileges': {'databases': {'write': ['database4']}, 'schemas': {'write': ['database4.*']}, 'tables': {'write': ['database4.*.*']}}}
+    roles: ar_db_database5_r: {'privileges': {'databases': {'read': ['database5']}, 'schemas': {'read': ['database5.*']}, 'tables': {'read': ['database5.*.*']}}}
+    roles: ar_db_database5_w: {'privileges': {'databases': {'write': ['database5']}, 'schemas': {'write': ['database5.*']}, 'tables': {'write': ['database5.*.*']}}}
+    roles: data_engineer: {'warehouses': ['warehouse1'], 'member_of': ['analyst', 'reader']}
     databases: database3: {'shared': False}
     databases: database4: {'shared': False}
     databases: database5: {'shared': False, 'owner': 'data_engineer'}
+    users: loader_user: {'can_login': True, 'member_of': ['loader_qlik']}
+    users: pbi_user: {'can_login': True, 'member_of': ['analyst']}
+    roles: reader: {'warehouses': ['warehouse1'], 'member_of': ['ar_db_database4_r', 'ar_db_database4_w', 'ar_db_database5_r', 'ar_db_database5_w']}
     roles: role1: {'member_of': ['role2']}
     roles: role3: {'member_of': ['role4']}
     roles: role4: {'member_of': ['ar_db_database1_r', 'ar_db_database1_w', 'ar_db_database3_r', 'ar_db_database3_w']}
-    roles: ar_db_database3_r: {'privileges': {'databases': {'read': ['database3']}, 'schemas': {'read': ['database3.*']}, 'tables': {'read': ['database3.*.*']}}}
-    roles: ar_db_database3_w: {'privileges': {'databases': {'write': ['database3']}, 'schemas': {'write': ['database3.*']}, 'tables': {'write': ['database3.*.*']}}}
-    roles: data_engineer: {'warehouses': ['warehouse1'], 'member_of': ['analyst', 'reader']}
-    roles: analyst: {'member_of': ['ar_db_database1_r', 'ar_db_database1_w', 'ar_db_database2_r', 'ar_db_database2_w']}
-    roles: reader: {'warehouses': ['warehouse1'], 'member_of': ['ar_db_database4_r', 'ar_db_database4_w', 'ar_db_database5_r', 'ar_db_database5_w']}
-    roles: tag_admin: {'member_of': []}
-    roles: ar_db_database4_w: {'privileges': {'databases': {'write': ['database4']}, 'schemas': {'write': ['database4.*']}, 'tables': {'write': ['database4.*.*']}}}
-    roles: ar_db_database4_r: {'privileges': {'databases': {'read': ['database4']}, 'schemas': {'read': ['database4.*']}, 'tables': {'read': ['database4.*.*']}}}
-    roles: ar_db_database5_w: {'privileges': {'databases': {'write': ['database5']}, 'schemas': {'write': ['database5.*']}, 'tables': {'write': ['database5.*.*']}}}
-    roles: ar_db_database5_r: {'privileges': {'databases': {'read': ['database5']}, 'schemas': {'read': ['database5.*']}, 'tables': {'read': ['database5.*.*']}}}
     users: sysuser: {'can_login': True, 'member_of': ['data_engineer']}
-    users: pbi_user: {'can_login': True, 'member_of': ['analyst']}
-    users: loader_user: {'can_login': True, 'member_of': ['loader_qlik']}
-    warehouses: warehouse1: {'size': 'xsmall'}
+    roles: tag_admin: {'member_of': []}
     warehouses: transforming_warehouse: {'size': 'medium', 'owner': 'data_engineer'}
-    warehouses: analytics_warehouse: {'size': 'xsmall'}
+    warehouses: warehouse1: {'size': 'xsmall'}
 Entities to be removed:
     users: user1
     warehouses: warehouse2

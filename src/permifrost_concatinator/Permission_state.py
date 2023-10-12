@@ -97,7 +97,7 @@ class Permission_state:
                 deletions = []
                 self.log.info(f"Number of changes: {len(self.state_changes)}")
                 self.log.debug(f"State changes: {self.state_changes}")
-                for change in sorted(self.state_changes, key=itemgetter(0)):
+                for change in sorted(self.state_changes, key=itemgetter(1)):
                     self.log.debug(f"Change: {change}")
                     self.log.debug(
                         f"Entity: {self.specification.get_entity(change[0], change[1])}"
@@ -115,7 +115,7 @@ class Permission_state:
                     self.log.info(f"Number of deletions: {len(deletions)}")
                     self.log.debug(f"Deletions: {deletions}")
                     file.write("Entities to be removed:\n")
-                    for deletion in sorted(deletions, key=itemgetter(0)):
+                    for deletion in sorted(deletions, key=itemgetter(1)):
                         file.write(f"    {deletion[0]}: {deletion[1]}\n")
         else:
             if len(self.state_changes) == 0:
@@ -126,7 +126,7 @@ class Permission_state:
             deletions = []
             self.log.info(f"Number of changes: {len(self.state_changes)}")
             self.log.debug(f"State changes: {self.state_changes}")
-            for change in sorted(self.state_changes, key=itemgetter(0)):
+            for change in sorted(self.state_changes, key=itemgetter(1)):
                 self.log.debug(f"Change: {change}")
                 self.log.debug(
                     f"Entity: {self.specification.get_entity(change[0], change[1])}"
@@ -145,7 +145,7 @@ class Permission_state:
                 self.log.info(f"Number of deletions: {len(deletions)}")
                 self.log.debug(f"Deletions: {deletions}")
                 print("Entities to be removed:")
-                for deletion in sorted(deletions, key=itemgetter(0)):
+                for deletion in sorted(deletions, key=itemgetter(1)):
                     print(f"    {deletion[0]}: {deletion[1]}")
 
             return
