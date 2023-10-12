@@ -22,6 +22,7 @@ def test_simple_generation():
     spec.identify_modules()
     spec.identify_entities()
     spec.generate()
+    
     spec.export("tests/data/generated/team_a_permisions.yml")
     assert spec.generated == True
     assert isinstance(spec.output, str)

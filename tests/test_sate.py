@@ -37,13 +37,14 @@ def test_permision_state_export(
     """
     Test that the Permission_state class exports a permission state file
     """
+    working_dir = os.getcwd()
     permission_state = Permission_state(spesification_team_c_verified)
-    permission_state.export("tests/data/generated/permision_state_export.json")
-    with open("tests/data/generated/permision_state_export.json", "r") as file:
+    permission_state.export(f"{working_dir}/tests/data/generated/permision_state_export.json")
+    with open(f"{working_dir}/tests/data/generated/permision_state_export.json", "r") as file:
         output = json.load(file)
     assert output == team_c_verefied_state_file
     try:
-        os.remove("tests/data/generated/permision_state_export.json")
+        os.remove(f"{working_dir}/tests/data/generated/permision_state_export.json")
     except FileNotFoundError:
         pass
 

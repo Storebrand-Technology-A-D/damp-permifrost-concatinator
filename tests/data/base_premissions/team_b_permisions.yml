@@ -1,8 +1,8 @@
-version: "0.14.0"
+version: "0.15.1"
 # ==========================================
 # databases
 # ==========================================
-databases: 
+databases:
   - database1:
       shared: no
   - database3:
@@ -30,7 +30,7 @@ roles:
     - ar_db_database1_r:
           privileges:
             databases:
-                read: 
+                read:
                     - database1
             schemas:
                 read:
@@ -41,7 +41,7 @@ roles:
     - ar_db_database1_w:
           privileges:
             databases:
-                write: 
+                write:
                     - database1
             schemas:
                 write:
@@ -53,7 +53,7 @@ roles:
     - ar_db_database3_r:
           privileges:
             databases:
-                read: 
+                read:
                     - database3
             schemas:
                 read:
@@ -64,7 +64,7 @@ roles:
     - ar_db_database3_w:
           privileges:
             databases:
-                write: 
+                write:
                     - database3
             schemas:
                 write:
@@ -89,7 +89,7 @@ users:
         - role2
 
 # ==========================================
-# warehouses  
+# warehouses
 # ==========================================
 
 warehouses:

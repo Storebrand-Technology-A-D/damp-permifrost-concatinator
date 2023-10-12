@@ -27,8 +27,11 @@ def test_reader_read_dir():
 
 def test_reader_read_dir_empty():
     reader = Reader()
-    assert reader.read_dir("tests/data/empty") == []
-    assert reader.files == []
+    with pytest.raises(Exception) as exception_info:
+        assert reader.read_dir("tests/data/empty") == []
+        assert exception_info.type == FileNotFoundError
+        assert exception_info.value.args[0] == "Directory not found"
+        assert reader.files == []
 
 
 def test_reader_read_dir_not_found():

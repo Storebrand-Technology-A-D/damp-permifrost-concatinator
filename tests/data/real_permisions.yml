@@ -1,8 +1,8 @@
-version: "0.14.0"
+version: "0.15.1"
 # ==========================================
 # databases
 # ==========================================
-databases: 
+databases:
 # production databases
   - landing_scd:
       shared: no
@@ -98,7 +98,7 @@ databases:
 # dev databases
 
   - dev_landing_wolf:
-      shared: no 
+      shared: no
   - dev_landing_scd_qa:
       shared: no
       owner: loader_qlik
@@ -196,12 +196,12 @@ databases:
   - dev_demo:
       shared: no
       owner: data_engineer_platform
-  
+
 # ==========================================
 # admin roles
 # ==========================================
 
-roles: 
+roles:
 
     - stb_account_admin:
           member_of:
@@ -212,10 +212,10 @@ roles:
             - sysadmin
             - aad_provisioner
     - securityadmin:
-          member_of:  
+          member_of:
             - useradmin
             - maskadmin
-    - sysadmin: 
+    - sysadmin:
           member_of:
             - data_engineer_platform
             - loader
@@ -226,13 +226,13 @@ roles:
     - maskadmin:
           member_of: []
 
-    
-      
+
+
 # ==========================================
 # functional roles
 # ==========================================
-    - loader: # binding role for structural order 
-          member_of: 
+    - loader: # binding role for structural order
+          member_of:
             - loader_hevo
             - loader_qlik
             - loader_meltano
@@ -240,13 +240,13 @@ roles:
             - dev_loader_scd
             - loader_qlik_corporate
             - dev_loader_qlik_corporate
-            
+
 
     - loader_meltano:
-          warehouses: 
+          warehouses:
             - loading_sam_wh
             - dev_loading_sam_wh
-          member_of: 
+          member_of:
             - ar_db_landing_sustainalytics_r
             - ar_db_landing_sustainalytics_w
             - ar_db_landing_trucost_r
@@ -287,10 +287,10 @@ roles:
             - dev_ar_db_landing_iss_w
 
     - loader_qlik:
-          warehouses: 
+          warehouses:
             - loading_sam_wh
             - dev_loading_sam_wh
-          member_of: 
+          member_of:
             - ar_db_landing_wolf_r
             - ar_db_landing_wolf_w
             - ar_db_landing_scd_r
@@ -310,24 +310,24 @@ roles:
             - dev_ar_db_landing_external_data_r
             - dev_ar_db_landing_scd_qa_r
             - dev_ar_db_landing_scd_qa_w
-    
+
     #Corporate - Functional roles
     - loader_qlik_corporate:
-          warehouses: 
+          warehouses:
             - loading_corporate_xs
           member_of:
             - ar_db_landing_usb_r
             - ar_db_landing_usb_w
-    
+
     - dev_loader_qlik_corporate:
-          warehouses: 
+          warehouses:
             - dev_loading_corporate_xs
           member_of:
             - dev_ar_db_landing_usb_r
-            - dev_ar_db_landing_usb_w    
+            - dev_ar_db_landing_usb_w
 
     - transformer_corporate: # system role for dbt in production
-          warehouses: 
+          warehouses:
             - transforming_corporate_xs
             - transforming_corporate_m
             - transforming_corporate_l
@@ -338,14 +338,14 @@ roles:
             - ar_db_rd_usb_w
             - ar_db_dds_pension_r
             - ar_db_dds_pension_w
-            
+
             # dev
             - dev_ar_db_dds_pension_r
             - dev_ar_db_dds_pension_w
             - dev_ar_db_rd_usb_r
             - dev_ar_db_rd_usb_w
             - dev_ar_db_landing_usb_r
-    
+
     #Pension (Fist domain covered within Corporate)
     - data_engineer_pension: #ad gruppe
           warehouses:
@@ -357,7 +357,7 @@ roles:
            #Functional roles
             - data_analyst_pension
 
-            #Prod read  
+            #Prod read
             - ar_db_landing_usb_r
             - ar_db_rd_usb_r
             - ar_db_dds_pension_r
@@ -365,7 +365,7 @@ roles:
             #Dev
             - dev_ar_db_landing_usb_r
             - dev_ar_db_rd_usb_r
-            - dev_ar_db_rd_usb_w 
+            - dev_ar_db_rd_usb_w
             - dev_ar_db_dds_pension_r
             - dev_ar_db_dds_pension_w
 
@@ -373,12 +373,12 @@ roles:
           warehouses:
             - analysis_corporate_xs
           member_of:
-            - ar_db_dds_pension_r                      
+            - ar_db_dds_pension_r
 
 
 
     - loader_hevo:
-          warehouses: 
+          warehouses:
             - loading_sam_wh
             - dev_loading_sam_wh
           member_of:
@@ -389,21 +389,21 @@ roles:
             - dev_ar_db_landing_esgaia_w
 
     - loader_scd:
-          warehouses: 
+          warehouses:
             - loading_sam_wh
           member_of:
             - ar_db_landing_scd_data_products_r
             - ar_db_landing_scd_data_products_w
-            
+
     - dev_loader_scd:
-          warehouses: 
+          warehouses:
             - dev_loading_sam_wh
           member_of:
             - dev_ar_db_landing_scd_data_products_r
-            - dev_ar_db_landing_scd_data_products_w                                   
-  
+            - dev_ar_db_landing_scd_data_products_w
+
     - transformer_sam: # system role for dbt in production
-          warehouses: 
+          warehouses:
             - transforming_sam_wh
             - transforming_sam_xl
           member_of:
@@ -499,7 +499,7 @@ roles:
 
 
     - transformer_sourcing: # system role for dbt in production
-          warehouses: 
+          warehouses:
             - transforming_sourcing_xs
           member_of:
             # prod
@@ -512,7 +512,7 @@ roles:
             - dev_ar_db_dds_sourcing_w
 
     - transformer_platform: # system role for dbt in production
-          warehouses: 
+          warehouses:
             - transforming_platform_xs
             - transforming_platform_m
             - transforming_sam_wh
@@ -609,7 +609,7 @@ roles:
             - dev_ar_db_rd_iss_w
 
     - data_engineer_platform:  #ad gruppe
-          warehouses: 
+          warehouses:
             - transforming_platform_m
             - transforming_platform_xs
             - dev_transforming_platform_xs
@@ -664,11 +664,11 @@ roles:
             - dev_transforming_sam_xl
           member_of:
             - data_analyst_sam
-            - data_engineer_sam_risk_and_ownership 
+            - data_engineer_sam_risk_and_ownership
             - data_engineer_investment_platform
             - reporter_sam
             - exporter_sam
-            - reader_sam                     
+            - reader_sam
             - dev_ar_db_landing_wolf_r
             - dev_ar_db_landing_scd_r
             - dev_ar_db_landing_esgaia_r
@@ -676,7 +676,7 @@ roles:
             - dev_ar_db_landing_trucost_r
             - dev_ar_db_landing_sharepoint_sam_r
             - dev_ar_db_landing_scd_qa_r
-            - dev_ar_db_landing_scd_data_products_r      
+            - dev_ar_db_landing_scd_data_products_r
             - ar_db_landing_factset_r #there is no dev role for this
             - dev_ar_db_landing_external_data_r # to be deleted
             - dev_ar_db_rd_external_data_r # to be deleted
@@ -709,7 +709,7 @@ roles:
             - dev_ar_db_rd_esg_w
             - dev_ar_db_rd_esg_r
             - dev_ar_db_rd_scd_data_products_r
-            - dev_ar_db_rd_scd_data_products_w      
+            - dev_ar_db_rd_scd_data_products_w
             - dev_ar_db_landing_iss_r
             - dev_ar_db_landing_iss_w
 
@@ -756,7 +756,7 @@ roles:
             - dev_ar_db_landing_external_data_r # to be deleted
             - dev_ar_db_rd_external_data_r # to be deleted
             - dev_ar_db_landing_iss_r
-            
+
             #dev rd
             - dev_ar_db_rd_external_data_r # to be deleted
             - dev_ar_db_rd_external_data_w # to be deleted
@@ -770,9 +770,9 @@ roles:
             - dev_ar_db_rd_trucost_w
             - dev_ar_db_rd_scd_r
             - dev_ar_db_rd_iss_r
-            - dev_ar_db_rd_iss_w         
-                        
-            #dev ddds & dwh  
+            - dev_ar_db_rd_iss_w
+
+            #dev ddds & dwh
             - dev_ar_db_dds_sam_r
             - dev_ar_db_dds_sam_w
             - dev_ar_db_dwh_sam_r
@@ -784,7 +784,7 @@ roles:
             - dev_ar_db_internal_export_sam_r
             - dev_ar_db_internal_export_sam_w
             - dev_ar_db_external_export_sam_r
-            - dev_ar_db_external_export_sam_w            
+            - dev_ar_db_external_export_sam_w
 
             #prod RD
             - ar_db_rd_scd_r
@@ -793,9 +793,9 @@ roles:
             #Prod Landing
             - ar_db_landing_iss_r
 
-               
+
        #     - ar_schema_dds_sam_scd_pfc_holdings_r
-            
+
 
     # ad rolle data_engineer_sam_prod
     # heller mot egen rolle, men avventer med navnegiving til etter test av qa prosess
@@ -807,7 +807,7 @@ roles:
             - ar_schema_internal_export_sam_ie_grc_r
             - ar_db_landing_jira_r
             - dev_ar_db_landing_jira_r
-            - data_analyst_sam_fund_administration_no #grc needs this role to be able to analyze on unmasked fund-admin data for only sams (not spps) customers. 
+            - data_analyst_sam_fund_administration_no #grc needs this role to be able to analyze on unmasked fund-admin data for only sams (not spps) customers.
 
     - data_engineer_investment_platform:  #ad gruppe
           warehouses:
@@ -847,13 +847,13 @@ roles:
             - analysis_sam_wh
           member_of:
             - public_sam
-            - ar_schema_dwh_sam_esg_r            
+            - ar_schema_dwh_sam_esg_r
   ##        - ar_schema_dwh_sam_performance_r ##activate this access when this product is production ready
 
     - data_analyst_sam_eiendom: #ad gruppe
           warehouses:
             - analysis_sam_wh
-          member_of: 
+          member_of:
             - public_sam
             - ar_schema_dwh_sam_esg_r
             - ar_schema_dds_sam_esg_kpi_r
@@ -872,12 +872,12 @@ roles:
             - public_sam
             - ar_schema_dwh_sam_fund_admin_r
 
-    - data_analyst_sam_fund_admin_skagen: 
+    - data_analyst_sam_fund_admin_skagen:
           warehouses:
             - analysis_sam_wh
           member_of:
             - public_sam
-            - ar_schema_dwh_sam_fund_admin_skagen_r             
+            - ar_schema_dwh_sam_fund_admin_skagen_r
 
     - data_analyst_sam_fund_product: #ad gruppe
           warehouses:
@@ -887,18 +887,18 @@ roles:
             - ar_schema_dwh_sam_esg_r
   ##        - ar_schema_dwh_sam_performance_r ##activate this access when this product is production ready
             - ar_schema_dds_sam_sustainalytics_r
-            - ar_schema_dds_sam_esg_kpi_r              
+            - ar_schema_dds_sam_esg_kpi_r
 
     - data_analyst_sam_ik: #ad gruppe
           warehouses:
             - analysis_sam_wh
           member_of:
             - public_sam
-            - ar_schema_dwh_sam_esg_r            
+            - ar_schema_dwh_sam_esg_r
   ##        - ar_schema_dwh_sam_performance_r ##active this access when this product is production ready
             - ar_db_rd_scd_r
             - ar_schema_dwh_sam_fund_admin_nordic_distribution_r
-           
+
     - data_analyst_sam_operations: #ad gruppe
           warehouses:
             - analysis_sam_wh
@@ -910,21 +910,21 @@ roles:
             - ar_schema_dwh_sam_bruddstatistikk_r
             - ar_schema_dwh_sam_price_r
             - ar_schema_dwh_sam_transactions_and_finance_r
-            - ar_schema_dds_sam_esg_kpi_r  
+            - ar_schema_dds_sam_esg_kpi_r
             - ar_schema_dds_sam_sustainalytics_r
             - ar_schema_dds_sam_scd_pfc_holdings_r
             - ar_db_rd_scd_r
-            - ar_schema_dwh_sam_fund_admin_r         
-            
+            - ar_schema_dwh_sam_fund_admin_r
 
-    - data_analyst_sam_renteforvaltning: #ad gruppe 
+
+    - data_analyst_sam_renteforvaltning: #ad gruppe
           warehouses:
             - analysis_sam_wh
           member_of:
             - public_sam
             - ar_schema_dwh_sam_esg_r
             - ar_schema_dds_sam_esg_kpi_r
-            - ar_schema_dds_sam_bquant_r             
+            - ar_schema_dds_sam_bquant_r
   ##        - ar_schema_dwh_sam_performance_r ##activate this access when this product is production ready
             ##note: need to add access to sandbox sb_bquant
 
@@ -933,10 +933,10 @@ roles:
     - data_analyst_sam_skagen: #ad gruppe - created for portfolio managers and analyst in skagen who mostly needs just simcorp data and are not allowed to see client details.
           warehouses:
             - analysis_sam_wh
-          member_of: 
+          member_of:
             - public_sam
             - ar_schema_dwh_sam_esg_r
-            - ar_schema_dds_sam_esg_kpi_r   
+            - ar_schema_dds_sam_esg_kpi_r
   ##        - ar_schema_dwh_sam_performance_r ##activate this access when this product is production ready
 
     - data_analyst_sam_risk_and_ownership: #ad gruppe
@@ -985,7 +985,7 @@ roles:
             - exporting_sam_wh
           member_of:
             - ar_schema_internal_export_sam_ie_ads_r
-        
+
     - export_reader_bquant:
           warehouses:
             - exporting_sam_wh
@@ -1033,15 +1033,15 @@ roles:
             - ar_schema_rd_esg_rd_science_based_targets_r
             - ar_schema_rd_scd_data_products_rd_esg_scores_r
 
-    
+
     - reporter_platform: #role used by system users to schedule reports and dataset refresh
           warehouses:
             - reporting_sam_wh
           member_of:
             - reporter_sam
             - ar_db_dds_core_data_platform_r
-    
-    - reporter_sam: 
+
+    - reporter_sam:
           warehouses:
             - reporting_sam_wh
           member_of:
@@ -1049,7 +1049,7 @@ roles:
             - ar_schema_dwh_sam_conformed_dim_r
             - ar_schema_dwh_sam_bruddstatistikk_r
             - ar_schema_dwh_sam_esg_r
-            - ar_schema_dwh_sam_general_ledger_r 
+            - ar_schema_dwh_sam_general_ledger_r
             - ar_schema_dwh_sam_price_r
             - ar_schema_dds_sam_active_ownership_engagement_r
             - ar_schema_dds_sam_esg_kpi_r
@@ -1074,7 +1074,7 @@ roles:
     - ops_metaplane:
           privileges:
             databases:
-                read: 
+                read:
                     - internal_export_sam
             schemas:
                 read:
@@ -1083,7 +1083,7 @@ roles:
     - ops_datadog:
           privileges:
             databases:
-                read: 
+                read:
                     - snowflake
 
 # ==========================================
@@ -1096,7 +1096,7 @@ roles:
     - ar_db_landing_scd_r:
           privileges:
             databases:
-                read: 
+                read:
                     - landing_scd
             schemas:
                 read:
@@ -1108,7 +1108,7 @@ roles:
     - ar_db_landing_scd_w:
           privileges:
             databases:
-                write: 
+                write:
                     - landing_scd
             schemas:
                 write:
@@ -1120,22 +1120,22 @@ roles:
     - ar_db_landing_wolf_r:
           privileges:
             databases:
-                read: 
+                read:
                     - landing_wolf
             schemas:
                 read:
-                    - landing_wolf.* 
+                    - landing_wolf.*
             tables:
                 read:
                     - landing_wolf.*.*
     - ar_db_landing_wolf_w:
           privileges:
             databases:
-                write: 
+                write:
                     - landing_wolf
             schemas:
                 write:
-                    - landing_wolf.* 
+                    - landing_wolf.*
             tables:
                 write:
                     - landing_wolf.*.*
@@ -1144,7 +1144,7 @@ roles:
     - ar_db_landing_jira_r:
           privileges:
             databases:
-                read: 
+                read:
                     - landing_jira
             schemas:
                 read:
@@ -1155,7 +1155,7 @@ roles:
     - ar_db_landing_jira_w:
           privileges:
             databases:
-                write: 
+                write:
                     - landing_jira
             schemas:
                 write:
@@ -1168,7 +1168,7 @@ roles:
     - ar_db_landing_esgaia_r:
           privileges:
             databases:
-                read: 
+                read:
                     - landing_esgaia
             schemas:
                 read:
@@ -1179,7 +1179,7 @@ roles:
     - ar_db_landing_esgaia_w:
           privileges:
             databases:
-                write: 
+                write:
                     - landing_esgaia
             schemas:
                 write:
@@ -1192,7 +1192,7 @@ roles:
     - ar_db_landing_factset_r:
           privileges:
             databases:
-                read: 
+                read:
                     - landing_factset
             schemas:
                 read:
@@ -1203,7 +1203,7 @@ roles:
     - ar_db_landing_factset_w:
           privileges:
             databases:
-                write: 
+                write:
                     - landing_factset
             schemas:
                 write:
@@ -1216,7 +1216,7 @@ roles:
     - ar_db_landing_sustainalytics_r:
           privileges:
             databases:
-                read: 
+                read:
                     - landing_sustainalytics
             schemas:
                 read:
@@ -1227,7 +1227,7 @@ roles:
     - ar_db_landing_sustainalytics_w:
           privileges:
             databases:
-                write: 
+                write:
                     - landing_sustainalytics
             schemas:
                 write:
@@ -1240,7 +1240,7 @@ roles:
     - ar_db_landing_trucost_r:
           privileges:
             databases:
-                read: 
+                read:
                     - landing_trucost
             schemas:
                 read:
@@ -1252,7 +1252,7 @@ roles:
     - ar_db_landing_trucost_w:
           privileges:
             databases:
-                write: 
+                write:
                     - landing_trucost
             schemas:
                 write:
@@ -1265,7 +1265,7 @@ roles:
     - ar_db_landing_sharepoint_sam_r:
           privileges:
             databases:
-                read: 
+                read:
                     - landing_sharepoint_sam
             schemas:
                 read:
@@ -1277,7 +1277,7 @@ roles:
     - ar_db_landing_sharepoint_sam_w:
           privileges:
             databases:
-                write: 
+                write:
                     - landing_sharepoint_sam
             schemas:
                 write:
@@ -1289,7 +1289,7 @@ roles:
     - ar_db_landing_external_data_r:
           privileges:
             databases:
-                read: 
+                read:
                     - landing_external_data
             schemas:
                 read:
@@ -1300,7 +1300,7 @@ roles:
     - ar_db_landing_external_data_w:
           privileges:
             databases:
-                write: 
+                write:
                     - landing_external_data
             schemas:
                 write:
@@ -1312,7 +1312,7 @@ roles:
     - ar_db_landing_scd_data_products_r:
           privileges:
             databases:
-                read: 
+                read:
                     - landing_scd_data_products
             schemas:
                 read:
@@ -1324,20 +1324,20 @@ roles:
     - ar_db_landing_scd_data_products_w:
           privileges:
             databases:
-                write: 
+                write:
                     - landing_scd_data_products
             schemas:
                 write:
                     - landing_scd_data_products.*
             tables:
                 write:
-                    - landing_scd_data_products.*.*                    
+                    - landing_scd_data_products.*.*
 
     # meps landing
     - ar_db_landing_meps_r:
           privileges:
             databases:
-                read: 
+                read:
                     - landing_meps
             schemas:
                 read:
@@ -1349,7 +1349,7 @@ roles:
     - ar_db_landing_meps_w:
           privileges:
             databases:
-                write: 
+                write:
                     - landing_meps
             schemas:
                 write:
@@ -1362,7 +1362,7 @@ roles:
     - ar_db_landing_usb_r:
           privileges:
             databases:
-                read: 
+                read:
                     - landing_usb
             schemas:
                 read:
@@ -1374,7 +1374,7 @@ roles:
     - ar_db_landing_usb_w:
           privileges:
             databases:
-                write: 
+                write:
                     - landing_usb
             schemas:
                 write:
@@ -1386,7 +1386,7 @@ roles:
     - ar_db_landing_boost_ai_r:
           privileges:
             databases:
-                read: 
+                read:
                     - landing_boost_ai
             schemas:
                 read:
@@ -1398,7 +1398,7 @@ roles:
     - ar_db_landing_boost_ai_w:
           privileges:
             databases:
-                write: 
+                write:
                     - landing_boost_ai
             schemas:
                 write:
@@ -1407,11 +1407,11 @@ roles:
                 write:
                     - landing_boost_ai.*.*
 
-# ISS landing 
+# ISS landing
     - ar_db_landing_iss_r:
           privileges:
             databases:
-                read: 
+                read:
                     - landing_iss
             schemas:
                 read:
@@ -1423,20 +1423,20 @@ roles:
     - ar_db_landing_iss_w:
           privileges:
             databases:
-                write: 
+                write:
                     - landing_iss
             schemas:
                 write:
                     - landing_iss.*
             tables:
                 write:
-                    - landing_iss.*.*    
+                    - landing_iss.*.*
 
 # monitoring landing
     - ar_db_landing_monitoring_r:
           privileges:
             databases:
-                read: 
+                read:
                     - landing_monitoring
             schemas:
                 read:
@@ -1448,7 +1448,7 @@ roles:
     - ar_db_landing_monitoring_w:
           privileges:
             databases:
-                write: 
+                write:
                     - landing_monitoring
             schemas:
                 write:
@@ -1457,11 +1457,11 @@ roles:
                 write:
                     - landing_monitoring.*.*
 
-# rd 
+# rd
     - ar_db_rd_external_data_r:
           privileges:
             databases:
-                read: 
+                read:
                     - rd_external_data
             schemas:
                 read:
@@ -1472,7 +1472,7 @@ roles:
     - ar_db_rd_external_data_w:
           privileges:
             databases:
-                write: 
+                write:
                     - rd_external_data
             schemas:
                 write:
@@ -1484,7 +1484,7 @@ roles:
     - ar_db_rd_scd_r:
           privileges:
             databases:
-                read: 
+                read:
                     - rd_scd
             schemas:
                 read:
@@ -1496,7 +1496,7 @@ roles:
     - ar_db_rd_scd_w:
           privileges:
             databases:
-                write: 
+                write:
                     - rd_scd
             schemas:
                 write:
@@ -1508,11 +1508,11 @@ roles:
     - ar_db_rd_wolf_r:
           privileges:
             databases:
-                read: 
+                read:
                     - rd_wolf
             schemas:
                 read:
-                    - rd_wolf.* 
+                    - rd_wolf.*
             tables:
                 read:
                     - rd_wolf.*.*
@@ -1520,11 +1520,11 @@ roles:
     - ar_db_rd_wolf_w:
           privileges:
             databases:
-                write: 
+                write:
                     - rd_wolf
             schemas:
                 write:
-                    - rd_wolf.* 
+                    - rd_wolf.*
             tables:
                 write:
                     - rd_wolf.*.*
@@ -1532,7 +1532,7 @@ roles:
     - ar_db_rd_jira_r:
           privileges:
             databases:
-                read: 
+                read:
                     - rd_jira
             schemas:
                 read:
@@ -1544,7 +1544,7 @@ roles:
     - ar_db_rd_jira_w:
           privileges:
             databases:
-                write: 
+                write:
                     - rd_jira
             schemas:
                 write:
@@ -1557,7 +1557,7 @@ roles:
     - ar_db_rd_esgaia_r:
           privileges:
             databases:
-                read: 
+                read:
                     - rd_esgaia
             schemas:
                 read:
@@ -1569,7 +1569,7 @@ roles:
     - ar_db_rd_esgaia_w:
           privileges:
             databases:
-                write: 
+                write:
                     - rd_esgaia
             schemas:
                 write:
@@ -1581,7 +1581,7 @@ roles:
     - ar_db_rd_factset_r:
           privileges:
             databases:
-                read: 
+                read:
                     - rd_factset
             schemas:
                 read:
@@ -1593,7 +1593,7 @@ roles:
     - ar_db_rd_factset_w:
           privileges:
             databases:
-                write: 
+                write:
                     - rd_factset
             schemas:
                 write:
@@ -1606,7 +1606,7 @@ roles:
     - ar_db_rd_sustainalytics_r:
           privileges:
             databases:
-                read: 
+                read:
                     - rd_sustainalytics
             schemas:
                 read:
@@ -1618,7 +1618,7 @@ roles:
     - ar_db_rd_sustainalytics_w:
           privileges:
             databases:
-                write: 
+                write:
                     - rd_sustainalytics
             schemas:
                 write:
@@ -1630,7 +1630,7 @@ roles:
     - ar_db_rd_trucost_r:
           privileges:
             databases:
-                read: 
+                read:
                     - rd_trucost
             schemas:
                 read:
@@ -1642,7 +1642,7 @@ roles:
     - ar_db_rd_trucost_w:
           privileges:
             databases:
-                write: 
+                write:
                     - rd_trucost
             schemas:
                 write:
@@ -1654,7 +1654,7 @@ roles:
     - ar_db_rd_sharepoint_sam_r:
           privileges:
             databases:
-                read: 
+                read:
                     - rd_sharepoint_sam
             schemas:
                 read:
@@ -1665,7 +1665,7 @@ roles:
     - ar_db_rd_sharepoint_sam_w:
           privileges:
             databases:
-                write: 
+                write:
                     - rd_sharepoint_sam
             schemas:
                 write:
@@ -1678,7 +1678,7 @@ roles:
     - ar_db_rd_meps_r:
           privileges:
             databases:
-                read: 
+                read:
                     - rd_meps
             schemas:
                 read:
@@ -1690,7 +1690,7 @@ roles:
     - ar_db_rd_meps_w:
           privileges:
             databases:
-                write: 
+                write:
                     - rd_meps
             schemas:
                 write:
@@ -1702,7 +1702,7 @@ roles:
     - ar_db_rd_usb_r:
           privileges:
             databases:
-                read: 
+                read:
                     - rd_usb
             schemas:
                 read:
@@ -1714,7 +1714,7 @@ roles:
     - ar_db_rd_usb_w:
           privileges:
             databases:
-                write: 
+                write:
                     - rd_usb
             schemas:
                 write:
@@ -1726,7 +1726,7 @@ roles:
     - ar_db_rd_boost_ai_r:
           privileges:
             databases:
-                read: 
+                read:
                     - rd_boost_ai
             schemas:
                 read:
@@ -1738,19 +1738,19 @@ roles:
     - ar_db_rd_boost_ai_w:
           privileges:
             databases:
-                write: 
+                write:
                     - rd_boost_ai
             schemas:
                 write:
                     - rd_boost_ai.*
             tables:
                 write:
-                    - rd_boost_ai.*.* 
+                    - rd_boost_ai.*.*
 # monitoring rd
     - ar_db_rd_monitoring_r:
           privileges:
             databases:
-                read: 
+                read:
                     - rd_monitoring
             schemas:
                 read:
@@ -1762,7 +1762,7 @@ roles:
     - ar_db_rd_monitoring_w:
           privileges:
             databases:
-                write: 
+                write:
                     - rd_monitoring
             schemas:
                 write:
@@ -1775,7 +1775,7 @@ roles:
     - ar_db_dds_sourcing_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dds_sourcing
             schemas:
                 read:
@@ -1787,7 +1787,7 @@ roles:
     - ar_db_dds_sourcing_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dds_sourcing
             schemas:
                 write:
@@ -1800,7 +1800,7 @@ roles:
     - ar_db_rd_scd_data_products_r:
           privileges:
             databases:
-                read: 
+                read:
                     - rd_scd_data_products
             schemas:
                 read:
@@ -1808,38 +1808,38 @@ roles:
             tables:
                 read:
                     - rd_scd_data_products.*.*
-    
+
     - ar_db_rd_scd_data_products_w:
           privileges:
             databases:
-                write: 
+                write:
                     - rd_scd_data_products
             schemas:
                 write:
                     - rd_scd_data_products.*
             tables:
                 write:
-                    - rd_scd_data_products.*.*   
-    
+                    - rd_scd_data_products.*.*
+
     # scd_data_products_rd_esg_scores rd
     - ar_schema_rd_scd_data_products_rd_esg_scores_r:
           privileges:
             databases:
-                read: 
+                read:
                     - rd_scd_data_products
             schemas:
                 read:
                     - rd_scd_data_products.rd_esg_scores
             tables:
                 read:
-                    - rd_scd_data_products.rd_esg_scores.* 
+                    - rd_scd_data_products.rd_esg_scores.*
 
 
     # esg rd
     - ar_db_rd_esg_r:
           privileges:
             databases:
-                read: 
+                read:
                     - rd_esg
             schemas:
                 read:
@@ -1851,7 +1851,7 @@ roles:
     - ar_db_rd_esg_w:
           privileges:
             databases:
-                write: 
+                write:
                     - rd_esg
             schemas:
                 write:
@@ -1876,7 +1876,7 @@ roles:
     - ar_db_rd_iss_r:
           privileges:
             databases:
-                read: 
+                read:
                     - rd_iss
             schemas:
                 read:
@@ -1888,22 +1888,22 @@ roles:
     - ar_db_rd_iss_w:
           privileges:
             databases:
-                write: 
+                write:
                     - rd_iss
             schemas:
                 write:
                     - rd_iss.*
             tables:
                 write:
-                    - rd_iss.*.* 
+                    - rd_iss.*.*
 
 
 
-# dds 
+# dds
     - ar_db_dds_sam_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dds_sam
             schemas:
                 read:
@@ -1916,7 +1916,7 @@ roles:
             - transforming_sam_wh
           privileges:
             databases:
-                write: 
+                write:
                     - dds_sam
             schemas:
                 write:
@@ -1928,7 +1928,7 @@ roles:
     - ar_db_dds_core_data_platform_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dds_core_data_platform
             schemas:
                 read:
@@ -1941,7 +1941,7 @@ roles:
             - transforming_sam_wh
           privileges:
             databases:
-                write: 
+                write:
                     - dds_core_data_platform
             schemas:
                 write:
@@ -1953,7 +1953,7 @@ roles:
     - ar_db_dds_sourcing_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dds_sourcing
             schemas:
                 read:
@@ -1964,7 +1964,7 @@ roles:
     - ar_db_dds_sourcing_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dds_sourcing
             schemas:
                 write:
@@ -1972,11 +1972,11 @@ roles:
             tables:
                 write:
                     - dds_sourcing.*.*
-# dds Pension 
+# dds Pension
     - ar_db_dds_pension_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dds_pension
             schemas:
                 read:
@@ -1987,7 +1987,7 @@ roles:
     - ar_db_dds_pension_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dds_pension
             schemas:
                 write:
@@ -2000,7 +2000,7 @@ roles:
     - ar_db_dwh_sam_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dwh_sam
             schemas:
                 read:
@@ -2011,7 +2011,7 @@ roles:
     - ar_db_dwh_sam_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dwh_sam
             schemas:
                 write:
@@ -2024,7 +2024,7 @@ roles:
     - ar_db_internal_export_sam_r:
           privileges:
             databases:
-                read: 
+                read:
                     - internal_export_sam
             schemas:
                 read:
@@ -2036,7 +2036,7 @@ roles:
     - ar_db_internal_export_sam_w:
           privileges:
             databases:
-                write: 
+                write:
                     - internal_export_sam
             schemas:
                 write:
@@ -2048,7 +2048,7 @@ roles:
     - ar_schema_internal_export_sam_ie_ads_r:
           privileges:
             databases:
-                read: 
+                read:
                     - internal_export_sam
             schemas:
                 read:
@@ -2061,7 +2061,7 @@ roles:
     - ar_schema_internal_export_sam_ie_ads_staging_w:
           privileges:
             databases:
-                write: 
+                write:
                     - internal_export_sam
             schemas:
                 write:
@@ -2074,7 +2074,7 @@ roles:
     - ar_schema_internal_export_sam_snapshots_r:
           privileges:
             databases:
-                read: 
+                read:
                     - internal_export_sam
             schemas:
                 read:
@@ -2087,7 +2087,7 @@ roles:
     - ar_schema_internal_export_sam_ie_bquant_r:
           privileges:
             databases:
-                read: 
+                read:
                     - internal_export_sam
             schemas:
                 read:
@@ -2099,7 +2099,7 @@ roles:
     - ar_schema_internal_export_sam_ie_cfo_r:
           privileges:
             databases:
-                read: 
+                read:
                     - internal_export_sam
             schemas:
                 read:
@@ -2107,11 +2107,11 @@ roles:
             tables:
                 read:
                     - internal_export_sam.ie_cfo.*
-    
+
     - ar_schema_internal_export_sam_ie_grc_r:
           privileges:
             databases:
-                read: 
+                read:
                     - internal_export_sam
             schemas:
                 read:
@@ -2124,7 +2124,7 @@ roles:
     - ar_db_external_export_sam_r:
           privileges:
             databases:
-                read: 
+                read:
                     - external_export_sam
             schemas:
                 read:
@@ -2136,7 +2136,7 @@ roles:
     - ar_db_external_export_sam_w:
           privileges:
             databases:
-                write: 
+                write:
                     - external_export_sam
             schemas:
                 write:
@@ -2149,7 +2149,7 @@ roles:
     - ar_db_landing_esg_r:
           privileges:
             databases:
-                read: 
+                read:
                     - landing_esg
             schemas:
                 read:
@@ -2161,14 +2161,14 @@ roles:
     - ar_db_landing_esg_w:
           privileges:
             databases:
-                write: 
+                write:
                     - landing_esg
             schemas:
                 write:
                     - landing_esg.*
             tables:
                 write:
-                    - landing_esg.*.*                    
+                    - landing_esg.*.*
 
 
 # schema accsess roles: dwh_sam
@@ -2176,7 +2176,7 @@ roles:
     - ar_schema_dwh_sam_performance_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dwh_sam
             schemas:
                 read:
@@ -2189,7 +2189,7 @@ roles:
     - ar_schema_dwh_sam_conformed_dim_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dwh_sam
             schemas:
                 read:
@@ -2202,7 +2202,7 @@ roles:
     - ar_schema_dwh_sam_fund_admin_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dwh_sam
             schemas:
                 read:
@@ -2215,7 +2215,7 @@ roles:
     - ar_schema_dwh_sam_fund_admin_nordic_distribution_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dwh_sam
             schemas:
                 read:
@@ -2227,20 +2227,20 @@ roles:
     - ar_schema_dwh_sam_fund_admin_skagen_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dwh_sam
             schemas:
                 read:
                     - dwh_sam.fund_admin_skagen
             tables:
                 read:
-                    - dwh_sam.fund_admin_skagen.*                    
+                    - dwh_sam.fund_admin_skagen.*
 
 #sam_esg
     - ar_schema_dwh_sam_esg_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dwh_sam
             schemas:
                 read:
@@ -2253,7 +2253,7 @@ roles:
     - ar_schema_dwh_sam_bruddstatistikk_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dwh_sam
             schemas:
                 read:
@@ -2265,7 +2265,7 @@ roles:
     - ar_schema_dwh_sam_general_ledger_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dwh_sam
             schemas:
                 read:
@@ -2278,7 +2278,7 @@ roles:
     - ar_schema_dwh_sam_price_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dwh_sam
             schemas:
                 read:
@@ -2291,14 +2291,14 @@ roles:
     - ar_schema_dwh_sam_transactions_and_finance_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dwh_sam
             schemas:
                 read:
                     - dwh_sam.transactions_and_finance
             tables:
                 read:
-                    - dwh_sam.transactions_and_finance.*                                
+                    - dwh_sam.transactions_and_finance.*
 
 # schema accsess roles: dds_sam
 
@@ -2306,7 +2306,7 @@ roles:
     - ar_schema_dds_sam_recon_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dds_sam
             schemas:
                 read:
@@ -2319,7 +2319,7 @@ roles:
     - ar_schema_dds_sam_esg_kpi_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dds_sam
             schemas:
                 read:
@@ -2332,7 +2332,7 @@ roles:
     - ar_schema_dds_sam_scd_pfc_holdings_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dds_sam
             schemas:
                 read:
@@ -2340,12 +2340,12 @@ roles:
             tables:
                 read:
                     - dds_sam.scd_pfc_holdings.*
-            
+
 #sustainalytics
     - ar_schema_dds_sam_sustainalytics_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dds_sam
             schemas:
                 read:
@@ -2358,11 +2358,11 @@ roles:
     - ar_schema_dds_sam_active_ownership_engagement_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dds_sam
             schemas:
                 read:
-                    - dds_sam.active_ownership_engagement 
+                    - dds_sam.active_ownership_engagement
             tables:
                 read:
                     - dds_sam.active_ownership_engagement.*
@@ -2371,14 +2371,14 @@ roles:
     - ar_schema_dds_sam_bquant_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dds_sam
             schemas:
                 read:
-                    - dds_sam.bquant 
+                    - dds_sam.bquant
             tables:
                 read:
-                    - dds_sam.bquant.*                    
+                    - dds_sam.bquant.*
 # ==========================================
 # access roles  - development
 # ==========================================
@@ -2386,81 +2386,81 @@ roles:
     - dev_ar_db_landing_scd_r:
           privileges:
             databases:
-                read:  
+                read:
                     - dev_landing_scd
             schemas:
-                read: 
+                read:
                     - dev_landing_scd.*
             tables:
-                read: 
+                read:
                     - dev_landing_scd.*.*
     - dev_ar_db_landing_scd_w:
           privileges:
             databases:
-                write:  
+                write:
                     - dev_landing_scd
             schemas:
-                write: 
+                write:
                     - dev_landing_scd.*
             tables:
-                write: 
+                write:
                     - dev_landing_scd.*.*
 
     - dev_ar_db_landing_scd_qa_r:
           privileges:
             databases:
-                read:  
+                read:
                     - dev_landing_scd_qa
             schemas:
-                read: 
+                read:
                     - dev_landing_scd_qa.*
             tables:
-                read: 
+                read:
                     - dev_landing_scd_qa.*.*
     - dev_ar_db_landing_scd_qa_w:
           privileges:
             databases:
-                write:  
+                write:
                     - dev_landing_scd_qa
             schemas:
-                write: 
+                write:
                     - dev_landing_scd_qa.*
             tables:
-                write: 
+                write:
                     - dev_landing_scd_qa.*.*
 
     - dev_ar_db_landing_wolf_r:
           privileges:
             databases:
-                read:  
+                read:
                     - dev_landing_wolf
             schemas:
-                read: 
-                    - dev_landing_wolf.* 
+                read:
+                    - dev_landing_wolf.*
             tables:
-                read: 
+                read:
                     - dev_landing_wolf.*.*
 
     - dev_ar_db_landing_wolf_w:
           privileges:
             databases:
-                write:  
+                write:
                     - dev_landing_wolf
             schemas:
-                write: 
-                    - dev_landing_wolf.* 
+                write:
+                    - dev_landing_wolf.*
             tables:
-                write: 
+                write:
                     - dev_landing_wolf.*.*
 
 
     - dev_ar_db_landing_jira_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_landing_jira
             schemas:
-                read: 
+                read:
                     - dev_landing_jira.*
             tables:
                 read:
@@ -2468,97 +2468,97 @@ roles:
     - dev_ar_db_landing_jira_w:
           privileges:
             databases:
-                write:  
+                write:
                     - dev_landing_jira
             schemas:
-                write: 
+                write:
                     - dev_landing_jira.*
             tables:
-                write: 
+                write:
                     - dev_landing_jira.*.*
 
     - dev_ar_db_landing_esgaia_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_landing_esgaia
             schemas:
-                read: 
+                read:
                     - dev_landing_esgaia.*
             tables:
-                read: 
+                read:
                     - dev_landing_esgaia.*.*
 
     - dev_ar_db_landing_esgaia_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_landing_esgaia
             schemas:
-                write: 
+                write:
                     - dev_landing_esgaia.*
             tables:
-                write: 
+                write:
                     - dev_landing_esgaia.*.*
 
 
     - dev_ar_db_landing_sustainalytics_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_landing_sustainalytics
             schemas:
-                read: 
+                read:
                     - dev_landing_sustainalytics.*
             tables:
-                read: 
+                read:
                     - dev_landing_sustainalytics.*.*
 
     - dev_ar_db_landing_sustainalytics_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_landing_sustainalytics
             schemas:
-                write: 
+                write:
                     - dev_landing_sustainalytics.*
             tables:
-                write: 
+                write:
                     - dev_landing_sustainalytics.*.*
 
     - dev_ar_db_landing_trucost_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_landing_trucost
             schemas:
-                read: 
+                read:
                     - dev_landing_trucost.*
             tables:
-                read: 
+                read:
                     - dev_landing_trucost.*.*
     - dev_ar_db_landing_trucost_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_landing_trucost
             schemas:
-                write: 
+                write:
                      - dev_landing_trucost.*
             tables:
-                write: 
+                write:
                     - dev_landing_trucost.*.*
 
     - dev_ar_db_landing_sharepoint_sam_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_landing_sharepoint_sam
             schemas:
-                read: 
+                read:
                     - dev_landing_sharepoint_sam.*
             tables:
-                read: 
+                read:
                     - dev_landing_sharepoint_sam.*.*
     - dev_ar_db_landing_sharepoint_sam_w:
           privileges:
@@ -2576,7 +2576,7 @@ roles:
     - dev_ar_db_landing_external_data_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_landing_external_data
             schemas:
                 read:
@@ -2588,7 +2588,7 @@ roles:
     - dev_ar_db_landing_external_data_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_landing_external_data
             schemas:
                 write:
@@ -2601,7 +2601,7 @@ roles:
     - dev_ar_db_landing_meps_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_landing_meps
             schemas:
                 read:
@@ -2612,7 +2612,7 @@ roles:
     - dev_ar_db_landing_meps_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_landing_meps
             schemas:
                 write:
@@ -2624,7 +2624,7 @@ roles:
     - dev_ar_db_landing_scd_data_products_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_landing_scd_data_products
             schemas:
                 read:
@@ -2636,20 +2636,20 @@ roles:
     - dev_ar_db_landing_scd_data_products_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_landing_scd_data_products
             schemas:
                 write:
                     - dev_landing_scd_data_products.*
             tables:
                 write:
-                    - dev_landing_scd_data_products.*.*    
+                    - dev_landing_scd_data_products.*.*
 
 # usb landing
     - dev_ar_db_landing_usb_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_landing_usb
             schemas:
                 read:
@@ -2661,7 +2661,7 @@ roles:
     - dev_ar_db_landing_usb_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_landing_usb
             schemas:
                 write:
@@ -2673,7 +2673,7 @@ roles:
     - dev_ar_db_landing_boost_ai_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_landing_boost_ai
             schemas:
                 read:
@@ -2685,19 +2685,19 @@ roles:
     - dev_ar_db_landing_boost_ai_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_landing_boost_ai
             schemas:
                 write:
                     - dev_landing_boost_ai.*
             tables:
                 write:
-                    - dev_landing_boost_ai.*.*     
+                    - dev_landing_boost_ai.*.*
 # monitoring landing
     - dev_ar_db_landing_monitoring_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_landing_monitoring
             schemas:
                 read:
@@ -2709,7 +2709,7 @@ roles:
     - dev_ar_db_landing_monitoring_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_landing_monitoring
             schemas:
                 write:
@@ -2722,7 +2722,7 @@ roles:
     - dev_ar_db_landing_iss_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_landing_iss
             schemas:
                 read:
@@ -2734,20 +2734,20 @@ roles:
     - dev_ar_db_landing_iss_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_landing_iss
             schemas:
                 write:
                     - dev_landing_iss.*
             tables:
                 write:
-                    - dev_landing_iss.*.*    
+                    - dev_landing_iss.*.*
 
-# rd 
+# rd
     - dev_ar_db_rd_external_data_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_rd_external_data
             schemas:
                 read:
@@ -2758,7 +2758,7 @@ roles:
     - dev_ar_db_rd_external_data_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_rd_external_data
             schemas:
                 write:
@@ -2770,7 +2770,7 @@ roles:
     - dev_ar_db_rd_scd_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_rd_scd
             schemas:
                 read:
@@ -2781,7 +2781,7 @@ roles:
     - dev_ar_db_rd_scd_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_rd_scd
             schemas:
                 write:
@@ -2793,22 +2793,22 @@ roles:
     - dev_ar_db_rd_wolf_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_rd_wolf
             schemas:
                 read:
-                    - dev_rd_wolf.* 
+                    - dev_rd_wolf.*
             tables:
                 read:
                     - dev_rd_wolf.*.*
     - dev_ar_db_rd_wolf_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_rd_wolf
             schemas:
                 write:
-                    - dev_rd_wolf.* 
+                    - dev_rd_wolf.*
             tables:
                 write:
                     - dev_rd_wolf.*.*
@@ -2817,7 +2817,7 @@ roles:
     - dev_ar_db_rd_jira_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_rd_jira
             schemas:
                 read:
@@ -2828,7 +2828,7 @@ roles:
     - dev_ar_db_rd_jira_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_rd_jira
             schemas:
                 write:
@@ -2840,7 +2840,7 @@ roles:
     - dev_ar_db_rd_esgaia_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_rd_esgaia
             schemas:
                 read:
@@ -2851,7 +2851,7 @@ roles:
     - dev_ar_db_rd_esgaia_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_rd_esgaia
             schemas:
                 write:
@@ -2863,7 +2863,7 @@ roles:
     - dev_ar_db_rd_factset_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_rd_factset
             schemas:
                 read:
@@ -2874,7 +2874,7 @@ roles:
     - dev_ar_db_rd_factset_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_rd_factset
             schemas:
                 write:
@@ -2886,7 +2886,7 @@ roles:
     - dev_ar_db_rd_sustainalytics_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_rd_sustainalytics
             schemas:
                 read:
@@ -2897,7 +2897,7 @@ roles:
     - dev_ar_db_rd_sustainalytics_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_rd_sustainalytics
             schemas:
                 write:
@@ -2909,7 +2909,7 @@ roles:
     - dev_ar_db_rd_trucost_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_rd_trucost
             schemas:
                 read:
@@ -2920,7 +2920,7 @@ roles:
     - dev_ar_db_rd_trucost_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_rd_trucost
             schemas:
                 write:
@@ -2932,7 +2932,7 @@ roles:
     - dev_ar_db_rd_sharepoint_sam_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_rd_sharepoint_sam
             schemas:
                 read:
@@ -2943,7 +2943,7 @@ roles:
     - dev_ar_db_rd_sharepoint_sam_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_rd_sharepoint_sam
             schemas:
                 write:
@@ -2956,7 +2956,7 @@ roles:
     - dev_ar_db_rd_meps_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_rd_meps
             schemas:
                 read:
@@ -2968,7 +2968,7 @@ roles:
     - dev_ar_db_rd_meps_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_rd_meps
             schemas:
                 write:
@@ -2980,7 +2980,7 @@ roles:
     - dev_ar_db_rd_scd_data_products_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_rd_scd_data_products
             schemas:
                 read:
@@ -2992,21 +2992,21 @@ roles:
     - dev_ar_db_rd_scd_data_products_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_rd_scd_data_products
             schemas:
                 write:
                     - dev_rd_scd_data_products.*
             tables:
                 write:
-                    - dev_rd_scd_data_products.*.*                   
+                    - dev_rd_scd_data_products.*.*
 
 
     # dev esg rd
     - dev_ar_db_rd_esg_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_rd_esg
             schemas:
                 read:
@@ -3018,7 +3018,7 @@ roles:
     - dev_ar_db_rd_esg_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_rd_esg
             schemas:
                 write:
@@ -3031,7 +3031,7 @@ roles:
     - dev_ar_db_rd_usb_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_rd_usb
             schemas:
                 read:
@@ -3043,7 +3043,7 @@ roles:
     - dev_ar_db_rd_usb_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_rd_usb
             schemas:
                 write:
@@ -3055,7 +3055,7 @@ roles:
     - dev_ar_db_rd_boost_ai_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_rd_boost_ai
             schemas:
                 read:
@@ -3067,20 +3067,20 @@ roles:
     - dev_ar_db_rd_boost_ai_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_rd_boost_ai
             schemas:
                 write:
                     - dev_rd_boost_ai.*
             tables:
                 write:
-                    - dev_rd_boost_ai.*.* 
+                    - dev_rd_boost_ai.*.*
 
 # iss rd (dev)
     - dev_ar_db_rd_iss_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_rd_iss
             schemas:
                 read:
@@ -3092,20 +3092,20 @@ roles:
     - dev_ar_db_rd_iss_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_rd_iss
             schemas:
                 write:
                     - dev_rd_iss.*
             tables:
                 write:
-                    - dev_rd_iss.*.* 
+                    - dev_rd_iss.*.*
 
 # monitoring rd
     - dev_ar_db_rd_monitoring_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_rd_monitoring
             schemas:
                 read:
@@ -3117,20 +3117,20 @@ roles:
     - dev_ar_db_rd_monitoring_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_rd_monitoring
             schemas:
                 write:
                     - dev_rd_monitoring.*
             tables:
                 write:
-                    - dev_rd_monitoring.*.*   
+                    - dev_rd_monitoring.*.*
 
-# dds 
+# dds
     - dev_ar_db_dds_sam_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_dds_sam
             schemas:
                 read:
@@ -3141,7 +3141,7 @@ roles:
     - dev_ar_db_dds_sam_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_dds_sam
             schemas:
                 write:
@@ -3152,7 +3152,7 @@ roles:
     - dev_ar_db_dds_core_data_platform_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_dds_core_data_platform
             schemas:
                 read:
@@ -3165,7 +3165,7 @@ roles:
             - transforming_sam_wh
           privileges:
             databases:
-                write: 
+                write:
                     - dev_dds_core_data_platform
             schemas:
                 write:
@@ -3178,7 +3178,7 @@ roles:
     - dev_ar_db_dds_sourcing_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_dds_sourcing
             schemas:
                 read:
@@ -3189,7 +3189,7 @@ roles:
     - dev_ar_db_dds_sourcing_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_dds_sourcing
             schemas:
                 write:
@@ -3201,7 +3201,7 @@ roles:
     - dev_ar_db_dds_pension_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_dds_pension
             schemas:
                 read:
@@ -3212,7 +3212,7 @@ roles:
     - dev_ar_db_dds_pension_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_dds_pension
             schemas:
                 write:
@@ -3220,11 +3220,11 @@ roles:
             tables:
                 write:
                     - dev_dds_pension.*.*
-# dwh 
+# dwh
     - dev_ar_db_dwh_sam_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_dwh_sam
             schemas:
                 read:
@@ -3235,7 +3235,7 @@ roles:
     - dev_ar_db_dwh_sam_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_dwh_sam
             schemas:
                 write:
@@ -3248,7 +3248,7 @@ roles:
     - dev_ar_db_internal_export_sam_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_internal_export_sam
             schemas:
                 read:
@@ -3259,7 +3259,7 @@ roles:
     - dev_ar_db_internal_export_sam_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_internal_export_sam
             schemas:
                 write:
@@ -3272,7 +3272,7 @@ roles:
     - dev_ar_db_external_export_sam_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_external_export_sam
             schemas:
                 read:
@@ -3283,7 +3283,7 @@ roles:
     - dev_ar_db_external_export_sam_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_external_export_sam
             schemas:
                 write:
@@ -3296,7 +3296,7 @@ roles:
     - dev_ar_db_landing_esg_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_landing_esg
             schemas:
                 read:
@@ -3308,7 +3308,7 @@ roles:
     - dev_ar_db_landing_esg_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_landing_esg
             schemas:
                 write:
@@ -3321,7 +3321,7 @@ roles:
     - ar_db_demo_r:
           privileges:
             databases:
-                read: 
+                read:
                     - demo
             schemas:
                 read:
@@ -3333,19 +3333,19 @@ roles:
     - ar_db_demo_w:
           privileges:
             databases:
-                write: 
+                write:
                     - demo
             schemas:
                 write:
                     - demo.*
             tables:
                 write:
-                    - demo.*.*                    
+                    - demo.*.*
 
     - dev_ar_db_demo_r:
           privileges:
             databases:
-                read: 
+                read:
                     - dev_demo
             schemas:
                 read:
@@ -3357,14 +3357,14 @@ roles:
     - dev_ar_db_demo_w:
           privileges:
             databases:
-                write: 
+                write:
                     - dev_demo
             schemas:
                 write:
                     - dev_demo.*
             tables:
                 write:
-                    - dev_demo.*.*                    
+                    - dev_demo.*.*
 
 
 
@@ -3391,7 +3391,7 @@ users:
                 - securityadmin
     - sys_prefect_janitor_platform:
             can_login: yes
-            member_of: 
+            member_of:
                 - data_engineer_platform
                 - sam_ads_exporter
     - sys_prefect_sam:
@@ -3422,7 +3422,7 @@ users:
                 - reporter_sam_fund_admin
     - sys_pbi_damp_platform:
             can_login: yes
-            member_of: 
+            member_of:
                 - reporter_platform
     - sys_pbi_sam_data_insight:
             can_login: yes
@@ -3430,7 +3430,7 @@ users:
                 - reporter_sam
     - sys_pbi_sam_data_insight_fund_admin:
             can_login: yes
-            member_of: 
+            member_of:
                 - reporter_sam_fund_admin
 
 
@@ -3472,7 +3472,7 @@ users:
                 - export_reader_bquant
     - ie_reader_cfo:
             can_login: yes
-            member_of: 
+            member_of:
                 - export_reader_cfo
     - ie_reader_connect:
             can_login: yes
@@ -3487,16 +3487,16 @@ users:
             can_login: yes
             member_of:
                 - data_analyst_sam_risk_and_ownership
-                - data_engineer_sam_risk_and_ownership                
+                - data_engineer_sam_risk_and_ownership
 
 # ==========================================
 # warehouses
 # ==========================================
 
-warehouses: 
+warehouses:
     # prod warehouses
     # prod - sam
-    - loading_sam_wh: 
+    - loading_sam_wh:
         size: x-small
     - analysis_sam_wh: # to be deleted, once move to new naming standard confirmed
         size: x-small
@@ -3506,9 +3506,9 @@ warehouses:
         size: x-small
     - exporting_sam_wh: # to be deleted, once move to new naming standard confirmed
         size: x-small
-    - analysis_sam_xs: 
+    - analysis_sam_xs:
         size: x-small
-    - transforming_sam_m: 
+    - transforming_sam_m:
         size: medium
     - reporting_sam_xs:
         size: x-small
@@ -3525,12 +3525,12 @@ warehouses:
     - demo_xs:
         size: x-small
     - demo_m:
-        size: medium   
+        size: medium
     - transforming_platform_xs:
         size: x-small
     - transforming_platform_m:
         size: medium
-     
+
 
     # prod - Pension / Corporate
     - analysis_corporate_xs:
@@ -3538,11 +3538,11 @@ warehouses:
     - transforming_corporate_xs:
         size: x-small
     - transforming_corporate_m:
-        size: medium        
+        size: medium
     - transforming_corporate_l:
         size: large
     - loading_corporate_xs:
-        size: x-small           
+        size: x-small
 
 
     # prod - sourcing
@@ -3552,9 +3552,9 @@ warehouses:
         size: x-small
 
     # dev warehouses
-    
+
     # dev - sam
-    - dev_loading_sam_wh: 
+    - dev_loading_sam_wh:
         size: x-small
     - dev_analysis_sam_wh: # to be deleted, once move to new naming standard confirmed
         size: x-small
@@ -3564,13 +3564,13 @@ warehouses:
         size: x-small
     - dev_transforming_sam_xl:
         size: xlarge
-    - dev_analysis_sam_xs: 
+    - dev_analysis_sam_xs:
         size: x-small
-    - dev_transforming_sam_m: 
+    - dev_transforming_sam_m:
         size: medium
     - dev_reporting_sam_xs:
         size: x-small
-    
+
     # dev - platform
     - dev_transforming_platform_xs:
         size: x-small
@@ -3580,15 +3580,15 @@ warehouses:
         size: x-small
     - dev_demo_m:
         size: medium
-    
+
     # dev - sourcing
     - dev_transforming_sourcing_xs:
         size: x-small
-        
+
     #dev - corporate
     - dev_transforming_corporate_xs:
         size: x-small
     - dev_transforming_corporate_m:
         size: medium
     - dev_loading_corporate_xs:
-        size: x-small               
+        size: x-small
