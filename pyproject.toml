@@ -30,3 +30,13 @@ permifrost-concatinator = "main:main"
 
 [project]
 name = "permifrost-concatinator"
+version = "0.0.1"
+description = "Concatenates multiple Permifrost spec files into one"
+readme = "README.md"
+requires-python = ">=3.6"
+dependencies = [
+    "click",
+    "pyyaml",
+    "regex",
+    "dictdiffer"
+]
