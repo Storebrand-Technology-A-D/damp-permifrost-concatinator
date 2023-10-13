@@ -27,3 +27,6 @@ build-backend = "setuptools.build_meta"
 
 [project.scripts]
 permifrost-concatinator = "main:main"
+
+[project]
+name = "permifrost-concatinator"
