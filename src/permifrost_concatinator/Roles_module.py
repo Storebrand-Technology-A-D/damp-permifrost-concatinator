@@ -158,5 +158,3 @@ def generate_access_roles(self):
                 self.log.error(f"Malformed Access roles: {role}")
 
     return access_roles
-
-        return accsess_roles
