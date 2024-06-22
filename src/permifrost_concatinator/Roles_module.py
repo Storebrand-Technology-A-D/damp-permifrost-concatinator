@@ -70,56 +70,6 @@ class Roles_Module(Base_Module):
         self.log.info(f"Databases for roles retrieved from spec")
         return privileges
 
-    #def generate_accsess_roles(self):
-    #    accsess_roles = {}
-    #    self.log.info("Generating accsess roles")
-    #    self.log.debug(f"Functional roles: {self.functional_roles_dependencies}")
-    #    for role in self.functional_roles_dependencies:
-    #        self.log.info(f"Generating accsess role for functional role: {role}")
-    #        if re.match("ar_db_.*_(w|r)$", role):
-    #            if re.match("^ar_db.*", role):
-    #                database = role[6:-2]
-    #                if re.match(".*_w$", role):
-    #                   accsess_roles[role] = {
-    #                        "privileges": {
-    #                            "databases": {"write": [f"{database}"]},
-    #                            "schemas": {"write": [f"{database}.*"]},
-    #                            "tables": {"write": [f"{database}.*.*"]},
-    #                        }
-    #                    }
-    #                else:
-    #                    accsess_roles[role] = {
-    #                        "privileges": {
-    #                            "databases": {"read": [f"{database}"]},
-    #                            "schemas": {"read": [f"{database}.*"]},
-    #                            "tables": {"read": [f"{database}.*.*"]},
-    #                        }
-    #                    }
-    #        elif re.match("^dev_ar_db.*_(w|r)$", role):
-    #            database = role[10:-2]
-    #            if re.match(".*_w$", role):
-    #                accsess_roles[role] = {
-    #                    "privileges": {
-    #                        "databases": {"write": [f"dev_{database}"]},
-    #                        "schemas": {"write": [f"dev_{database}.*"]},
-    #                        "tables": {"write": [f"dev_{database}.*.*"]},
-    #                    }
-    #                }
-    #            else:
-    #                accsess_roles[role] = {
-    #                    "privileges": {
-    #                        "databases": {"read": [f"dev_{database}"]},
-    #                        "schemas": {"read": [f"dev_{database}.*"]},
-    #                        "tables": {"read": [f"dev_{database}.*.*"]},
-    #                    }
-    #                }
-    #        elif re.match("^ar_schema.*_r$", role):
-    #            next
-#
-#            elif re.match("ar_|_db_|.*_(r|w)$", role):
-#                self.log.error(f"Malformed Accsess roles: {role}")
-
-
     def generate_accsess_roles(self):
         access_roles = {}
         self.log.info("Generating access roles")
