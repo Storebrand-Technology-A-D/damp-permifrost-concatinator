@@ -120,41 +120,41 @@ class Roles_Module(Base_Module):
 #                self.log.error(f"Malformed Accsess roles: {role}")
 
 
-def generate_accsess_roles(self):
-    access_roles = {}
-    self.log.info("Generating access roles")
-    self.log.debug(f"Functional roles: {self.functional_roles_dependencies}")
+    def generate_accsess_roles(self):
+        access_roles = {}
+        self.log.info("Generating access roles")
+        self.log.debug(f"Functional roles: {self.functional_roles_dependencies}")
 
-    # Define the patterns to match different types of roles
-    patterns = [
-        (r"^(ar_db_.+?)_(w|r)$", 6, 2, ""),          # Production databases (ar_db_name_r or ar_db_name_w)
-        (r"^(dev_ar_db_.+?)_(w|r)$", 10, 2, "dev_"), # Development databases (dev_ar_db_name_r or dev_ar_db_name_w)
-        (r"^(qa_ar_db_.+?)_(w|r)$", 9, 2, "qa_"),    # QA databases (qa_ar_db_name_r or qa_ar_db_name_w)
-        (r"^(test_ar_db_.+?)_(w|r)$", 11, 2, "test_"), # Test databases (test_ar_db_name_r or test_ar_db_name_w)
-        (r"^(preprod_ar_db_.+?)_(w|r)$", 14, 2, "preprod_") # Preprod databases (preprod_ar_db_name_r or preprod_ar_db_name_w)
-    ]
+        # Define the patterns to match different types of roles
+        patterns = [
+            (r"^(ar_db_.+?)_(w|r)$", 6, 2, ""),          # Production databases (ar_db_name_r or ar_db_name_w)
+            (r"^(dev_ar_db_.+?)_(w|r)$", 10, 2, "dev_"), # Development databases (dev_ar_db_name_r or dev_ar_db_name_w)
+            (r"^(qa_ar_db_.+?)_(w|r)$", 9, 2, "qa_"),    # QA databases (qa_ar_db_name_r or qa_ar_db_name_w)
+            (r"^(test_ar_db_.+?)_(w|r)$", 11, 2, "test_"), # Test databases (test_ar_db_name_r or test_ar_db_name_w)
+            (r"^(preprod_ar_db_.+?)_(w|r)$", 14, 2, "preprod_") # Preprod databases (preprod_ar_db_name_r or preprod_ar_db_name_w)
+        ]
 
-    for role in self.functional_roles_dependencies:
-        self.log.info(f"Generating access role for functional role: {role}")
+        for role in self.functional_roles_dependencies:
+            self.log.info(f"Generating access role for functional role: {role}")
 
-        for pattern, db_start, db_end, prefix in patterns:
-            match = re.match(pattern, role)
-            if match:
-                database = role[db_start:-db_end]
-                db_prefix = f"{prefix}{database}"
-                access_type = "write" if role.endswith("_w") else "read"
-                access_roles[role] = {
-                    "privileges": {
-                        "databases": {access_type: [db_prefix]},
-                        "schemas": {access_type: [f"{db_prefix}.*"]},
-                        "tables": {access_type: [f"{db_prefix}.*.*"]}
+            for pattern, db_start, db_end, prefix in patterns:
+                match = re.match(pattern, role)
+                if match:
+                    database = role[db_start:-db_end]
+                    db_prefix = f"{prefix}{database}"
+                    access_type = "write" if role.endswith("_w") else "read"
+                    access_roles[role] = {
+                        "privileges": {
+                            "databases": {access_type: [db_prefix]},
+                            "schemas": {access_type: [f"{db_prefix}.*"]},
+                            "tables": {access_type: [f"{db_prefix}.*.*"]}
+                        }
                     }
-                }
-                break
-        else:
-            if re.match("^ar_schema.*_r$", role):
-                continue
-            elif re.match("ar_|_db_|.*_(r|w)$", role):
-                self.log.error(f"Malformed Access roles: {role}")
+                    break
+            else:
+                if re.match("^ar_schema.*_r$", role):
+                    continue
+                elif re.match("ar_|_db_|.*_(r|w)$", role):
+                    self.log.error(f"Malformed Access roles: {role}")
 
-    return access_roles
+        return access_roles
