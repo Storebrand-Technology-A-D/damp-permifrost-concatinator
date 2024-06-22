@@ -22,45 +22,48 @@ class Databases_Module(Base_Module):
 
     def generate_accsess_roles(self):
         self.log.info("Generating access roles from Databases")
-        accsess_roles = {}
-        for databases in self.spesification:
-            self.log.debug(f"Generating access role from database: {databases}")
-            if re.match("^snowflake.*", databases):
-                self.log.debug(f"Database {databases} is a snowflake core database, skip generation of access role")
+        access_roles = {}
+        for database in self.spesification:  # Assuming self.spesification contains database names
+            self.log.debug(f"Generating access role from database: {database}")
+            
+            # Skip snowflake core databases
+            if re.match("^snowflake.*", database):
+                self.log.debug(f"Database {database} is a snowflake core database, skipping generation of access role")
                 continue
-
-            elif re.match("^dev_.*", databases):
-                self.log.debug(
-                    f"Database {databases} is a development database, skipping"
-                )
-                accsess_roles[f"dev_ar_db_{databases[4:]}_w"] = {
-                    "privileges": {
-                        "databases": {"write": [f"{databases}"]},
-                        "schemas": {"write": [f"{databases}.*"]},
-                        "tables": {"write": [f"{databases}.*.*"]},
-                    }
-                }
-                accsess_roles[f"dev_ar_db_{databases[4:]}_r"] = {
-                    "privileges": {
-                        "databases": {"read": [f"{databases}"]},
-                        "schemas": {"read": [f"{databases}.*"]},
-                        "tables": {"read": [f"{databases}.*.*"]},
-                    }
-                }
+            
+            db_name = ""
+            if re.match("^dev_.*", database):
+                db_name = database[4:]
+                prefix = "dev_ar_db"
+            elif re.match("^qa_.*", database):
+                db_name = database[3:]
+                prefix = "qa_ar_db"
+            elif re.match("^test_.*", database):
+                db_name = database[5:]
+                prefix = "test_ar_db"
+            elif re.match("^preprod_.*", database):
+                db_name = database[8:]
+                prefix = "preprod_ar_db"
             else:
-                self.log.debug(f"Database {databases} is a production database")
-                accsess_roles[f"ar_db_{databases}_w"] = {
+                db_name = database
+                prefix = "ar_db"
+            
+            if db_name:
+                access_roles[f"{prefix}_{db_name}_w"] = {
                     "privileges": {
-                        "databases": {"write": [f"{databases}"]},
-                        "schemas": {"write": [f"{databases}.*"]},
-                        "tables": {"write": [f"{databases}.*.*"]},
+                        "databases": {"write": [f"{database}"]},
+                        "schemas": {"write": [f"{database}.*"]},
+                        "tables": {"write": [f"{database}.*.*"]},
                     }
                 }
-                accsess_roles[f"ar_db_{databases}_r"] = {
+                access_roles[f"{prefix}_{db_name}_r"] = {
                     "privileges": {
-                        "databases": {"read": [f"{databases}"]},
-                        "schemas": {"read": [f"{databases}.*"]},
-                        "tables": {"read": [f"{databases}.*.*"]},
+                        "databases": {"read": [f"{database}"]},
+                        "schemas": {"read": [f"{database}.*"]},
+                        "tables": {"read": [f"{database}.*.*"]},
                     }
                 }
-        return accsess_roles
+        
+        return access_roles
+
+
