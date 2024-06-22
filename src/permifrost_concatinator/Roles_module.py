@@ -120,7 +120,7 @@ class Roles_Module(Base_Module):
 #                self.log.error(f"Malformed Accsess roles: {role}")
 
 
-def generate_access_roles(self):
+def generate_accsess_roles(self):
     access_roles = {}
     self.log.info("Generating access roles")
     self.log.debug(f"Functional roles: {self.functional_roles_dependencies}")
