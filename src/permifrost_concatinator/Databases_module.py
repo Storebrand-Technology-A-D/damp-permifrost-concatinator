@@ -23,7 +23,7 @@ class Databases_Module(Base_Module):
     def generate_accsess_roles(self):
         self.log.info("Generating access roles from Databases")
         access_roles = {}
-        for database in self.specification:  # Assuming self.specification contains database names
+        for database in self.spesification:  # Assuming self.specification contains database names
             self.log.debug(f"Generating access role from database: {database}")
             
             # Skip snowflake core databases
