@@ -53,30 +53,7 @@ class Databases_Module(Base_Module):
                         "tables": {"read": [f"{database}.*.*"]},
                     }
                 }
-            
-            # Handle production databases (ar_)
-            elif re.match("^ar_.*", database):
-                self.log.debug(f"Database {database} is a production database, generating roles")
-                db_name = database[3:]  # Extract the database name without the prefix
-                
-                # Write role
-                access_roles[f"ar_db_{db_name}_w"] = {
-                    "privileges": {
-                        "databases": {"write": [f"{database}"]},
-                        "schemas": {"write": [f"{database}.*"]},
-                        "tables": {"write": [f"{database}.*.*"]},
-                    }
-                }
-                
-                # Read role
-                access_roles[f"ar_db_{db_name}_r"] = {
-                    "privileges": {
-                        "databases": {"read": [f"{database}"]},
-                        "schemas": {"read": [f"{database}.*"]},
-                        "tables": {"read": [f"{database}.*.*"]},
-                    }
-                }
-            
+                     
             # Handle QA databases (qa_)
             elif re.match("^qa_.*", database):
                 self.log.debug(f"Database {database} is a QA database, generating roles")
@@ -145,9 +122,28 @@ class Databases_Module(Base_Module):
                         "tables": {"read": [f"{database}.*.*"]},
                     }
                 }
-            
-            else:
-                self.log.error(f"Unsupported database prefix for database: {database}")
+                   # Handle production databases 
+            elif re.match("^ar_.*", database):
+                self.log.debug(f"Database {database} is a production database, generating roles")
+                db_name = database[3:]  # Extract the database name without the prefix
+                
+                # Write role
+                access_roles[f"ar_db_{db_name}_w"] = {
+                    "privileges": {
+                        "databases": {"write": [f"{database}"]},
+                        "schemas": {"write": [f"{database}.*"]},
+                        "tables": {"write": [f"{database}.*.*"]},
+                    }
+                }
+                
+                # Read role
+                access_roles[f"ar_db_{db_name}_r"] = {
+                    "privileges": {
+                        "databases": {"read": [f"{database}"]},
+                        "schemas": {"read": [f"{database}.*"]},
+                        "tables": {"read": [f"{database}.*.*"]},
+                    }
+                }    
         
         return access_roles
 
